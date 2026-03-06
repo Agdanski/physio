@@ -8,6 +8,8 @@ interface ExerciseCardProps {
 }
 
 export default function ExerciseCard({ exercise, index }: ExerciseCardProps) {
+  const image = exerciseImages[exercise.imageKey];
+
   return (
     <div className="exercise-card clinic-card rounded-xl border border-border p-6 animate-fade-in" style={{ animationDelay: `${index * 80}ms` }}>
       <div className="flex items-start gap-4">
