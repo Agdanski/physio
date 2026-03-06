@@ -1,5 +1,6 @@
 import { Exercise } from "@/data/programs";
 import { AlertTriangle, TrendingUp, TrendingDown, Info } from "lucide-react";
+import exerciseImages from "@/data/exerciseImages";
 
 interface ExerciseCardProps {
   exercise: Exercise;
@@ -7,6 +8,8 @@ interface ExerciseCardProps {
 }
 
 export default function ExerciseCard({ exercise, index }: ExerciseCardProps) {
+  const image = exerciseImages[exercise.imageKey];
+
   return (
     <div className="exercise-card clinic-card rounded-xl border border-border p-6 animate-fade-in" style={{ animationDelay: `${index * 80}ms` }}>
       <div className="flex items-start gap-4">
@@ -19,6 +22,13 @@ export default function ExerciseCard({ exercise, index }: ExerciseCardProps) {
           {/* Header */}
           <h3 className="font-serif text-lg text-foreground">{exercise.name}</h3>
           <p className="text-sm text-primary/80 mt-1 italic">{exercise.why}</p>
+
+          {/* Exercise Image */}
+          {image && (
+            <div className="mt-4 rounded-lg overflow-hidden bg-muted/30 flex justify-center">
+              <img src={image} alt={exercise.name} className="max-h-64 object-contain" />
+            </div>
+          )}
 
           {/* Instructions */}
           <div className="mt-4">
