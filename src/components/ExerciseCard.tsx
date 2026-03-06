@@ -23,6 +23,13 @@ export default function ExerciseCard({ exercise, index }: ExerciseCardProps) {
           <h3 className="font-serif text-lg text-foreground">{exercise.name}</h3>
           <p className="text-sm text-primary/80 mt-1 italic">{exercise.why}</p>
 
+          {/* Exercise Image */}
+          {image && (
+            <div className="mt-4 rounded-lg overflow-hidden bg-muted/30 flex justify-center">
+              <img src={image} alt={exercise.name} className="max-h-64 object-contain" />
+            </div>
+          )}
+
           {/* Instructions */}
           <div className="mt-4">
             <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Instructions</h4>
