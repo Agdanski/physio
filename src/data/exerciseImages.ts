@@ -29,6 +29,13 @@ import hipAbduction from "@/assets/exercises/hip-abduction.png";
 import wristFlexorStretch from "@/assets/exercises/wrist-flexor-stretch.png";
 import isometricAbduction from "@/assets/exercises/isometric-abduction.png";
 import heelDigBridge from "@/assets/exercises/heel-dig-bridge.png";
+import wristExtensionLight from "@/assets/exercises/wrist-extension-light-resistance.png";
+import ballSqueeze from "@/assets/exercises/ball-squeeze-isometric.png";
+import lateralLunge from "@/assets/exercises/standing-lateral-lunge.png";
+import medianNerveGlide from "@/assets/exercises/median-nerve-glide.png";
+import nordicHamstring from "@/assets/exercises/nordic-hamstring.png";
+import sideLyingHipAbduction from "@/assets/exercises/side-lying-hip-abduction.png";
+import bridgeWalkout from "@/assets/exercises/bridge-walkout.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
@@ -63,6 +70,12 @@ const exerciseImages: Record<string, string> = {
   "wrist-flexor-stretch": wristFlexorStretch,
   "isometric-abduction": isometricAbduction,
   "heel-dig-bridge": heelDigBridge,
+  "ball-squeeze": ballSqueeze,
+  "lateral-lunge": lateralLunge,
+  "nerve-glide": medianNerveGlide,
+  "nordic-hamstring": nordicHamstring,
+  "side-lying-hip": sideLyingHipAbduction,
+  "bridge-walkout": bridgeWalkout,
 };
 
 export default exerciseImages;
