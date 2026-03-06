@@ -24,11 +24,13 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="w-full max-w-md animate-fade-in">
         {/* Logo / Header */}
-        <div className="text-center mb-8">
-          <img src={clinicLogo} alt="Gdanski Chiropractic Clinic" className="h-24 mx-auto mb-4 rounded-xl" />
-          <p className="text-muted-foreground mt-2">
-            Patient Physiotherapy Portal
-          </p>
+        <div className="w-screen relative left-1/2 -translate-x-1/2 bg-clinic-navy py-8 mb-8">
+          <div className="flex flex-col items-center">
+            <img src={clinicLogo} alt="Gdanski Chiropractic Clinic" className="h-24 mx-auto mb-4" />
+            <p className="text-primary-foreground/70">
+              Patient Physiotherapy Portal
+            </p>
+          </div>
         </div>
 
         {/* Login Card */}
