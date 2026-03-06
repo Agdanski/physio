@@ -1,5 +1,6 @@
 import { Exercise } from "@/data/programs";
 import { AlertTriangle, TrendingUp, TrendingDown, Info } from "lucide-react";
+import exerciseImages from "@/data/exerciseImages";
 
 interface ExerciseCardProps {
   exercise: Exercise;
