@@ -8,6 +8,7 @@ import SymptomSearch from "@/components/SymptomSearch";
 import { BodyRegion, bodyRegionLabels, getProgramsByRegion, Program } from "@/data/programs";
 import { LogOut, Activity } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import clinicLogo from "@/assets/clinic-logo.png";
 
 type View = "home" | "conditions" | "program";
 
@@ -47,15 +48,8 @@ const Index = () => {
       <header className="clinic-gradient no-print">
         <div className="container max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-primary-foreground/20 flex items-center justify-center">
-              <span className="text-sm font-bold text-primary-foreground font-serif">G</span>
-            </div>
-            <div>
-              <h1 className="text-sm font-semibold text-primary-foreground font-serif">
-                Gdanski Chiropractic Clinic
-              </h1>
-              <p className="text-xs text-primary-foreground/70">Physiotherapy Portal</p>
-            </div>
+            <img src={clinicLogo} alt="Gdanski Chiropractic Clinic" className="h-10 rounded-md" />
+            <p className="text-xs text-primary-foreground/70">Physiotherapy Portal</p>
           </div>
           <Button
             variant="ghost"

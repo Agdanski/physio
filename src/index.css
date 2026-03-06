@@ -15,7 +15,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 210 30% 12%;
 
-    --primary: 195 80% 32%;
+    --primary: 213 35% 28%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 25% 93%;
@@ -32,31 +32,31 @@
 
     --border: 210 20% 88%;
     --input: 210 20% 88%;
-    --ring: 195 80% 32%;
+    --ring: 213 35% 28%;
 
     --radius: 0.625rem;
 
     --sidebar-background: 210 25% 96%;
     --sidebar-foreground: 210 30% 20%;
-    --sidebar-primary: 195 80% 32%;
+    --sidebar-primary: 213 35% 28%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 210 20% 92%;
     --sidebar-accent-foreground: 210 30% 20%;
     --sidebar-border: 210 20% 88%;
-    --sidebar-ring: 195 80% 32%;
+    --sidebar-ring: 213 35% 28%;
 
     /* Custom tokens */
-    --clinic-navy: 210 40% 18%;
-    --clinic-teal: 195 80% 32%;
-    --clinic-teal-light: 195 60% 92%;
+    --clinic-navy: 213 35% 28%;
+    --clinic-teal: 213 30% 38%;
+    --clinic-teal-light: 213 25% 92%;
     --clinic-sage: 160 25% 50%;
     --clinic-warm: 30 30% 96%;
     --clinic-amber: 38 92% 50%;
-    --gradient-hero: linear-gradient(135deg, hsl(210, 40%, 18%), hsl(195, 80%, 32%));
+    --gradient-hero: linear-gradient(135deg, hsl(213, 35%, 24%), hsl(213, 35%, 34%));
     --gradient-card: linear-gradient(180deg, hsl(0, 0%, 100%), hsl(210, 20%, 98%));
     --shadow-card: 0 1px 3px 0 hsl(210 20% 12% / 0.06), 0 1px 2px -1px hsl(210 20% 12% / 0.06);
     --shadow-elevated: 0 10px 25px -5px hsl(210 20% 12% / 0.08), 0 8px 10px -6px hsl(210 20% 12% / 0.04);
-    --shadow-glow: 0 0 20px hsl(195 80% 32% / 0.15);
+    --shadow-glow: 0 0 20px hsl(213 35% 28% / 0.15);
   }
 
   .dark {
