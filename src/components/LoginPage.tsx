@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Lock, User } from "lucide-react";
+import clinicLogo from "@/assets/clinic-logo.png";
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -24,12 +25,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md animate-fade-in">
         {/* Logo / Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl clinic-gradient mb-4">
-            <span className="text-2xl font-bold text-primary-foreground font-serif">G</span>
-          </div>
-          <h1 className="text-2xl font-serif text-foreground">
-            Gdanski Chiropractic Clinic
-          </h1>
+          <img src={clinicLogo} alt="Gdanski Chiropractic Clinic" className="h-24 mx-auto mb-4 rounded-xl" />
           <p className="text-muted-foreground mt-2">
             Patient Physiotherapy Portal
           </p>
