@@ -21,6 +21,14 @@ import hamstringCurl from "@/assets/exercises/hamstring-curl-band.png";
 import puttySqueeze from "@/assets/exercises/putty-squeeze.png";
 import rowWithBand from "@/assets/exercises/row-with-band.png";
 import bandExtRotation from "@/assets/exercises/band-ext-rotation.png";
+import lateralBandWalk from "@/assets/exercises/lateral-band-walk.png";
+import tendonGlide from "@/assets/exercises/tendon-glide.png";
+import standingExtension from "@/assets/exercises/standing-extension.png";
+import romanianDeadlift from "@/assets/exercises/romanian-deadlift.png";
+import hipAbduction from "@/assets/exercises/hip-abduction.png";
+import wristFlexorStretch from "@/assets/exercises/wrist-flexor-stretch.png";
+import isometricAbduction from "@/assets/exercises/isometric-abduction.png";
+import heelDigBridge from "@/assets/exercises/heel-dig-bridge.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
@@ -47,6 +55,14 @@ const exerciseImages: Record<string, string> = {
   "hamstring-curl": hamstringCurl,
   "putty-squeeze": puttySqueeze,
   "band-ext-rotation": bandExtRotation,
+  "lateral-band-walk": lateralBandWalk,
+  "tendon-glide": tendonGlide,
+  "standing-extension": standingExtension,
+  "romanian-deadlift": romanianDeadlift,
+  "hip-abduction": hipAbduction,
+  "wrist-flexor-stretch": wristFlexorStretch,
+  "isometric-abduction": isometricAbduction,
+  "heel-dig-bridge": heelDigBridge,
 };
 
 export default exerciseImages;
