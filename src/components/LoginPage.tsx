@@ -27,9 +27,7 @@ export default function LoginPage() {
         <div className="w-screen relative left-1/2 -translate-x-1/2 bg-clinic-navy py-8 mb-8">
           <div className="flex flex-col items-center">
             <img src={clinicLogo} alt="Gdanski Chiropractic Clinic" className="h-24 mx-auto mb-4" />
-            <p className="text-primary-foreground/70">
-              Patient Physiotherapy Portal
-            </p>
+            <p className="text-primary-foreground/80">Patient Physiotherapy Portal</p>
           </div>
         </div>
 
@@ -72,11 +70,7 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {error && (
-              <p className="text-sm text-destructive bg-destructive/10 p-3 rounded-lg">
-                {error}
-              </p>
-            )}
+            {error && <p className="text-sm text-destructive bg-destructive/10 p-3 rounded-lg">{error}</p>}
 
             <Button type="submit" className="w-full" size="lg">
               Sign In
