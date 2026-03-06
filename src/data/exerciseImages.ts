@@ -14,6 +14,13 @@ import wallSlide from "@/assets/exercises/wall-slide.png";
 import supination from "@/assets/exercises/supination.png";
 import stepUp from "@/assets/exercises/step-up.png";
 import eccentricWristExt from "@/assets/exercises/eccentric-wrist-extension.png";
+import proneOnElbows from "@/assets/exercises/prone-on-elbows.png";
+import scaptionRaise from "@/assets/exercises/scaption-raise.png";
+import wristExtension from "@/assets/exercises/wrist-extension.png";
+import hamstringCurl from "@/assets/exercises/hamstring-curl-band.png";
+import puttySqueeze from "@/assets/exercises/putty-squeeze.png";
+import rowWithBand from "@/assets/exercises/row-with-band.png";
+import bandExtRotation from "@/assets/exercises/band-ext-rotation.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
@@ -23,7 +30,7 @@ const exerciseImages: Record<string, string> = {
   "bridge-band": bridgeWithBand,
   "abdominal-brace": abdominalBrace,
   "isometric-wrist-ext": isometricWristExt,
-  "wrist-extension": isometricWristExt,
+  "wrist-extension": wristExtension,
   "band-row": bandRow,
   "hip-extension-band": hipExtensionBand,
   "towel-squeeze": towelSqueeze,
@@ -35,6 +42,11 @@ const exerciseImages: Record<string, string> = {
   "step-up": stepUp,
   "step-down": stepUp,
   "eccentric-wrist-ext": eccentricWristExt,
+  "prone-on-elbows": proneOnElbows,
+  "scaption-raise": scaptionRaise,
+  "hamstring-curl": hamstringCurl,
+  "putty-squeeze": puttySqueeze,
+  "band-ext-rotation": bandExtRotation,
 };
 
 export default exerciseImages;
