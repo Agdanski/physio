@@ -45,6 +45,8 @@ import singleCalfRaise from "@/assets/exercises/single-leg-calf-raise.png";
 import standingCalfStretch from "@/assets/exercises/standing-calf-stretch.png";
 import bentKneeCalfStretch from "@/assets/exercises/bent-knee-calf-stretch.png";
 import declineSquat from "@/assets/exercises/decline-squat.png";
+import splitSquat from "@/assets/exercises/split-squat.png";
+import seatedKneeExt from "@/assets/exercises/seated-knee-extension.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
@@ -91,9 +93,12 @@ const exerciseImages: Record<string, string> = {
   "calf-raise": calfRaise,
   "double-calf-raise": doubleCalfRaise,
   "single-calf-raise": singleCalfRaise,
+  "single-leg-calf-raise": singleCalfRaise,
   "calf-stretch": standingCalfStretch,
   "bent-knee-calf-stretch": bentKneeCalfStretch,
   "decline-squat": declineSquat,
+  "split-squat": splitSquat,
+  "seated-knee-ext": seatedKneeExt,
 };
 
 export default exerciseImages;
