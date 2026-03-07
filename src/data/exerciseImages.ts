@@ -40,7 +40,6 @@ import terminalKneeExt from "@/assets/exercises/terminal-knee-extension.png";
 import miniSquat from "@/assets/exercises/mini-squat.png";
 import ankleEversionBand from "@/assets/exercises/ankle-eversion-band.png";
 import calfRaise from "@/assets/exercises/calf-raise.png";
-import doubleCalfRaise from "@/assets/exercises/double-leg-calf-raise.png";
 import singleCalfRaise from "@/assets/exercises/single-leg-calf-raise.png";
 import standingCalfStretch from "@/assets/exercises/standing-calf-stretch.png";
 import bentKneeCalfStretch from "@/assets/exercises/bent-knee-calf-stretch.png";
@@ -48,6 +47,9 @@ import declineSquat from "@/assets/exercises/decline-squat.png";
 import splitSquat from "@/assets/exercises/split-squat.png";
 import seatedKneeExt from "@/assets/exercises/seated-knee-extension.png";
 import legExtension from "@/assets/exercises/leg-extension-slow-tempo.png";
+import singleLegBalance from "@/assets/exercises/single-leg-balance.png";
+import straightLegRaise from "@/assets/exercises/straight-leg-raise.png";
+import clamshell from "@/assets/exercises/clamshell.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
@@ -92,8 +94,6 @@ const exerciseImages: Record<string, string> = {
   "mini-squat": miniSquat,
   "ankle-eversion": ankleEversionBand,
   "calf-raise": calfRaise,
-  "double-calf-raise": doubleCalfRaise,
-  "single-calf-raise": singleCalfRaise,
   "single-leg-calf-raise": singleCalfRaise,
   "calf-stretch": standingCalfStretch,
   "bent-knee-calf-stretch": bentKneeCalfStretch,
@@ -101,6 +101,9 @@ const exerciseImages: Record<string, string> = {
   "split-squat": splitSquat,
   "seated-knee-ext": seatedKneeExt,
   "leg-extension": legExtension,
+  "single-leg-balance": singleLegBalance,
+  "straight-leg-raise": straightLegRaise,
+  "clamshell": clamshell,
 };
 
 export default exerciseImages;
