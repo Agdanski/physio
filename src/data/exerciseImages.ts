@@ -45,6 +45,8 @@ import singleCalfRaise from "@/assets/exercises/single-leg-calf-raise.png";
 import standingCalfStretch from "@/assets/exercises/standing-calf-stretch.png";
 import bentKneeCalfStretch from "@/assets/exercises/bent-knee-calf-stretch.png";
 import declineSquat from "@/assets/exercises/decline-squat.png";
+import splitSquat from "@/assets/exercises/split-squat.png";
+import seatedKneeExt from "@/assets/exercises/seated-knee-extension.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
