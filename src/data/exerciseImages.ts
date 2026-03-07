@@ -36,6 +36,15 @@ import medianNerveGlide from "@/assets/exercises/median-nerve-glide.png";
 import nordicHamstring from "@/assets/exercises/nordic-hamstring.png";
 import sideLyingHipAbduction from "@/assets/exercises/side-lying-hip-abduction.png";
 import bridgeWalkout from "@/assets/exercises/bridge-walkout.png";
+import terminalKneeExt from "@/assets/exercises/terminal-knee-extension.png";
+import miniSquat from "@/assets/exercises/mini-squat.png";
+import ankleEversionBand from "@/assets/exercises/ankle-eversion-band.png";
+import calfRaise from "@/assets/exercises/calf-raise.png";
+import doubleCalfRaise from "@/assets/exercises/double-leg-calf-raise.png";
+import singleCalfRaise from "@/assets/exercises/single-leg-calf-raise.png";
+import standingCalfStretch from "@/assets/exercises/standing-calf-stretch.png";
+import bentKneeCalfStretch from "@/assets/exercises/bent-knee-calf-stretch.png";
+import declineSquat from "@/assets/exercises/decline-squat.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
@@ -76,6 +85,15 @@ const exerciseImages: Record<string, string> = {
   "nordic-hamstring": nordicHamstring,
   "side-lying-hip": sideLyingHipAbduction,
   "bridge-walkout": bridgeWalkout,
+  "terminal-knee-ext": terminalKneeExt,
+  "mini-squat": miniSquat,
+  "ankle-eversion": ankleEversionBand,
+  "calf-raise": calfRaise,
+  "double-calf-raise": doubleCalfRaise,
+  "single-calf-raise": singleCalfRaise,
+  "calf-stretch": standingCalfStretch,
+  "bent-knee-calf-stretch": bentKneeCalfStretch,
+  "decline-squat": declineSquat,
 };
 
 export default exerciseImages;
