@@ -100,6 +100,7 @@ const exerciseImages: Record<string, string> = {
   "decline-squat": declineSquat,
   "split-squat": splitSquat,
   "seated-knee-ext": seatedKneeExt,
+  "leg-extension": legExtension,
 };
 
 export default exerciseImages;
