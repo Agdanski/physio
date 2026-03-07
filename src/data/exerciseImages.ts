@@ -93,9 +93,12 @@ const exerciseImages: Record<string, string> = {
   "calf-raise": calfRaise,
   "double-calf-raise": doubleCalfRaise,
   "single-calf-raise": singleCalfRaise,
+  "single-leg-calf-raise": singleCalfRaise,
   "calf-stretch": standingCalfStretch,
   "bent-knee-calf-stretch": bentKneeCalfStretch,
   "decline-squat": declineSquat,
+  "split-squat": splitSquat,
+  "seated-knee-ext": seatedKneeExt,
 };
 
 export default exerciseImages;
