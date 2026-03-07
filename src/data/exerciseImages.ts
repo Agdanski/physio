@@ -85,6 +85,15 @@ const exerciseImages: Record<string, string> = {
   "nordic-hamstring": nordicHamstring,
   "side-lying-hip": sideLyingHipAbduction,
   "bridge-walkout": bridgeWalkout,
+  "terminal-knee-ext": terminalKneeExt,
+  "mini-squat": miniSquat,
+  "ankle-eversion": ankleEversionBand,
+  "calf-raise": calfRaise,
+  "double-calf-raise": doubleCalfRaise,
+  "single-calf-raise": singleCalfRaise,
+  "calf-stretch": standingCalfStretch,
+  "bent-knee-calf-stretch": bentKneeCalfStretch,
+  "decline-squat": declineSquat,
 };
 
 export default exerciseImages;
