@@ -50,6 +50,16 @@ import legExtension from "@/assets/exercises/leg-extension-slow-tempo.png";
 import singleLegBalance from "@/assets/exercises/single-leg-balance.png";
 import straightLegRaise from "@/assets/exercises/straight-leg-raise.png";
 import clamshell from "@/assets/exercises/clamshell.png";
+import assistedFlexionStick from "@/assets/exercises/assisted-flexion-stick.png";
+import wallSit from "@/assets/exercises/wall-sit.png";
+import hipAdduction from "@/assets/exercises/hip-adduction.png";
+import figure4Stretch from "@/assets/exercises/figure-4-stretch.png";
+import isometricHipWall from "@/assets/exercises/isometric-hip-wall.png";
+import quadSetTowel from "@/assets/exercises/quad-set-towel.png";
+import heelRaiseTowel from "@/assets/exercises/heel-raise-towel.png";
+import wallPushupPlus from "@/assets/exercises/wall-pushup-plus.png";
+import extRotationStick from "@/assets/exercises/ext-rotation-stick.png";
+import bentKneeCalfRaise from "@/assets/exercises/bent-knee-calf-raise.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
@@ -66,7 +76,7 @@ const exerciseImages: Record<string, string> = {
   "chin-tuck-lift": chinTuckLift,
   "chin-tuck": chinTuck,
   "wall-slide": wallSlide,
-  "wall-sit": wallSlide,
+  "wall-sit": wallSit,
   "supination": supination,
   "step-up": stepUp,
   "step-down": stepUp,
@@ -104,6 +114,15 @@ const exerciseImages: Record<string, string> = {
   "single-leg-balance": singleLegBalance,
   "straight-leg-raise": straightLegRaise,
   "clamshell": clamshell,
+  "assisted-flexion-stick": assistedFlexionStick,
+  "hip-adduction": hipAdduction,
+  "figure-4-stretch": figure4Stretch,
+  "isometric-hip-wall": isometricHipWall,
+  "quad-set-towel": quadSetTowel,
+  "heel-raise-towel": heelRaiseTowel,
+  "wall-pushup-plus": wallPushupPlus,
+  "ext-rotation-stick": extRotationStick,
+  "bent-knee-calf-raise": bentKneeCalfRaise,
 };
 
 export default exerciseImages;
