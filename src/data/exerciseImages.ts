@@ -60,6 +60,16 @@ import heelRaiseTowel from "@/assets/exercises/heel-raise-towel.png";
 import wallPushupPlus from "@/assets/exercises/wall-pushup-plus.png";
 import extRotationStick from "@/assets/exercises/ext-rotation-stick.png";
 import bentKneeCalfRaise from "@/assets/exercises/bent-knee-calf-raise.png";
+import isometricExtRotation from "@/assets/exercises/isometric-ext-rotation.png";
+import isometricNeckExt from "@/assets/exercises/isometric-neck-ext.png";
+import nerveSlider from "@/assets/exercises/nerve-slider.png";
+import eccentricHeelDrop from "@/assets/exercises/eccentric-heel-drop.png";
+import seatedCalfRaise from "@/assets/exercises/seated-calf-raise.png";
+import pendulum from "@/assets/exercises/pendulum.png";
+import plantarStretch from "@/assets/exercises/plantar-stretch.png";
+import copenhagenAdduction from "@/assets/exercises/copenhagen-adduction.png";
+import quadSet from "@/assets/exercises/quad-set.png";
+import spanishSquat from "@/assets/exercises/spanish-squat.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
@@ -123,6 +133,16 @@ const exerciseImages: Record<string, string> = {
   "wall-pushup-plus": wallPushupPlus,
   "ext-rotation-stick": extRotationStick,
   "bent-knee-calf-raise": bentKneeCalfRaise,
+  "isometric-ext-rotation": isometricExtRotation,
+  "isometric-neck-ext": isometricNeckExt,
+  "nerve-slider": nerveSlider,
+  "eccentric-heel-drop": eccentricHeelDrop,
+  "seated-calf-raise": seatedCalfRaise,
+  "pendulum": pendulum,
+  "plantar-stretch": plantarStretch,
+  "copenhagen-adduction": copenhagenAdduction,
+  "quad-set": quadSet,
+  "spanish-squat": spanishSquat,
 };
 
 export default exerciseImages;
