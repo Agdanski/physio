@@ -89,7 +89,7 @@ const Index = () => {
             {/* Divider */}
             <div className="flex items-center gap-4 max-w-lg mx-auto mb-8">
               <div className="flex-1 h-px bg-border" />
-              <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium">or select body area</span>
+              <span className="text-base text-black uppercase tracking-wider font-bold">or select body area</span>
               <div className="flex-1 h-px bg-border" />
             </div>
 
