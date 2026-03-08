@@ -70,6 +70,7 @@ import plantarStretch from "@/assets/exercises/plantar-stretch.png";
 import copenhagenAdduction from "@/assets/exercises/copenhagen-adduction.png";
 import quadSet from "@/assets/exercises/quad-set.png";
 import spanishSquat from "@/assets/exercises/spanish-squat.png";
+import towelScrunch from "@/assets/exercises/towel-scrunch.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
@@ -83,6 +84,7 @@ const exerciseImages: Record<string, string> = {
   "band-row": bandRow,
   "hip-extension-band": hipExtensionBand,
   "towel-squeeze": towelSqueeze,
+  "towel-scrunch": towelScrunch,
   "chin-tuck-lift": chinTuckLift,
   "chin-tuck": chinTuck,
   "wall-slide": wallSlide,
