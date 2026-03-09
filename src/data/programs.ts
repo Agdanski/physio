@@ -1335,6 +1335,338 @@ export const programs: Program[] = [
       }
     ],
     programAudit: "Consistent with conservative exercise principles used for deep gluteal/posterior hip presentations."
+  },
+
+  // ─── LUMBAR SPINAL STENOSIS BOOT CAMP ───
+  {
+    id: "lumbar-spinal-stenosis",
+    condition: "Lumbar Spinal Stenosis – Boot Camp Program",
+    goal: "Improve spinal mobility, core stability, and walking tolerance through a progressive flexion-based exercise program.",
+    description: "A structured 6-week boot camp program designed for lumbar spinal stenosis. Exercises emphasize flexion-based positions that open the spinal canal, progressive core strengthening, nerve mobilization, and graduated walking. All exercises should be performed while avoiding back extension (arching backwards).",
+    bodyRegion: "lower-back",
+    symptoms: [
+      "leg pain with walking",
+      "neurogenic claudication",
+      "leg heaviness",
+      "lower back stiffness",
+      "numbness in legs",
+      "pain relief with sitting or bending forward",
+      "difficulty standing upright",
+      "lumbar stenosis",
+      "spinal stenosis"
+    ],
+    urgentSigns: [
+      "Sudden loss of bladder or bowel control",
+      "Progressive weakness in both legs",
+      "Saddle area numbness (inner thighs, buttocks, groin)",
+      "Sudden inability to walk"
+    ],
+    exercises: [
+      {
+        name: "Stationary Bike (Leaning Forward)",
+        why: "Cycling in a flexed posture opens the spinal canal and improves cardiovascular endurance with minimal spinal loading.",
+        instructions: [
+          "Be very careful when getting on and off the stationary bike — use a stool if needed.",
+          "Adjust the seat height so your legs almost fully extend while pedalling.",
+          "Lean forward onto the handlebars throughout.",
+          "Use a bike with a large, comfortable seat.",
+          "Start at 5–10 minutes and progress weekly."
+        ],
+        dose: "Week 1: 5–10 min → Week 6: 30 min, performed daily",
+        keyCues: ["Lean forward onto handlebars", "Keep resistance light initially"],
+        progression: "Increase duration by 5 minutes each week; add light resistance as tolerated.",
+        painRule: "Reduce duration if leg symptoms increase during cycling.",
+        imageKey: "stationary-bike-forward"
+      },
+      {
+        name: "Knee to Chest Stretch",
+        why: "Gently stretches the lower back and opens the lumbar spinal canal to relieve nerve compression.",
+        instructions: [
+          "Lie on your back with both legs straight.",
+          "Bring one knee up to your chest.",
+          "With both hands on the knee, pull it as far as you can toward your chest/shoulder.",
+          "Keep the other leg straight on the mat.",
+          "Hold, then repeat on the other side."
+        ],
+        dose: "Hold 5–10 sec, repeat 5× each side, performed daily",
+        keyCues: ["Keep opposite leg straight on mat", "Pull gently — no forcing"],
+        progression: "Increase hold time by 1–2 seconds each week.",
+        imageKey: "knee-to-chest-stretch"
+      },
+      {
+        name: "Knee to Opposite Shoulder Stretch",
+        why: "Targets the piriformis and deep hip rotators while further opening the lumbar canal.",
+        instructions: [
+          "Lie on your back and bring one knee to your chest.",
+          "With both hands on the outside of the knee, pull it toward the opposite shoulder.",
+          "Grasp the ankle with your opposite hand and pull at the same time.",
+          "Hold, then repeat on the opposite side."
+        ],
+        dose: "Hold 5–10 sec, repeat 5× each side, performed daily",
+        keyCues: ["Direct the knee toward the opposite shoulder", "Keep shoulders flat on the mat"],
+        progression: "Increase hold time by 1–2 seconds each week.",
+        imageKey: "knee-to-opposite-shoulder"
+      },
+      {
+        name: "Double Knee to Chest Stretch",
+        why: "Maximizes lumbar flexion stretch and spinal canal opening bilaterally.",
+        instructions: [
+          "Lie on your back.",
+          "Using your hands, bring both knees toward your chest.",
+          "Pull as far as you can go and hold."
+        ],
+        dose: "Hold 5–10 sec, repeat 5×, performed daily",
+        keyCues: ["Perform after single knee-to-chest and opposite shoulder stretches for best results"],
+        important: "Exercises 2, 3, and 4 can be done in sequence: Knee to Chest → Knee to Opposite Shoulder (both sides) → Double Knee to Chest.",
+        imageKey: "double-knee-to-chest"
+      },
+      {
+        name: "Pelvic Twist Stretch",
+        why: "Rotational stretch that mobilizes the lumbar spine and reduces stiffness.",
+        instructions: [
+          "Lie on your back with both knees bent, feet flat on the floor.",
+          "Bring both knees together to one side, then the other.",
+          "Keep your shoulders flat on the floor.",
+          "Do not shift your pelvis when moving side to side."
+        ],
+        dose: "Hold 5–10 sec each side, repeat 5×, performed daily",
+        keyCues: ["Keep shoulders pinned to the floor", "Move slowly and controlled"],
+        imageKey: "pelvic-twist"
+      },
+      {
+        name: "Advanced Pelvic Twist",
+        why: "Deeper rotational stretch targeting the lumbar spine and hip complex.",
+        instructions: [
+          "Lie on your back with both knees bent, feet flat on the mat.",
+          "Place the right leg over the left knee.",
+          "Keeping shoulders on the mat, drop the right knee toward your left side.",
+          "Place your left hand on your right knee and direct it downward as far as you can.",
+          "Hold, then repeat on the opposite side."
+        ],
+        dose: "Hold 5–10 sec each side, repeat 5×, performed daily",
+        keyCues: ["Keep shoulders flat", "Use hand pressure gently to deepen the stretch"],
+        progression: "Introduced in Week 2 once basic pelvic twist is comfortable.",
+        imageKey: "advanced-pelvic-twist"
+      },
+      {
+        name: "Nerve Flossing (Neuro-Mobilization)",
+        why: "Mobilizes the sciatic nerve to reduce neural tension and improve leg symptoms.",
+        instructions: [
+          "Lie on your back with a belt or strap wrapped around the base of your toes.",
+          "Phase 1: Pull the leg up toward you as far as you can with the knee straight and hold.",
+          "Phase 2: Point the toes toward the ceiling, then use the belt to pull the foot down while keeping the knee straight.",
+          "Repeat on the opposite side."
+        ],
+        dose: "5 reps × 2 sets each side, performed daily",
+        keyCues: ["Keep the knee straight throughout", "Move slowly — this should not reproduce sharp pain"],
+        regression: "Bend the knee slightly if the stretch is too intense.",
+        painRule: "Stop if sharp, shooting pain radiates down the leg.",
+        imageKey: "nerve-flossing-stenosis"
+      },
+      {
+        name: "Pelvic Tilt (Supine)",
+        why: "Activates the deep core and flattens the lumbar curve, reducing canal compression.",
+        instructions: [
+          "Lie on your back with knees bent, feet flat on the floor.",
+          "Squeeze your buttock muscles together.",
+          "Contract your lower abdominal muscles and tilt your pelvis toward you.",
+          "Flatten your lower back against the floor.",
+          "Hold this position — do not elevate your pelvis off the floor."
+        ],
+        dose: "Hold 5–10 sec, repeat 5×, performed daily",
+        keyCues: ["Think about pressing your belly button toward the floor", "Do not lift the pelvis"],
+        progression: "Increase hold time by 1–2 seconds each week.",
+        imageKey: "pelvic-tilt-supine"
+      },
+      {
+        name: "Half Sit-Up",
+        why: "Strengthens the anterior core to support the flexed lumbar posture.",
+        instructions: [
+          "Lie on your back with both knees bent, feet flat on the floor.",
+          "Place your arms across your chest.",
+          "Elevate your torso off the floor (partial sit-up).",
+          "Hold this position."
+        ],
+        dose: "Hold 5–10 sec, repeat 5×, performed daily",
+        keyCues: ["Lift only until shoulder blades clear the floor", "Exhale as you lift"],
+        progression: "Increase hold duration each week.",
+        imageKey: "half-sit-up"
+      },
+      {
+        name: "Side Sit-Up",
+        why: "Strengthens the obliques and lateral core to improve trunk stability.",
+        instructions: [
+          "Lie on your right side with both knees bent.",
+          "Bend your right arm, making a fist pointing to the ceiling, placing your right elbow against your body.",
+          "Place your left open hand over the fist of the right hand.",
+          "While pushing down with your left hand, elevate your torso.",
+          "Hold this position, then repeat on the other side."
+        ],
+        dose: "Hold 5–10 sec, repeat 5× each side, performed daily",
+        keyCues: ["Use the push-down force to help elevate", "Keep knees bent for stability"],
+        imageKey: "side-sit-up"
+      },
+      {
+        name: "Side Hip Lift",
+        why: "Strengthens hip abductors and improves pelvic stability for walking.",
+        instructions: [
+          "Lie on your right side.",
+          "Bend your bottom knee and bring it toward your chest with your bottom hand.",
+          "Raise your top leg (keeping it straight) about 12 inches above the mat, parallel to the floor. Hold.",
+          "Move the straight leg toward your head about 45 degrees and hold.",
+          "Bring your straight leg upward as far as you can and hold.",
+          "Repeat on the opposite side."
+        ],
+        dose: "Hold 5–10 sec each position, repeat 5× each side, performed daily",
+        keyCues: ["Keep the top leg straight throughout", "Three positions: parallel, 45°, and full elevation"],
+        imageKey: "side-hip-lift"
+      },
+      {
+        name: "Quadriceps Stretch (Side-Lying)",
+        why: "Stretches the quadriceps and hip flexors, which can contribute to anterior pelvic tilt and stenosis symptoms.",
+        instructions: [
+          "Lie on your side.",
+          "Bring your bottom bent knee up toward your chest with your bottom hand.",
+          "Grasp the ankle of the top leg and pull it backward without arching your back.",
+          "Hold this position, then repeat on the other side."
+        ],
+        dose: "Hold 5–10 sec, repeat 5× each side, performed daily",
+        keyCues: ["Do not arch your back", "Keep bottom knee pulled forward for stability"],
+        imageKey: "quad-stretch-side-lying"
+      },
+      {
+        name: "Back Leg Extension (Using Chair)",
+        why: "Strengthens the gluteals and posterior chain in a supported, flexed position.",
+        instructions: [
+          "Place a chair with armrests against a wall.",
+          "Lean forward and place hands on the armrests.",
+          "Extend the right leg backward, keeping your knee straight.",
+          "Lift your foot about 6 inches above the floor, hold for one second, then lower.",
+          "Repeat on the opposite side."
+        ],
+        dose: "5–10 reps × 2 sets each side, performed daily",
+        keyCues: ["Do not arch your back", "Small controlled movement — only 6 inches"],
+        progression: "Progress to prone version (with pillows) when comfortable.",
+        imageKey: "back-leg-ext-chair"
+      },
+      {
+        name: "Back Leg Extension (Prone)",
+        why: "Advanced glute and posterior chain strengthening in a supported prone position.",
+        instructions: [
+          "Place a stack of pillows or blankets (about 12 inches high) on the mat.",
+          "Lie face down with your pelvis on the pillows.",
+          "Lift one leg 6 inches off the mat, keeping your knee straight.",
+          "Do not arch your back.",
+          "Hold, then repeat on the opposite leg."
+        ],
+        dose: "Hold 5–10 sec, repeat 5× each side, performed daily",
+        keyCues: ["Pillows keep the spine in flexion", "Do not arch the back"],
+        imageKey: "back-leg-ext-prone"
+      },
+      {
+        name: "Torso Extension (Using Table)",
+        why: "Strengthens the back extensors in a controlled range without excessive lumbar extension.",
+        instructions: [
+          "Stand in front of a table or desk with legs shoulder-width apart.",
+          "Place hands behind your back.",
+          "Lean forward until your nose touches the table/desk.",
+          "Elevate your torso about 6 inches, hold for one second, then lower back down.",
+          "Repeat."
+        ],
+        dose: "5–10 reps × 2 sets, performed daily",
+        keyCues: ["Only 6 inches of movement", "Controlled tempo — no jerking"],
+        progression: "Progress to prone version when comfortable.",
+        imageKey: "torso-ext-table"
+      },
+      {
+        name: "Torso Extension (Prone)",
+        why: "Advanced back extensor strengthening in a supported prone position.",
+        instructions: [
+          "Place a stack of pillows or blankets (about 12 inches high) on the mat.",
+          "Lie face down with your pelvis on the pillows.",
+          "Place your hands behind your back.",
+          "Keeping your back straight, lift your torso 6 inches off the mat.",
+          "Do not arch your back. Hold this position."
+        ],
+        dose: "Hold 5–10 sec, repeat 5×, performed daily",
+        keyCues: ["Pillows maintain spinal flexion", "Lift only 6 inches"],
+        imageKey: "torso-ext-prone"
+      },
+      {
+        name: "Sit-Stand",
+        why: "Functional strengthening exercise that improves ability to transfer from sitting to standing.",
+        instructions: [
+          "Sit at the edge of a chair with armrests, legs shoulder-width apart.",
+          "Place hands on the armrests.",
+          "Using your arms to assist if necessary, stand up from the chair while leaning forward.",
+          "Then lower yourself back toward sitting slowly and hold."
+        ],
+        dose: "Hold 5–10 sec, repeat 5×, performed daily",
+        keyCues: ["Lean forward as you stand", "Lower yourself slowly — control the descent"],
+        progression: "Reduce arm assistance over time.",
+        imageKey: "sit-to-stand"
+      },
+      {
+        name: "Sitting Forward Flex",
+        why: "Stretches the lumbar spine in a flexion-dominant position, relieving canal compression.",
+        instructions: [
+          "Sit at the edge of a chair with legs shoulder-width apart.",
+          "Grasp your ankles from the outside of the legs.",
+          "Pull yourself downward toward the floor.",
+          "You should feel a stretch in the lower back.",
+          "Hold this position."
+        ],
+        dose: "Hold 5–10 sec, repeat 5×, performed daily",
+        keyCues: ["Grasp ankles from the outside", "Let gravity assist the stretch"],
+        imageKey: "sitting-forward-flex"
+      },
+      {
+        name: "Standing Pelvic Tilt",
+        why: "Teaches pelvic control in a functional standing position, preparing for walking.",
+        instructions: [
+          "Stand with your feet shoulder-width apart.",
+          "Squeeze your buttocks and perform the pelvic tilt.",
+          "Avoid arching your back.",
+          "Hold this position."
+        ],
+        dose: "Hold 5–10 sec, repeat 5×, performed daily",
+        keyCues: ["Same concept as supine pelvic tilt, now upright", "Maintain throughout walking practice"],
+        progression: "Use as the foundation for walking pelvic tilt exercise.",
+        imageKey: "standing-pelvic-tilt"
+      },
+      {
+        name: "Standing Groin Stretch",
+        why: "Stretches the hip adductors and groin, improving hip mobility for walking.",
+        instructions: [
+          "Place a chair against a wall.",
+          "Place one foot on the chair with the knee bent.",
+          "The other leg should be straight and about 6 inches from the chair.",
+          "While maintaining the pelvic tilt, lean forward by bending the knee on the chair.",
+          "You should feel a stretch along the groin of the opposite (straight) leg.",
+          "Hold, then repeat on the other side."
+        ],
+        dose: "Hold 5–10 sec, repeat 5× each side, performed daily",
+        keyCues: ["Maintain pelvic tilt throughout", "Lean forward gently"],
+        imageKey: "standing-groin-stretch"
+      },
+      {
+        name: "Graduated Walking with Pelvic Tilt",
+        why: "The ultimate functional goal — progressively increasing walking distance while maintaining optimal spinal posture.",
+        instructions: [
+          "Stand in the pelvic tilt position.",
+          "While maintaining the pelvic tilt, attempt to walk normally, swinging your arms.",
+          "Count your steps and aim to increase weekly.",
+          "Rest when symptoms appear, then resume."
+        ],
+        dose: "Start with comfortable step count, increase weekly. Performed daily.",
+        keyCues: ["Maintain pelvic tilt throughout", "Walk normally — swing arms", "Track your step count"],
+        progression: "Increase step count by 10–20% each week as tolerated.",
+        painRule: "Rest when leg symptoms appear; resume after symptoms settle.",
+        important: "Avoid back extension activities — that is, arching your back backwards at all times during this program.",
+        imageKey: "walking-pelvic-tilt"
+      }
+    ],
+    programAudit: "Based on the Boot Camp Program for Lumbar Spinal Stenosis©. Evidence supports flexion-based exercise programs for symptomatic lumbar stenosis, with progressive walking as a key functional outcome measure."
   }
 ];
 
