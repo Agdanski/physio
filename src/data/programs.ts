@@ -1039,7 +1039,98 @@ export const programs: Program[] = [
     programAudit: "Aligned with AAOS and PT guidance supporting conservative exercise options for appropriate CTS presentations."
   },
 
-  // 16. Hamstring Strain
+  // 16. Medial Epicondylitis
+  {
+    id: "medial-epicondylitis",
+    condition: "Medial Epicondylitis (Golfer's Elbow)",
+    goal: "Restore tendon load tolerance of the wrist flexors and flexor-pronator mass, reduce pain, and rebuild grip and forearm function.",
+    description: "Conservative management emphasizes progressive loading, starting with isometric holds and advancing through eccentric and concentric strengthening. Stretching and grip work are added as symptoms allow.",
+    bodyRegion: "elbow-wrist-hand",
+    symptoms: ["inner elbow pain", "pain gripping objects", "pain with wrist flexion", "forearm tightness", "pain throwing or lifting"],
+    exercises: [
+      {
+        name: "Isometric Wrist Flexion",
+        why: "Good starting exercise when the tendon is irritable. Progressive loading approaches for medial epicondylitis commonly begin with symptom-limited strengthening.",
+        instructions: [
+          "Sit with forearm supported on a table, palm up.",
+          "Make a gentle fist.",
+          "Use the other hand to resist as you try to curl the wrist upward.",
+          "Do not let the wrist move.",
+          "Hold 20–30 seconds."
+        ],
+        dose: "4–5 holds, 1–2 times daily",
+        imageKey: "isometric-wrist-flexion"
+      },
+      {
+        name: "Eccentric Wrist Flexion",
+        why: "One of the most cited exercises for painful medial epicondylitis in AAOS exercise materials.",
+        instructions: [
+          "Sit with forearm supported on a table, palm up, wrist just past the edge.",
+          "Hold a light dumbbell.",
+          "Use the other hand to help lift the wrist up.",
+          "Then slowly lower the wrist down over 3–5 seconds using the affected side only.",
+          "Reset and repeat."
+        ],
+        dose: "3 sets × 8–12 reps, every other day",
+        keyCues: ["Focus on the slow lowering phase.", "Keep the forearm flat on the table throughout."],
+        imageKey: "eccentric-wrist-flexion"
+      },
+      {
+        name: "Concentric-Eccentric Wrist Flexion",
+        why: "Progresses from eccentric-only loading toward fuller strengthening. General epicondylitis rehab programs include this type of progressive forearm strengthening.",
+        instructions: [
+          "Same setup: forearm supported, palm up, light weight in hand.",
+          "Curl the wrist upward slowly.",
+          "Lower slowly.",
+          "Keep the movement at the wrist only."
+        ],
+        dose: "3 sets × 10–15 reps, every other day",
+        progression: "Gradually increase weight as tolerated.",
+        imageKey: "concentric-wrist-flexion"
+      },
+      {
+        name: "Forearm Pronation with Hammer or Dumbbell",
+        why: "The flexor-pronator mass is involved in medial epicondylitis, so pronation loading is commonly included in rehab.",
+        instructions: [
+          "Sit with elbow bent to 90° and tucked at your side.",
+          "Hold a hammer near the end or hold a dumbbell vertically.",
+          "Start with the forearm in a neutral position.",
+          "Slowly rotate the palm downward into pronation.",
+          "Return slowly to neutral."
+        ],
+        dose: "2–3 sets × 10–12 reps, every other day",
+        imageKey: "forearm-pronation"
+      },
+      {
+        name: "Wrist Flexor Stretch",
+        why: "Stretching is commonly included in conservative medial epicondylitis programs alongside strengthening.",
+        instructions: [
+          "Straighten the affected arm in front of you with the palm up.",
+          "Use the opposite hand to gently pull the fingers and palm down and back.",
+          "You should feel a stretch along the inside/front of the forearm.",
+          "Hold 20–30 seconds."
+        ],
+        dose: "3–5 holds, daily",
+        imageKey: "wrist-flexor-stretch"
+      },
+      {
+        name: "Soft Towel or Putty Squeeze",
+        why: "Light grip strengthening added once the elbow is calmer.",
+        instructions: [
+          "Hold a soft towel or therapy putty.",
+          "Squeeze gradually, not maximally.",
+          "Hold 2–3 seconds.",
+          "Relax fully."
+        ],
+        dose: "2 sets × 8–12 reps, every other day",
+        painRule: "Mild discomfort during exercise is acceptable. Pain should settle back near baseline by the next day. If next-day pain is clearly worse, reduce load, range, or volume.",
+        imageKey: "towel-squeeze"
+      }
+    ],
+    programAudit: "Aligned with AAOS exercise guidance and current tendinopathy loading principles for medial epicondylitis."
+  },
+
+  // 17. Hamstring Strain
   {
     id: "hamstring-strain",
     condition: "Hamstring Strain",
