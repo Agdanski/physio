@@ -152,6 +152,13 @@ const exerciseImages: Record<string, string> = {
   "copenhagen-adduction": copenhagenAdduction,
   "quad-set": quadSet,
   "spanish-squat": spanishSquat,
+  "ytwl-scapular": ytwlScapular,
+  "gh-internal-rotation": ghInternalRotation,
+  "corner-pec-stretch": cornerPecStretch,
+  "brugger-band": bruggerBand,
+  "eccentric-supraspinatus": eccentricSupraspinatus,
+  "eccentric-scapular-stabilizers": eccentricScapStabilizers,
+  "eccentric-teres-infraspinatus": eccentricTeresInfra,
 };
 
 export default exerciseImages;
