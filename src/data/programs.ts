@@ -354,6 +354,83 @@ export const programs: Program[] = [
         dose: "2–3 sets × 6–10 reps, every other day",
         important: "Marked weakness, sudden loss of active elevation, traumatic onset, or inability to lift the arm after injury warrants medical assessment.",
         imageKey: "scaption-raise"
+      },
+      {
+        name: "YTWL Scapular Depression",
+        why: "Strengthens scapular stabilisers through multiple planes, supporting shoulder function even with a torn cuff.",
+        instructions: [
+          "Stand with straight arms raised above your head in a 'Y' position.",
+          "Squeeze shoulder blades together and downward.",
+          "Lower arms to shoulder level into a 'T' position.",
+          "Bend elbows so fingers point up, making a 'W'.",
+          "Lower elbows to your sides to form an 'L' and squeeze."
+        ],
+        dose: "3 sets × 10 reps, twice daily",
+        keyCues: ["Hold each position 1–2 seconds.", "Keep shoulder blades squeezed throughout."],
+        imageKey: "ytwl-scapular"
+      },
+      {
+        name: "Glenohumeral Internal Rotation Stretch",
+        why: "Restores internal rotation range that is often restricted with rotator cuff pathology.",
+        instructions: [
+          "Sit with good posture.",
+          "Place the affected arm behind your back and reach toward the opposite hip.",
+          "Using the unaffected arm, gently pull the wrist further toward the opposite hip.",
+          "Pull gently to the point of tightness — stop if you feel sharp pain."
+        ],
+        dose: "10 reps, once per hour or as directed",
+        keyCues: ["Each pull should be slow and controlled.", "A stretch should be felt in the shoulder."],
+        imageKey: "gh-internal-rotation"
+      },
+      {
+        name: "Corner Pectoral Stretch",
+        why: "Opens the chest and anterior shoulder to improve posture and reduce compressive load on the cuff.",
+        instructions: [
+          "Stand facing a corner with forearms on each wall, elbows at shoulder height.",
+          "Lean gently into the corner until a stretch is felt across the chest.",
+          "Hold 20–30 seconds.",
+          "Return to start."
+        ],
+        dose: "3–5 holds, twice daily",
+        keyCues: ["Keep elbows at or below shoulder height.", "Do not arch the lower back."],
+        imageKey: "corner-pec-stretch"
+      },
+      {
+        name: "Eccentric Supraspinatus",
+        why: "Targets the supraspinatus with a slow lowering phase to build tendon capacity.",
+        instructions: [
+          "Stand holding a weight with your arm outstretched at a 45° angle in front of you at shoulder level.",
+          "Thumb should be pointing down.",
+          "Slowly lower the weight to your thigh at a count of 4 seconds.",
+          "Use your other arm to return the weight to the starting position."
+        ],
+        dose: "3 sets × 10 reps, daily",
+        keyCues: ["Control the lowering — 4 seconds down.", "Only the lowering phase uses the affected arm."],
+        imageKey: "eccentric-supraspinatus"
+      },
+      {
+        name: "Eccentric Scapular Stabilizers",
+        why: "Builds eccentric scapular control to support shoulder mechanics during reaching and lifting.",
+        instructions: [
+          "Lie on your side holding a weight with your arm outstretched toward the ceiling.",
+          "Slowly lower the weight to the floor at a count of 4 seconds.",
+          "Return your arm to the starting position by keeping it close to your body."
+        ],
+        dose: "3 sets × 10 reps, daily",
+        keyCues: ["Focus on the slow lowering phase.", "Keep the movement controlled throughout."],
+        imageKey: "eccentric-scapular-stabilizers"
+      },
+      {
+        name: "Eccentric Teres Minor and Infraspinatus",
+        why: "Eccentrically loads the external rotators to improve tendon resilience and rotational strength.",
+        instructions: [
+          "Lie on your side with arm on your rib cage, elbow bent to 90°, forearm pointing up.",
+          "Slowly lower the weight toward the floor at a count of 4 seconds.",
+          "Use your other arm to return the weight to the starting position."
+        ],
+        dose: "3 sets × 10 reps, daily",
+        keyCues: ["Keep the elbow on your ribs throughout.", "Only the lowering phase uses the affected arm."],
+        imageKey: "eccentric-teres-infraspinatus"
       }
     ],
     programAudit: "Consistent with AAOS guidance distinguishing tear management from tendinopathy and supporting PT as a valid option for many symptomatic tears."
