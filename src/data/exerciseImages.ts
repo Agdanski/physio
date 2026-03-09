@@ -71,6 +71,13 @@ import copenhagenAdduction from "@/assets/exercises/copenhagen-adduction.png";
 import quadSet from "@/assets/exercises/quad-set.png";
 import spanishSquat from "@/assets/exercises/spanish-squat.png";
 import towelScrunch from "@/assets/exercises/towel-scrunch.png";
+import ytwlScapular from "@/assets/exercises/ytwl-scapular.png";
+import ghInternalRotation from "@/assets/exercises/gh-internal-rotation.png";
+import cornerPecStretch from "@/assets/exercises/corner-pec-stretch.png";
+import bruggerBand from "@/assets/exercises/brugger-band.png";
+import eccentricSupraspinatus from "@/assets/exercises/eccentric-supraspinatus.png";
+import eccentricScapStabilizers from "@/assets/exercises/eccentric-scapular-stabilizers.png";
+import eccentricTeresInfra from "@/assets/exercises/eccentric-teres-infraspinatus.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
