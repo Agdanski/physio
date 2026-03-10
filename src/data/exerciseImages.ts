@@ -78,6 +78,10 @@ import bruggerBand from "@/assets/exercises/brugger-band.png";
 import eccentricSupraspinatus from "@/assets/exercises/eccentric-supraspinatus.png";
 import eccentricScapStabilizers from "@/assets/exercises/eccentric-scapular-stabilizers.png";
 import eccentricTeresInfra from "@/assets/exercises/eccentric-teres-infraspinatus.png";
+import isometricWristFlexion from "@/assets/exercises/isometric-wrist-flexion.png";
+import eccentricWristFlexion from "@/assets/exercises/eccentric-wrist-flexion.png";
+import concentricWristFlexion from "@/assets/exercises/concentric-wrist-flexion.png";
+import forearmPronation from "@/assets/exercises/forearm-pronation.jpg";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
