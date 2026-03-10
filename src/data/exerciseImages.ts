@@ -163,6 +163,10 @@ const exerciseImages: Record<string, string> = {
   "eccentric-supraspinatus": eccentricSupraspinatus,
   "eccentric-scapular-stabilizers": eccentricScapStabilizers,
   "eccentric-teres-infraspinatus": eccentricTeresInfra,
+  "isometric-wrist-flexion": isometricWristFlexion,
+  "eccentric-wrist-flexion": eccentricWristFlexion,
+  "concentric-wrist-flexion": concentricWristFlexion,
+  "forearm-pronation": forearmPronation,
 };
 
 export default exerciseImages;
