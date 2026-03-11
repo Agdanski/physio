@@ -1759,6 +1759,430 @@ export const programs: Program[] = [
     ],
     programAudit: "Based on the Boot Camp Program for Lumbar Spinal Stenosis©. Evidence supports flexion-based exercise programs for symptomatic lumbar stenosis, with progressive walking as a key functional outcome measure."
   }
+  // ── Piriformis Syndrome ──
+  {
+    id: "piriformis-syndrome",
+    condition: "Piriformis Syndrome",
+    goal: "Reduce buttock pain and sciatic-type irritation, improve hip strength, and restore normal movement control.",
+    description: "A progressive program to reduce buttock and sciatic-type irritation, improve hip strength, and restore normal movement control.",
+    bodyRegion: "hip-groin",
+    symptoms: [
+      "Deep buttock pain",
+      "Sciatic-type leg pain",
+      "Pain sitting",
+      "Pain with hip rotation",
+      "Buttock tightness"
+    ],
+    urgentSigns: [
+      "Progressive leg weakness or foot drop",
+      "Loss of bladder or bowel control",
+      "Numbness in the groin or saddle area"
+    ],
+    exercises: [
+      {
+        name: "Supine Figure-4 Piriformis Stretch",
+        why: "Gently lengthens the piriformis to reduce compression on the sciatic nerve.",
+        instructions: [
+          "Lie on your back with both knees bent.",
+          "Cross the affected ankle over the other knee.",
+          "Gently pull the opposite thigh toward your chest until a stretch is felt deep in the buttock.",
+          "Do not force the movement."
+        ],
+        dose: "3 × 30-second holds, 1–2 times per day",
+        keyCues: ["Keep hips relaxed on the floor", "Pull gently — no sharp pain"],
+        progression: "Increase the stretch only slightly over time as tolerated.",
+        painRule: "Mild stretch is acceptable. Stop if sharp or radiating pain occurs.",
+        imageKey: "figure-4-stretch"
+      },
+      {
+        name: "Seated Piriformis Stretch",
+        why: "An accessible seated variation to improve piriformis flexibility throughout the day.",
+        instructions: [
+          "Sit tall in a chair.",
+          "Cross the affected leg over the other.",
+          "Lean forward slightly with a straight back until a stretch is felt in the buttock."
+        ],
+        dose: "3 × 30-second holds, 1–2 times per day",
+        keyCues: ["Sit tall — don't round the back", "Lean from the hips"],
+        progression: "Progress by increasing the forward lean slightly while staying comfortable.",
+        painRule: "Should feel a comfortable stretch, not sharp pain.",
+        imageKey: "figure-4-stretch"
+      },
+      {
+        name: "Sciatic Nerve Glide",
+        why: "Promotes healthy nerve mobility and reduces sciatic-type irritation.",
+        instructions: [
+          "Sit tall or lie on your back.",
+          "Slowly straighten the affected knee while bringing the ankle up.",
+          "Ease off and return to the start.",
+          "This should feel like a gentle glide, not an aggressive stretch."
+        ],
+        dose: "2 × 10 reps, 1–2 times per day",
+        keyCues: ["Smooth, rhythmic motion", "No bouncing or forcing"],
+        progression: "Increase range gradually only if symptoms do not flare afterward.",
+        painRule: "Stop if symptoms increase or radiate further down the leg.",
+        imageKey: "nerve-slider"
+      },
+      {
+        name: "Clamshell",
+        why: "Strengthens the hip external rotators and gluteus medius to improve pelvic control.",
+        instructions: [
+          "Lie on your side with hips and knees bent.",
+          "Keep your feet together and lift the top knee without rolling your pelvis backward."
+        ],
+        dose: "2–3 × 12–15 reps, 4–5 days per week",
+        keyCues: ["Don't roll backward", "Control the movement"],
+        progression: "Add a loop band above the knees when bodyweight becomes easy.",
+        imageKey: "clamshell"
+      },
+      {
+        name: "Side-Lying Hip Abduction",
+        why: "Targets the gluteus medius to improve lateral hip stability.",
+        instructions: [
+          "Lie on your side with the bottom knee bent and the top leg straight.",
+          "Lift the top leg slightly back and upward without turning the toes toward the ceiling."
+        ],
+        dose: "2–3 × 10–15 reps, 4–5 days per week",
+        keyCues: ["Lead with the heel", "Keep pelvis stacked"],
+        progression: "Add ankle weights or a loop band as tolerated.",
+        imageKey: "side-lying-hip"
+      },
+      {
+        name: "Bridge with Band Around Knees",
+        why: "Combines glute strengthening with external rotation activation to improve hip control.",
+        instructions: [
+          "Lie on your back with knees bent and feet flat.",
+          "Place a loop band around the knees.",
+          "Press slightly outward into the band and lift the hips upward.",
+          "Lower with control."
+        ],
+        dose: "2–3 × 10–12 reps, 4–5 days per week",
+        keyCues: ["Press knees outward throughout", "Squeeze glutes at the top"],
+        progression: "Progress to longer holds or single-leg bridge variations if tolerated.",
+        imageKey: "bridge-band"
+      }
+    ],
+    programAudit: "Based on established conservative exercise approaches for piriformis syndrome, combining mobility, nerve glide, and progressive hip strengthening. The exercise evidence base is less robust than some conditions, so this program focuses on the most widely used clinical approaches."
+  },
+
+  // ── Iliotibial Band Syndrome ──
+  {
+    id: "itband-syndrome",
+    condition: "Iliotibial Band Syndrome",
+    goal: "Reduce lateral knee pain and improve single-leg control through progressive hip and lower limb strengthening.",
+    description: "A progressive hip and lower limb strengthening program to reduce lateral knee pain and improve single-leg control.",
+    bodyRegion: "knee",
+    symptoms: [
+      "Lateral knee pain",
+      "Pain with running",
+      "Pain going downstairs",
+      "Outside knee pain",
+      "Pain with repetitive bending"
+    ],
+    urgentSigns: [
+      "Significant knee swelling with no clear cause",
+      "Knee locking or giving way",
+      "Inability to bear weight"
+    ],
+    exercises: [
+      {
+        name: "Side-Lying Hip Abduction",
+        why: "Strengthens the gluteus medius, which is commonly weak in IT band syndrome.",
+        instructions: [
+          "Lie on your side with the bottom knee bent and the top leg straight.",
+          "Keep the top leg slightly behind the body and lift it upward without rolling the pelvis backward."
+        ],
+        dose: "3 × 12–15 reps, 4–5 days per week",
+        keyCues: ["Lead with the heel", "Don't rotate the pelvis"],
+        progression: "Add ankle weights as tolerated.",
+        imageKey: "side-lying-hip"
+      },
+      {
+        name: "Clamshell with Band",
+        why: "Targets hip external rotators to improve lateral hip control.",
+        instructions: [
+          "Lie on your side with knees bent and a loop band around the thighs.",
+          "Keep your feet together and lift the top knee while keeping your pelvis still."
+        ],
+        dose: "3 × 12–15 reps, 4–5 days per week",
+        keyCues: ["Keep pelvis still", "Control the lowering phase"],
+        progression: "Use a stronger band over time.",
+        imageKey: "clamshell"
+      },
+      {
+        name: "Lateral Band Walk",
+        why: "Functional hip abductor strengthening to improve dynamic knee control.",
+        instructions: [
+          "Place a loop band around the ankles or above the knees.",
+          "Bend slightly at the hips and knees.",
+          "Take controlled side steps while keeping tension on the band."
+        ],
+        dose: "2–3 rounds of 8–12 steps each direction, 4 days per week",
+        keyCues: ["Stay low", "Keep tension on the band throughout"],
+        progression: "Increase band resistance or step count.",
+        imageKey: "lateral-band-walk"
+      },
+      {
+        name: "Single-Leg Squat to Chair",
+        why: "Develops single-leg strength and knee alignment control.",
+        instructions: [
+          "Stand on one leg in front of a chair or box.",
+          "Slowly squat down toward the chair and return to standing.",
+          "Keep the knee aligned over the foot."
+        ],
+        dose: "2–3 × 6–10 reps, 3–4 days per week",
+        keyCues: ["Don't let the knee cave inward", "Control the descent"],
+        progression: "Lower the chair height or add light load when tolerated.",
+        imageKey: "sit-to-stand"
+      },
+      {
+        name: "Step-Down",
+        why: "Builds eccentric quadriceps and hip control in a functional pattern.",
+        instructions: [
+          "Stand on a step on the affected leg.",
+          "Slowly lower the opposite heel toward the floor, then return to the start.",
+          "Keep the pelvis level and avoid the knee collapsing inward."
+        ],
+        dose: "2–3 × 8–12 reps, 3–4 days per week",
+        keyCues: ["Keep pelvis level", "Knee tracks over foot"],
+        progression: "Increase step height gradually.",
+        imageKey: "step-down"
+      },
+      {
+        name: "Single-Leg Romanian Deadlift",
+        why: "Develops posterior chain strength and single-leg balance.",
+        instructions: [
+          "Stand on one leg and hinge forward at the hips while the other leg extends behind you.",
+          "Keep your back straight and pelvis level.",
+          "Return to standing."
+        ],
+        dose: "2–3 × 6–10 reps, 3 days per week",
+        keyCues: ["Hinge at the hips", "Keep back flat"],
+        progression: "Add a dumbbell or kettlebell as tolerated.",
+        imageKey: "romanian-deadlift"
+      }
+    ],
+    programAudit: "Based on established evidence supporting hip abductor strengthening and single-leg control training as the primary exercise-based treatment for iliotibial band syndrome."
+  },
+
+  // ── Achilles Tendinopathy ──
+  {
+    id: "achilles-tendinopathy",
+    condition: "Achilles Tendinopathy",
+    goal: "Improve calf strength, tendon capacity, and tolerance for walking, stairs, and sport.",
+    description: "A tendon-loading program to improve calf strength, tendon capacity, and tolerance for walking, stairs, and sport.",
+    bodyRegion: "ankle-foot",
+    symptoms: [
+      "Achilles tendon pain",
+      "Morning stiffness in the tendon",
+      "Pain with walking or running",
+      "Tendon thickening",
+      "Pain on stairs"
+    ],
+    urgentSigns: [
+      "Sudden snap or pop in the tendon with immediate weakness",
+      "Inability to push off or stand on toes",
+      "Significant swelling or bruising around the ankle"
+    ],
+    exercises: [
+      {
+        name: "Standing Bilateral Calf Raise",
+        why: "Initiates tendon loading at a manageable level using both legs.",
+        instructions: [
+          "Stand holding onto a support if needed.",
+          "Rise up onto the balls of both feet.",
+          "Pause briefly, then lower slowly."
+        ],
+        dose: "3 × 15 reps, daily",
+        keyCues: ["Control the lowering phase", "Full range of motion"],
+        progression: "Progress to single-leg calf raises when tolerated.",
+        painRule: "Some tendon discomfort is acceptable if it remains manageable and settles by the next day.",
+        imageKey: "calf-raise"
+      },
+      {
+        name: "Isometric Calf Raise Hold",
+        why: "Provides tendon loading with sustained holds, useful for pain management.",
+        instructions: [
+          "Rise onto the balls of both feet and hold the position.",
+          "Keep weight evenly distributed unless instructed otherwise."
+        ],
+        dose: "5 × 30–45 second holds, daily",
+        keyCues: ["Stay tall", "Breathe normally"],
+        progression: "Progress to single-leg holds as tolerated.",
+        painRule: "Aim for tolerable discomfort only.",
+        imageKey: "calf-raise"
+      },
+      {
+        name: "Straight-Knee Calf Raise",
+        why: "Targets the gastrocnemius component of the calf for comprehensive tendon loading.",
+        instructions: [
+          "Stand on the floor or edge of a step.",
+          "Keeping the knee straight, rise up onto the ball of the foot.",
+          "Pause and lower slowly."
+        ],
+        dose: "3–4 × 8–15 reps, 3–5 days per week",
+        keyCues: ["Keep knee straight", "Slow 3-second lower"],
+        progression: "Progress from double-leg to single-leg, then add weight.",
+        painRule: "Pain should remain manageable during and settle within 24 hours.",
+        imageKey: "calf-raise"
+      },
+      {
+        name: "Bent-Knee Calf Raise",
+        why: "Targets the soleus muscle for deeper calf and tendon strengthening.",
+        instructions: [
+          "Perform a calf raise with the knees slightly bent.",
+          "Rise up, pause, and lower slowly."
+        ],
+        dose: "3–4 × 8–15 reps, 3–5 days per week",
+        keyCues: ["Keep knees bent throughout", "Slow controlled movement"],
+        progression: "Add external load as tolerated.",
+        painRule: "Tolerable discomfort is acceptable; sharp pain is not.",
+        imageKey: "bent-knee-calf-raise"
+      },
+      {
+        name: "Eccentric Heel Drop",
+        why: "A cornerstone exercise for Achilles tendinopathy — loads the tendon eccentrically to promote remodelling.",
+        instructions: [
+          "Rise up with both feet.",
+          "Shift weight to the affected side.",
+          "Slowly lower down on that side.",
+          "Use support as needed."
+        ],
+        dose: "3 × 15 reps, 1–2 times per day",
+        keyCues: ["Slow controlled lowering", "Use both legs to rise up"],
+        progression: "Increase load gradually with a backpack or dumbbell if tolerated.",
+        painRule: "Some discomfort is expected; stop if pain is sharp or worsening.",
+        imageKey: "eccentric-heel-drop"
+      },
+      {
+        name: "Heavy Slow Resistance Calf Raise",
+        why: "Progressive heavy loading to build tendon capacity and calf strength for return to activity.",
+        instructions: [
+          "Perform calf raises slowly using added weight such as a machine, dumbbell, backpack, or smith machine.",
+          "Use both straight-knee and bent-knee versions."
+        ],
+        dose: "3–4 × 6–8 reps, 3 days per week",
+        keyCues: ["3 seconds up, 3 seconds down", "Heavy but controlled"],
+        progression: "Increase weight gradually while maintaining slow controlled form.",
+        painRule: "Load should be challenging but pain should remain tolerable.",
+        imageKey: "calf-raise"
+      }
+    ],
+    programAudit: "Based on strong evidence supporting progressive tendon loading for Achilles tendinopathy, including eccentric heel drop programs (Alfredson protocol) and heavy slow resistance approaches (Kongsgaard et al.)."
+  },
+
+  // ── Patellofemoral Pain Syndrome ──
+  {
+    id: "patellofemoral-pain",
+    condition: "Patellofemoral Pain Syndrome",
+    goal: "Reduce kneecap-related pain and improve functional tolerance through combined hip and knee strengthening.",
+    description: "A combined hip and knee strengthening program to reduce kneecap-related pain and improve functional tolerance.",
+    bodyRegion: "knee",
+    symptoms: [
+      "Pain around or behind the kneecap",
+      "Pain going up or down stairs",
+      "Pain with squatting",
+      "Pain sitting for long periods",
+      "Knee pain with running"
+    ],
+    urgentSigns: [
+      "Knee locking or giving way",
+      "Significant swelling with no clear cause",
+      "Inability to bear weight"
+    ],
+    exercises: [
+      {
+        name: "Spanish Squat or Wall Sit",
+        why: "Isometric quadriceps loading that can reduce pain and build early strength.",
+        instructions: [
+          "For a Spanish squat, lean back into a strap or band positioned behind the knees and sit into a squat hold.",
+          "For a wall sit, lean against a wall and hold a seated position at a tolerable bend angle."
+        ],
+        dose: "5 × 30–45 second holds, daily or before aggravating activity",
+        keyCues: ["Find a tolerable knee angle", "Breathe normally throughout"],
+        progression: "Increase hold time or depth gradually if tolerated.",
+        painRule: "Pain should remain tolerable during and settle quickly after.",
+        imageKey: "spanish-squat"
+      },
+      {
+        name: "Straight Leg Raise",
+        why: "Strengthens the quadriceps without significant kneecap loading.",
+        instructions: [
+          "Lie on your back with one knee bent and the affected leg straight.",
+          "Tighten the thigh and lift the straight leg upward.",
+          "Lower slowly."
+        ],
+        dose: "2–3 × 10–15 reps, 4–5 days per week",
+        keyCues: ["Lock the knee straight", "Controlled lowering"],
+        progression: "Add ankle weight when tolerated.",
+        imageKey: "straight-leg-raise"
+      },
+      {
+        name: "Knee Extension",
+        why: "Progressive quadriceps strengthening in a controlled range.",
+        instructions: [
+          "Perform a controlled knee extension in a tolerable range using bodyweight, a band, or a machine.",
+          "Avoid forcing painful range early on."
+        ],
+        dose: "2–3 × 10–15 reps, 3–4 days per week",
+        keyCues: ["Work in a comfortable range", "Slow and controlled"],
+        progression: "Increase resistance gradually.",
+        painRule: "Avoid ranges that produce sharp kneecap pain.",
+        imageKey: "leg-extension"
+      },
+      {
+        name: "Clamshell or Side-Lying Hip Abduction",
+        why: "Strengthens the hip abductors and external rotators to improve knee alignment.",
+        instructions: [
+          "Perform either clamshells or side-lying hip abduction with controlled movement.",
+          "Target the hip abductors and external rotators."
+        ],
+        dose: "2–3 × 12–15 reps, 4–5 days per week",
+        keyCues: ["Don't roll backward", "Control the movement"],
+        progression: "Add band resistance or ankle weights over time.",
+        imageKey: "clamshell"
+      },
+      {
+        name: "Sit-to-Stand or Squat to Chair",
+        why: "Functional quadriceps and hip strengthening with controlled depth.",
+        instructions: [
+          "Stand up from a chair and sit back down with control.",
+          "Keep the knees aligned over the feet."
+        ],
+        dose: "2–3 × 8–12 reps, 3–4 days per week",
+        keyCues: ["Push through the heels", "Control the descent"],
+        progression: "Lower the chair height or add load as tolerated.",
+        imageKey: "sit-to-stand"
+      },
+      {
+        name: "Step-Down",
+        why: "Develops eccentric quadriceps control in a functional pattern.",
+        instructions: [
+          "Stand on a step and slowly lower the opposite heel toward the floor.",
+          "Keep the pelvis controlled and the knee tracking over the foot."
+        ],
+        dose: "2–3 × 6–10 reps, 3–4 days per week",
+        keyCues: ["Keep pelvis level", "Knee over foot"],
+        progression: "Increase the step height gradually.",
+        imageKey: "step-down"
+      },
+      {
+        name: "Forward Lunge or Split Squat",
+        why: "Progressive single-leg strengthening for functional return.",
+        instructions: [
+          "Take a step forward or stagger the stance and lower under control.",
+          "Use a shallow range initially.",
+          "Keep the knee aligned over the foot."
+        ],
+        dose: "2–3 × 6–10 reps, 3 days per week",
+        keyCues: ["Shallow range first", "Knee tracks over toes"],
+        progression: "Increase depth and add load as tolerated.",
+        painRule: "Reduce range if sharp kneecap pain occurs.",
+        imageKey: "split-squat"
+      }
+    ],
+    programAudit: "Based on strong evidence supporting combined hip and knee strengthening for patellofemoral pain syndrome. Guidelines recommend both proximal (hip) and local (quadriceps) strengthening alongside activity modification and patient education."
+  }
 ];
 
 export function getProgramsByRegion(region: BodyRegion): Program[] {
