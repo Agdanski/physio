@@ -176,6 +176,15 @@ const exerciseImages: Record<string, string> = {
   "eccentric-wrist-flexion": eccentricWristFlexion,
   "concentric-wrist-flexion": concentricWristFlexion,
   "forearm-pronation": forearmPronation,
+  "knee-to-chest-stretch": kneeToChestStretch,
+  "knee-to-opposite-shoulder": kneeToOppositeShoulder,
+  "double-knee-to-chest": doubleKneeToChest,
+  "advanced-pelvic-twist": advancedPelvicTwist,
+  "nerve-flossing-stenosis": nerveFlossingStenosis,
+  "pelvic-tilt-supine": pelvicTiltSupine,
+  "half-sit-up": halfSitUp,
+  "back-leg-ext-chair": backLegExtChair,
+  "back-leg-ext-prone": backLegExtProne,
 };
 
 export default exerciseImages;
