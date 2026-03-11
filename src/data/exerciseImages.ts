@@ -92,6 +92,13 @@ import halfSitUp from "@/assets/exercises/half-sit-up.png";
 import backLegExtChair from "@/assets/exercises/back-leg-ext-chair.png";
 import backLegExtProne from "@/assets/exercises/back-leg-ext-prone.png";
 import torsoExtTable from "@/assets/exercises/torso-ext-table.png";
+import pelvicTwist from "@/assets/exercises/pelvic-twist.png";
+import quadStretchSideLying from "@/assets/exercises/quad-stretch-side-lying.png";
+import sideSitUp from "@/assets/exercises/side-sit-up.jpg";
+import sittingForwardFlex from "@/assets/exercises/sitting-forward-flex.png";
+import standingGroinStretch from "@/assets/exercises/standing-groin-stretch.png";
+import standingPelvicTilt from "@/assets/exercises/standing-pelvic-tilt.png";
+import torsoExtProne from "@/assets/exercises/torso-ext-prone.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
