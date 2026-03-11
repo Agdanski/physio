@@ -82,6 +82,15 @@ import isometricWristFlexion from "@/assets/exercises/isometric-wrist-flexion.pn
 import eccentricWristFlexion from "@/assets/exercises/eccentric-wrist-flexion.png";
 import concentricWristFlexion from "@/assets/exercises/concentric-wrist-flexion.png";
 import forearmPronation from "@/assets/exercises/forearm-pronation.jpg";
+import kneeToChestStretch from "@/assets/exercises/knee-to-chest-stretch.png";
+import kneeToOppositeShoulder from "@/assets/exercises/knee-to-opposite-shoulder.png";
+import doubleKneeToChest from "@/assets/exercises/double-knee-to-chest.png";
+import advancedPelvicTwist from "@/assets/exercises/advanced-pelvic-twist.png";
+import nerveFlossingStenosis from "@/assets/exercises/nerve-flossing-stenosis.png";
+import pelvicTiltSupine from "@/assets/exercises/pelvic-tilt-supine.png";
+import halfSitUp from "@/assets/exercises/half-sit-up.png";
+import backLegExtChair from "@/assets/exercises/back-leg-ext-chair.png";
+import backLegExtProne from "@/assets/exercises/back-leg-ext-prone.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
