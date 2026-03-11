@@ -194,6 +194,13 @@ const exerciseImages: Record<string, string> = {
   "back-leg-ext-chair": backLegExtChair,
   "back-leg-ext-prone": backLegExtProne,
   "torso-ext-table": torsoExtTable,
+  "pelvic-twist": pelvicTwist,
+  "quad-stretch-side-lying": quadStretchSideLying,
+  "side-sit-up": sideSitUp,
+  "sitting-forward-flex": sittingForwardFlex,
+  "standing-groin-stretch": standingGroinStretch,
+  "standing-pelvic-tilt": standingPelvicTilt,
+  "torso-ext-prone": torsoExtProne,
 };
 
 export default exerciseImages;
