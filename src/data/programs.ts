@@ -1598,19 +1598,20 @@ export const programs: Program[] = [
         imageKey: "side-sit-up"
       },
       {
-        name: "Side Hip Lift",
-        why: "Strengthens hip abductors and improves pelvic stability for walking.",
+        name: "Side-Lying Hip Abduction",
+        why: "Strengthen the gluteus medius to improve pelvic stability.",
         instructions: [
           "Lie on your right side.",
-          "Bend your bottom knee and bring it toward your chest with your bottom hand.",
-          "Raise your top leg (keeping it straight) about 12 inches above the mat, parallel to the floor. Hold.",
-          "Move the straight leg toward your head about 45 degrees and hold.",
-          "Bring your straight leg upward as far as you can and hold.",
-          "Repeat on the opposite side."
+          "Bend the bottom knee slightly for balance.",
+          "Keep the top leg straight and in line with your body.",
+          "Lift the top leg upward about 12–18 inches.",
+          "Keep the toes pointing forward or slightly down.",
+          "Hold 5 seconds, then slowly lower.",
+          "Repeat 10–15 repetitions, then switch sides."
         ],
-        dose: "Hold 5–10 sec each position, repeat 5× each side, performed daily",
-        keyCues: ["Keep the top leg straight throughout", "Three positions: parallel, 45°, and full elevation"],
-        imageKey: "side-hip-lift"
+        dose: "2–3 sets of 10–15 reps each side, performed daily",
+        keyCues: ["Toes pointing forward or slightly down", "Keep pelvis stacked — don't roll backward"],
+        imageKey: "side-lying-hip"
       },
       {
         name: "Quadriceps Stretch (Side-Lying)",
