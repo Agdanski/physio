@@ -1758,7 +1758,7 @@ export const programs: Program[] = [
       }
     ],
     programAudit: "Based on the Boot Camp Program for Lumbar Spinal Stenosis©. Evidence supports flexion-based exercise programs for symptomatic lumbar stenosis, with progressive walking as a key functional outcome measure."
-  }
+  },
   // ── Piriformis Syndrome ──
   {
     id: "piriformis-syndrome",
