@@ -91,6 +91,7 @@ import pelvicTiltSupine from "@/assets/exercises/pelvic-tilt-supine.png";
 import halfSitUp from "@/assets/exercises/half-sit-up.png";
 import backLegExtChair from "@/assets/exercises/back-leg-ext-chair.png";
 import backLegExtProne from "@/assets/exercises/back-leg-ext-prone.png";
+import torsoExtTable from "@/assets/exercises/torso-ext-table.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
