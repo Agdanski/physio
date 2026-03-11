@@ -186,6 +186,7 @@ const exerciseImages: Record<string, string> = {
   "half-sit-up": halfSitUp,
   "back-leg-ext-chair": backLegExtChair,
   "back-leg-ext-prone": backLegExtProne,
+  "torso-ext-table": torsoExtTable,
 };
 
 export default exerciseImages;
