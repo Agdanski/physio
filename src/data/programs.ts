@@ -557,7 +557,7 @@ export const programs: Program[] = [
             ],
             easierVersion: "Very small range with hands on a counter for support.",
             harderVersion: "Gradually increase range, then add light load later if needed.",
-            imageKey: "romanian-deadlift",
+            imageKey: "hip-hinge",
           },
         ],
       },
