@@ -99,6 +99,7 @@ import sittingForwardFlex from "@/assets/exercises/sitting-forward-flex.png";
 import standingGroinStretch from "@/assets/exercises/standing-groin-stretch.png";
 import standingPelvicTilt from "@/assets/exercises/standing-pelvic-tilt.png";
 import torsoExtProne from "@/assets/exercises/torso-ext-prone.png";
+import heavySlowCalfRaise from "@/assets/exercises/heavy-slow-calf-raise.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
@@ -201,6 +202,7 @@ const exerciseImages: Record<string, string> = {
   "standing-groin-stretch": standingGroinStretch,
   "standing-pelvic-tilt": standingPelvicTilt,
   "torso-ext-prone": torsoExtProne,
+  "heavy-slow-calf-raise": heavySlowCalfRaise,
 };
 
 export default exerciseImages;

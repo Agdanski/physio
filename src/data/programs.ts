@@ -2066,7 +2066,7 @@ export const programs: Program[] = [
         keyCues: ["3 seconds up, 3 seconds down", "Heavy but controlled"],
         progression: "Increase weight gradually while maintaining slow controlled form.",
         painRule: "Load should be challenging but pain should remain tolerable.",
-        imageKey: "calf-raise"
+        imageKey: "heavy-slow-calf-raise"
       }
     ],
     programAudit: "Based on strong evidence supporting progressive tendon loading for Achilles tendinopathy, including eccentric heel drop programs (Alfredson protocol) and heavy slow resistance approaches (Kongsgaard et al.)."
