@@ -17,7 +17,7 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Neck",
     zones: [
       // Front neck / upper collar
-      [27, 16, 6, 6],
+      [28, 16, 6, 6],
       // Back neck
       [64, 15, 5, 6],
     ],
