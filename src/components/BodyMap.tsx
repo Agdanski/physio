@@ -158,20 +158,30 @@ export default function BodyMap({ onSelectRegion, selectedRegion }: BodyMapProps
               onMouseEnter={() => setHoveredRegion(region.id)}
               onMouseLeave={() => setHoveredRegion(null)}
               aria-label={region.label}
-              className="absolute rounded-lg transition-all duration-200 border-2"
+              className="absolute rounded-lg transition-all duration-200 border-2 flex items-center justify-center overflow-hidden"
               style={{
                 left: `${zone[0]}%`,
                 top: `${zone[1]}%`,
                 width: `${zone[2]}%`,
                 height: `${zone[3]}%`,
-                backgroundColor: isHighlighted(region.id)
-                  ? "hsl(var(--primary) / 0.3)"
-                  : "transparent",
-                borderColor: isHighlighted(region.id)
-                  ? "hsl(var(--primary) / 0.7)"
-                  : "transparent",
+                backgroundColor: DEBUG_OVERLAYS
+                  ? DEBUG_COLORS[region.id] || "rgba(128,128,128,0.25)"
+                  : isHighlighted(region.id)
+                    ? "hsl(var(--primary) / 0.3)"
+                    : "transparent",
+                borderColor: DEBUG_OVERLAYS
+                  ? DEBUG_BORDERS[region.id] || "gray"
+                  : isHighlighted(region.id)
+                    ? "hsl(var(--primary) / 0.7)"
+                    : "transparent",
               }}
-            />
+            >
+              {DEBUG_OVERLAYS && (
+                <span className="text-[6px] font-bold text-black bg-white/80 px-0.5 rounded leading-tight text-center pointer-events-none">
+                  {region.label} {i}
+                </span>
+              )}
+            </button>
           ))
         )}
 
