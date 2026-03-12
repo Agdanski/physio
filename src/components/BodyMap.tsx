@@ -77,7 +77,7 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     zones: [
       // Front: what was previously thigh
       [23, 58.5, 5.8, 18.8],
-      [30.8, 58.5, 5.8, 18.8],
+      [33, 58.5, 5.8, 18.8],
       // Back: removed per mapping request
     ],
   },
