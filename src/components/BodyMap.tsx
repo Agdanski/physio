@@ -7,91 +7,89 @@ interface BodyMapProps {
   selectedRegion?: BodyRegion | null;
 }
 
-// All coordinates are % of image width/height.
-// Calibrated by visual testing against the rendered image.
 const regions: { id: BodyRegion; label: string; areas: { x: number; y: number; w: number; h: number }[] }[] = [
   {
     id: "neck",
     label: "Neck",
     areas: [
-      { x: 24, y: 16, w: 8, h: 5 },
-      { x: 61, y: 13, w: 8, h: 5 },
+      { x: 24, y: 19, w: 8, h: 5 },
+      { x: 61, y: 16, w: 8, h: 5 },
     ],
   },
   {
     id: "shoulder",
     label: "Shoulder",
     areas: [
-      { x: 14, y: 19, w: 11, h: 9 },
-      { x: 31, y: 19, w: 11, h: 9 },
-      { x: 52, y: 17, w: 10, h: 9 },
-      { x: 70, y: 17, w: 10, h: 9 },
+      { x: 14, y: 22, w: 11, h: 9 },
+      { x: 31, y: 22, w: 11, h: 9 },
+      { x: 52, y: 20, w: 10, h: 9 },
+      { x: 70, y: 20, w: 10, h: 9 },
     ],
   },
   {
     id: "elbow-wrist-hand",
     label: "Elbow, Wrist & Hand",
     areas: [
-      { x: 9, y: 30, w: 8, h: 30 },
-      { x: 38, y: 30, w: 8, h: 30 },
-      { x: 47, y: 30, w: 7, h: 30 },
-      { x: 77, y: 30, w: 7, h: 30 },
+      { x: 9, y: 33, w: 8, h: 30 },
+      { x: 38, y: 33, w: 8, h: 30 },
+      { x: 47, y: 33, w: 7, h: 30 },
+      { x: 77, y: 33, w: 7, h: 30 },
     ],
   },
   {
     id: "lower-back",
     label: "Lower Back",
     areas: [
-      { x: 21, y: 23, w: 14, h: 19 },
-      { x: 59, y: 23, w: 12, h: 19 },
+      { x: 21, y: 26, w: 14, h: 19 },
+      { x: 59, y: 26, w: 12, h: 19 },
     ],
   },
   {
     id: "hip-groin",
     label: "Hip & Groin",
     areas: [
-      { x: 19, y: 42, w: 18, h: 8 },
-      { x: 56, y: 42, w: 18, h: 10 },
+      { x: 19, y: 45, w: 18, h: 8 },
+      { x: 56, y: 45, w: 18, h: 10 },
     ],
   },
   {
     id: "thigh",
     label: "Thigh",
     areas: [
-      { x: 17, y: 50, w: 10, h: 14 },
-      { x: 28, y: 50, w: 10, h: 14 },
-      { x: 55, y: 52, w: 10, h: 12 },
-      { x: 66, y: 52, w: 10, h: 12 },
+      { x: 17, y: 53, w: 10, h: 14 },
+      { x: 28, y: 53, w: 10, h: 14 },
+      { x: 55, y: 55, w: 10, h: 12 },
+      { x: 66, y: 55, w: 10, h: 12 },
     ],
   },
   {
     id: "knee",
     label: "Knee",
     areas: [
-      { x: 18, y: 64, w: 8, h: 6 },
-      { x: 29, y: 64, w: 8, h: 6 },
-      { x: 56, y: 64, w: 8, h: 5 },
-      { x: 67, y: 64, w: 8, h: 5 },
+      { x: 18, y: 67, w: 8, h: 6 },
+      { x: 29, y: 67, w: 8, h: 6 },
+      { x: 56, y: 67, w: 8, h: 5 },
+      { x: 67, y: 67, w: 8, h: 5 },
     ],
   },
   {
     id: "lower-leg",
     label: "Lower Leg",
     areas: [
-      { x: 18, y: 70, w: 8, h: 14 },
-      { x: 29, y: 70, w: 8, h: 14 },
-      { x: 56, y: 69, w: 8, h: 14 },
-      { x: 67, y: 69, w: 8, h: 14 },
+      { x: 18, y: 73, w: 8, h: 14 },
+      { x: 29, y: 73, w: 8, h: 14 },
+      { x: 56, y: 72, w: 8, h: 14 },
+      { x: 67, y: 72, w: 8, h: 14 },
     ],
   },
   {
     id: "ankle-foot",
     label: "Ankle & Foot",
     areas: [
-      { x: 17, y: 84, w: 9, h: 10 },
-      { x: 29, y: 84, w: 9, h: 10 },
-      { x: 55, y: 83, w: 9, h: 10 },
-      { x: 67, y: 83, w: 9, h: 10 },
+      { x: 17, y: 87, w: 9, h: 10 },
+      { x: 29, y: 87, w: 9, h: 10 },
+      { x: 55, y: 86, w: 9, h: 10 },
+      { x: 67, y: 86, w: 9, h: 10 },
     ],
   },
 ];
