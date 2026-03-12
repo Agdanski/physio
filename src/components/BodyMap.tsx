@@ -31,11 +31,11 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
       // Front left shoulder (orange)
       [28, 17, 8, 7],
       // Front right shoulder (orange)
-      [38, 17, 8, 7],
+      [37, 17, 7, 7],
       // Back left shoulder (orange)
-      [53, 17, 8, 7],
+      [55, 17, 7, 7],
       // Back right shoulder (orange)
-      [65, 17, 8, 7],
+      [64, 17, 8, 7],
     ],
   },
   {
