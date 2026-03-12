@@ -2973,7 +2973,7 @@ export const programs: Program[] = [
             easierVersion: "Smaller range.",
             harderVersion: "Add ankle weight.",
             equipmentNeeded: "None",
-            imageKey: "hip-adduction",
+            imageKey: "side-lying-hip-adduction",
           },
           {
             name: "Split Squat",
