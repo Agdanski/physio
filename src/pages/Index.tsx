@@ -52,15 +52,18 @@ const Index = () => {
             <img src={clinicLogo} alt="Gdanski Chiropractic Clinic" className="h-10 rounded-md" />
             <p className="text-xs text-primary-foreground/70">Physiotherapy Portal</p>
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={logout}
-            className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10"
-          >
-            <LogOut className="w-4 h-4 mr-1.5" />
-            Sign Out
-          </Button>
+          <div className="flex items-center gap-2">
+            <FeedbackDialog />
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={logout}
+              className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10"
+            >
+              <LogOut className="w-4 h-4 mr-1.5" />
+              Sign Out
+            </Button>
+          </div>
         </div>
       </header>
 
