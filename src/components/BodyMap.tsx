@@ -7,19 +7,21 @@ interface BodyMapProps {
   selectedRegion?: BodyRegion | null;
 }
 
-// Percentage-based hit zones mapped to color regions in the image
-// Each zone: [left%, top%, width%, height%]
+// Percentage-based hit zones: [left%, top%, width%, height%]
 type Zone = [number, number, number, number];
 
+// Coordinates calibrated to the uploaded body-map.png
+// Front figure center ~36%, Back figure center ~63%
+// Front figure: x range ~26%-47%, Back: ~52%-73%
 const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
   {
     id: "neck",
     label: "Neck",
     zones: [
-      // Front neck (yellow area)
-      [22, 12, 8, 6],
+      // Front neck (yellow)
+      [33, 13, 7, 5],
       // Back neck
-      [64, 12, 8, 6],
+      [60, 13, 7, 5],
     ],
   },
   {
@@ -27,13 +29,13 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Shoulder",
     zones: [
       // Front left shoulder (orange)
-      [13, 14, 10, 8],
+      [26, 17, 8, 7],
       // Front right shoulder (orange)
-      [29, 14, 10, 8],
+      [39, 17, 8, 7],
       // Back left shoulder (orange)
-      [55, 14, 10, 8],
+      [52, 17, 8, 7],
       // Back right shoulder (orange)
-      [71, 14, 10, 8],
+      [66, 17, 8, 7],
     ],
   },
   {
@@ -41,21 +43,21 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Elbow, Wrist & Hand",
     zones: [
       // Front left arm (green)
-      [8, 28, 7, 32],
+      [23, 28, 6, 28],
       // Front right arm (green)
-      [37, 28, 7, 32],
+      [44, 28, 6, 28],
       // Back left arm (green)
-      [50, 28, 7, 32],
+      [49, 28, 6, 28],
       // Back right arm (green)
-      [79, 28, 7, 32],
+      [71, 28, 6, 28],
     ],
   },
   {
     id: "lower-back",
     label: "Lower Back",
     zones: [
-      // Back only - purple/blue lower back area
-      [58, 36, 20, 10],
+      // Back only - purple lower back
+      [56, 38, 14, 8],
     ],
   },
   {
@@ -63,9 +65,9 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Hip & Groin",
     zones: [
       // Front groin (purple)
-      [19, 44, 14, 8],
-      // Back glutes (pink/magenta)
-      [58, 46, 20, 10],
+      [31, 45, 11, 7],
+      // Back glutes (pink)
+      [55, 46, 16, 10],
     ],
   },
   {
@@ -73,13 +75,13 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Thigh",
     zones: [
       // Front left thigh
-      [18, 52, 8, 16],
+      [30, 52, 7, 14],
       // Front right thigh
-      [27, 52, 8, 16],
+      [37, 52, 7, 14],
       // Back left thigh (red)
-      [57, 56, 10, 14],
+      [55, 56, 9, 13],
       // Back right thigh (red)
-      [69, 56, 10, 14],
+      [64, 56, 9, 13],
     ],
   },
   {
@@ -87,27 +89,27 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Knee",
     zones: [
       // Front left knee (red)
-      [18, 66, 8, 7],
+      [30, 66, 7, 6],
       // Front right knee (red)
-      [27, 66, 8, 7],
+      [37, 66, 7, 6],
       // Back left knee
-      [58, 69, 9, 6],
+      [56, 69, 8, 5],
       // Back right knee
-      [70, 69, 9, 6],
+      [64, 69, 8, 5],
     ],
   },
   {
     id: "lower-leg",
     label: "Lower Leg",
     zones: [
-      // Front left lower leg (purple + blue)
-      [18, 73, 8, 16],
+      // Front left lower leg
+      [30, 72, 7, 15],
       // Front right lower leg
-      [27, 73, 8, 16],
+      [37, 72, 7, 15],
       // Back left lower leg (blue)
-      [58, 75, 9, 14],
+      [56, 74, 8, 13],
       // Back right lower leg
-      [70, 75, 9, 14],
+      [64, 74, 8, 13],
     ],
   },
   {
@@ -115,13 +117,13 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Ankle & Foot",
     zones: [
       // Front left foot (teal)
-      [17, 89, 8, 8],
+      [29, 87, 7, 8],
       // Front right foot
-      [27, 89, 8, 8],
+      [37, 87, 7, 8],
       // Back left foot
-      [57, 89, 9, 8],
+      [55, 87, 8, 8],
       // Back right foot
-      [70, 89, 9, 8],
+      [64, 87, 8, 8],
     ],
   },
 ];
@@ -133,7 +135,6 @@ export default function BodyMap({ onSelectRegion, selectedRegion }: BodyMapProps
 
   return (
     <div className="flex flex-col items-center">
-      {/* Image container with overlay hit zones */}
       <div className="relative w-full max-w-xl mx-auto select-none">
         <img
           src={bodyMapImage}
@@ -142,7 +143,6 @@ export default function BodyMap({ onSelectRegion, selectedRegion }: BodyMapProps
           draggable={false}
         />
 
-        {/* Hit zone overlays */}
         {regionDefs.map((region) =>
           region.zones.map((zone, i) => (
             <button
@@ -168,16 +168,14 @@ export default function BodyMap({ onSelectRegion, selectedRegion }: BodyMapProps
           ))
         )}
 
-        {/* View labels */}
-        <div className="absolute bottom-1 left-[18%] text-xs font-bold text-muted-foreground tracking-wide">
+        <div className="absolute bottom-1 left-[30%] text-xs font-bold text-muted-foreground tracking-wide">
           FRONT
         </div>
-        <div className="absolute bottom-1 left-[62%] text-xs font-bold text-muted-foreground tracking-wide">
+        <div className="absolute bottom-1 left-[58%] text-xs font-bold text-muted-foreground tracking-wide">
           BACK
         </div>
       </div>
 
-      {/* Button grid */}
       <div className="grid grid-cols-3 gap-2 mt-6 w-full max-w-md">
         {regionDefs.map((region) => (
           <button
