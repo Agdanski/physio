@@ -1,15 +1,82 @@
+// ═══════════════════════════════════════════════════════════════
+// PHYSIOTHERAPY EXERCISE PROGRAM LIBRARY
+// Evidence-informed self-management programs
+// ═══════════════════════════════════════════════════════════════
+
+// ── Global Constants ──
+
+export const STANDARD_DISCLAIMER =
+  "This program is designed as an evidence-informed self-management guide. It does not replace in-person assessment when symptoms are severe, traumatic, rapidly worsening, neurologic, or not improving.";
+
+export const STANDARD_PAIN_NOTE =
+  "Mild and tolerable discomfort during exercise is often acceptable in musculoskeletal rehabilitation. Symptoms should generally return to usual baseline within 24 hours. If symptoms clearly worsen and stay worse, reduce range, load, reps, or frequency.";
+
+export const DEFAULT_PROGRESSION_RULES: string[] = [
+  "Progress only when pain during exercise stays tolerable and symptoms return to usual baseline by the next day.",
+  "Progress one variable at a time: range → reps → load → complexity → speed or power.",
+  "When you can complete the top end of the prescribed rep or hold range with good control for 2 to 3 sessions and symptoms remain acceptable the next day, progress slightly.",
+];
+
+export const DEFAULT_FLARE_UP_RULES: string[] = [
+  "If pain sharply increases, movement quality worsens, swelling clearly increases, night pain increases, repeated giving-way occurs, or next-day symptoms are worse than usual, reduce range, load, reps, or frequency.",
+];
+
+export const STANDARD_MOVEMENT_CUES: string[] = [
+  "Stop 1 to 2 reps before form breaks down.",
+  "Use slow, controlled movement.",
+  "Do not push into compensations such as shrugging, twisting, knee collapse, pelvic drop, trunk sway, or breath-holding.",
+];
+
+export const RED_FLAGS_BY_REGION: Record<string, string[]> = {
+  spine: [
+    "New bowel or bladder change",
+    "Saddle numbness",
+    "Progressive leg weakness",
+    "Rapidly worsening numbness",
+    "Unsteady gait or major balance decline",
+  ],
+  shoulder: [
+    "Traumatic inability to lift the arm",
+    "Suspected dislocation",
+    "Major sudden loss of active motion after injury",
+    "Marked weakness after trauma",
+  ],
+  "elbow-wrist-hand": [
+    "Progressive numbness or weakness",
+    "Thenar wasting",
+    "Constant worsening neurologic symptoms",
+    "Frequent dropping of objects due to weakness or numbness",
+  ],
+  "hip-knee-ankle-foot": [
+    "Inability to bear weight after trauma",
+    "Major swelling, deformity, or locking",
+    "Suspected rupture or fracture",
+    "Sudden calf swelling, redness, or heat if DVT concern",
+  ],
+};
+
+// ── Interfaces ──
+
 export interface Exercise {
   name: string;
   why: string;
   instructions: string[];
   dose: string;
   keyCues?: string[];
-  progression?: string;
-  regression?: string;
+  commonMistakes?: string[];
+  easierVersion?: string;
+  harderVersion?: string;
+  equipmentNeeded?: string;
   painRule?: string;
   stopIf?: string;
   important?: string;
   imageKey: string;
+}
+
+export interface Phase {
+  name: string;
+  description?: string;
+  exercises: Exercise[];
 }
 
 export interface Program {
@@ -19,7 +86,17 @@ export interface Program {
   description: string;
   bodyRegion: BodyRegion;
   symptoms: string[];
-  exercises: Exercise[];
+  bestFor?: string;
+  notFor?: string[];
+  selfManagementAdvice?: string[];
+  phases: Phase[];
+  progressionRules?: string[];
+  flareUpRules?: string[];
+  expectedTimeline?: string;
+  seekAssessment?: string[];
+  requiredEquipment?: string[];
+  optionalEquipment?: string[];
+  noEquipmentAlternative?: string;
   urgentSigns?: string[];
   programAudit: string;
 }
@@ -47,602 +124,1093 @@ export const bodyRegionLabels: Record<BodyRegion, string> = {
   "ankle-foot": "Ankle & Foot",
 };
 
+// ═══════════════════════════════════════════════════════════════
+// PROGRAMS
+// ═══════════════════════════════════════════════════════════════
+
 export const programs: Program[] = [
-  // 1. Non-specific low back pain
+
+  // ───────────────────────────────────────────────────────────
+  // 1. NON-SPECIFIC LOW BACK PAIN
+  // ───────────────────────────────────────────────────────────
   {
     id: "low-back-pain",
     condition: "Non-Specific Low Back Pain",
-    goal: "Improve trunk endurance, hip strength, and movement tolerance.",
-    description: "One of the most common orthopaedic presentations. Guidelines support exercise and progressive activity rather than rest alone.",
+    goal: "Improve trunk endurance, hip strength, and movement tolerance through graded activity.",
+    description: "One of the most common musculoskeletal presentations. Guidelines consistently support exercise and progressive return to normal activities rather than rest alone.",
     bodyRegion: "lower-back",
-    symptoms: ["general low back ache", "stiffness in the morning", "pain with prolonged sitting or standing", "difficulty bending"],
-    exercises: [
-      {
-        name: "Abdominal Brace with Breathing",
-        why: "Builds low-level trunk stability without excessive spinal load.",
-        instructions: [
-          "Lie on your back with knees bent and feet flat.",
-          "Breathe in normally.",
-          "As you breathe out, gently tighten your lower abdominal wall as if bracing for a light poke.",
-          "Keep your ribs, pelvis, and buttocks relaxed.",
-          "Hold the brace while taking 2 to 3 small breaths.",
-          "Fully relax."
-        ],
-        dose: "2–3 sets × 8–10 reps, once daily",
-        keyCues: ["Use about 20–30% effort, not a maximal squeeze.", "Do not flatten the back hard into the floor."],
-        stopIf: "It triggers sharp back pain or leg symptoms.",
-        imageKey: "abdominal-brace"
-      },
-      {
-        name: "Bridge",
-        why: "Strengthens glutes and posterior chain to reduce repeated lumbar overloading.",
-        instructions: [
-          "Lie on your back with knees bent.",
-          "Tighten your lower abdomen gently.",
-          "Squeeze your glutes.",
-          "Lift your hips until shoulders, hips, and knees form a straight line.",
-          "Pause 2 to 3 seconds.",
-          "Lower slowly."
-        ],
-        dose: "3 sets × 8–12 reps, every other day",
-        keyCues: ["Lift with the hips, not the low back.", "Do not over-arch at the top."],
-        progression: "Longer hold (5 sec), then single-leg bridge only if pain-free and controlled.",
-        imageKey: "bridge"
-      },
-      {
-        name: "Bird Dog",
-        why: "Improves trunk control and anti-rotation stability.",
-        instructions: [
-          "Start on hands and knees.",
-          "Brace lightly through the abdomen.",
-          "Reach one leg back while reaching the opposite arm forward.",
-          "Keep pelvis level and spine still.",
-          "Hold 3 to 5 seconds.",
-          "Return and switch sides."
-        ],
-        dose: "2–3 sets × 6–8 reps per side, every other day",
-        keyCues: ["Think 'long,' not 'high.'", "Do not rotate or twist."],
-        regression: "Move only the leg or only the arm.",
-        imageKey: "bird-dog"
-      },
-      {
-        name: "Side Plank from Knees",
-        why: "Improves lateral trunk endurance.",
-        instructions: [
-          "Lie on your side with knees bent.",
-          "Prop on your lower elbow directly under your shoulder.",
-          "Lift hips off the floor.",
-          "Keep shoulders, hips, and knees in line.",
-          "Hold 10 to 20 seconds.",
-          "Lower with control."
-        ],
-        dose: "2–3 sets × 3–5 holds per side, every other day",
-        progression: "Increase hold toward 30 seconds, then progress to full side plank from feet.",
-        imageKey: "side-plank"
-      },
-      {
-        name: "Sit-to-Stand",
-        why: "Restores functional strength and tolerance for daily activity.",
-        instructions: [
-          "Sit near the front of a chair.",
-          "Feet hip-width apart.",
-          "Lean trunk forward slightly.",
-          "Stand up without pushing off with the hands if possible.",
-          "Sit down slowly."
-        ],
-        dose: "3 sets × 8–15 reps, every other day",
-        painRule: "Mild discomfort is acceptable. Symptoms should settle back to baseline within 24 hours.",
-        imageKey: "sit-to-stand"
-      }
+    symptoms: ["general low back ache", "stiffness in the morning", "pain with prolonged sitting or standing", "difficulty bending", "low back pain"],
+    bestFor: "People with non-specific low back pain who want to improve strength, movement tolerance, and daily function.",
+    notFor: [
+      "New bowel or bladder changes",
+      "Saddle numbness",
+      "Progressive leg weakness",
+      "Rapidly worsening numbness",
+      "Unsteady gait or major balance decline",
     ],
-    programAudit: "Consistent with low back pain exercise guideline principles emphasizing exercise, trunk training, and progressive activity."
+    selfManagementAdvice: [
+      "Walking is one of the most effective self-management strategies for low back pain. Aim for regular, comfortable walks.",
+      "Gradually return to bending, sitting, standing, and lifting as tolerated. Avoidance often prolongs recovery.",
+      "There is no single perfect posture. Changing positions frequently is more important than any one position.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Mobility & Low-Load Control",
+        description: "Begin with gentle trunk control and mobility. Focus on comfort and confidence with movement.",
+        exercises: [
+          {
+            name: "Abdominal Brace with Breathing",
+            why: "One useful option for building low-level trunk control without excessive spinal load.",
+            instructions: [
+              "Lie on your back with knees bent and feet flat.",
+              "Breathe in normally.",
+              "As you breathe out, gently tighten your lower abdominal wall as if bracing for a light poke.",
+              "Keep your ribs, pelvis, and buttocks relaxed.",
+              "Hold the brace while taking 2 to 3 small breaths.",
+              "Fully relax.",
+            ],
+            dose: "2–3 sets × 8–10 reps, once daily",
+            keyCues: ["Use about 20–30% effort, not a maximal squeeze.", "Do not flatten the back hard into the floor."],
+            commonMistakes: ["Holding the breath", "Bracing too hard", "Flattening the back forcefully into the floor"],
+            easierVersion: "Simply practice relaxed diaphragmatic breathing without the brace.",
+            harderVersion: "Add gentle leg movements while maintaining the brace.",
+            equipmentNeeded: "None",
+            stopIf: "It triggers sharp back pain or leg symptoms.",
+            imageKey: "abdominal-brace",
+          },
+          {
+            name: "Bridge",
+            why: "Strengthens glutes and posterior chain to support the low back during daily activities.",
+            instructions: [
+              "Lie on your back with knees bent.",
+              "Tighten your lower abdomen gently.",
+              "Squeeze your glutes.",
+              "Lift your hips until shoulders, hips, and knees form a straight line.",
+              "Pause 2 to 3 seconds.",
+              "Lower slowly.",
+            ],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            keyCues: ["Lift with the hips, not the low back.", "Do not over-arch at the top."],
+            commonMistakes: ["Arching the low back at the top", "Pushing through the toes instead of heels", "Rushing the movement"],
+            easierVersion: "Smaller range — lift hips only partway.",
+            harderVersion: "Hold for 5 seconds at the top.",
+            equipmentNeeded: "None",
+            imageKey: "bridge",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Trunk Endurance & Strength",
+        description: "Build trunk and hip endurance. Progress when Phase 1 exercises are comfortable and symptoms are manageable.",
+        exercises: [
+          {
+            name: "Bird Dog",
+            why: "Improves trunk control and anti-rotation stability.",
+            instructions: [
+              "Start on hands and knees.",
+              "Brace lightly through the abdomen.",
+              "Reach one leg back while reaching the opposite arm forward.",
+              "Keep pelvis level and spine still.",
+              "Hold 3 to 5 seconds.",
+              "Return and switch sides.",
+            ],
+            dose: "2–3 sets × 6–8 reps per side, every other day",
+            keyCues: ["Think 'long,' not 'high.'", "Do not rotate or twist."],
+            commonMistakes: ["Rotating the pelvis", "Lifting the limbs too high", "Losing neutral spine"],
+            easierVersion: "Move only the leg or only the arm.",
+            harderVersion: "Hold for 8–10 seconds per rep.",
+            equipmentNeeded: "None",
+            imageKey: "bird-dog",
+          },
+          {
+            name: "Side Plank from Knees",
+            why: "Improves lateral trunk endurance, which is commonly linked to low back pain outcomes.",
+            instructions: [
+              "Lie on your side with knees bent.",
+              "Prop on your lower elbow directly under your shoulder.",
+              "Lift hips off the floor.",
+              "Keep shoulders, hips, and knees in line.",
+              "Hold 10 to 20 seconds.",
+              "Lower with control.",
+            ],
+            dose: "2–3 sets × 3–5 holds per side, every other day",
+            commonMistakes: ["Letting the hips sag", "Holding the breath", "Rolling forward or backward"],
+            easierVersion: "Shorter holds of 5–10 seconds.",
+            harderVersion: "Progress to full side plank from feet.",
+            equipmentNeeded: "None",
+            imageKey: "side-plank",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Functional Strength",
+        description: "Progress to more demanding functional exercises when Phase 2 is well tolerated.",
+        exercises: [
+          {
+            name: "Sit-to-Stand",
+            why: "Restores functional strength and tolerance for daily activity.",
+            instructions: [
+              "Sit near the front of a chair.",
+              "Feet hip-width apart.",
+              "Lean trunk forward slightly.",
+              "Stand up without pushing off with the hands if possible.",
+              "Sit down slowly.",
+            ],
+            dose: "2–4 sets × 8–15 reps, every other day",
+            commonMistakes: ["Using momentum to stand", "Pushing off with the hands when not needed", "Not controlling the descent"],
+            easierVersion: "Use a higher chair or push off lightly with hands.",
+            harderVersion: "Use a lower chair or hold a light weight.",
+            equipmentNeeded: "Chair",
+            imageKey: "sit-to-stand",
+          },
+        ],
+      },
+    ],
+    progressionRules: [
+      ...DEFAULT_PROGRESSION_RULES,
+      "Bridge: hold longer → bridge march → single-leg bridge only if excellent control.",
+      "Bird dog: arm only or leg only → full bird dog → longer hold.",
+      "Side plank from knees: longer hold → full side plank from feet.",
+    ],
+    flareUpRules: [
+      ...DEFAULT_FLARE_UP_RULES,
+      "Temporary soreness is acceptable. If pain begins radiating farther down the leg, causes marked guarding, or clearly worsens the next day, reduce the dose or seek reassessment.",
+    ],
+    expectedTimeline: "Some symptom improvement may occur within 2 to 6 weeks. Strength and endurance changes often take 6 to 12 weeks or longer.",
+    seekAssessment: [
+      "Pain spreading farther down the leg",
+      "Progressive weakness or numbness",
+      "Bowel or bladder changes",
+      "Symptoms not improving after 6–8 weeks of consistent effort",
+    ],
+    requiredEquipment: ["Chair"],
+    optionalEquipment: ["Exercise mat"],
+    noEquipmentAlternative: "All exercises can be done on the floor or with household furniture.",
+    urgentSigns: [
+      "New bowel or bladder change",
+      "Saddle numbness",
+      "Progressive leg weakness",
+      "Rapidly worsening numbness",
+    ],
+    programAudit: "Consistent with low back pain exercise guideline principles emphasizing exercise, trunk training, walking, and progressive return to activity.",
   },
 
-  // 2. Rotator Cuff–Related Shoulder Pain
+  // ───────────────────────────────────────────────────────────
+  // 2. ROTATOR CUFF–RELATED SHOULDER PAIN
+  // ───────────────────────────────────────────────────────────
   {
     id: "rcrsp",
-    condition: "Rotator Cuff–Related Shoulder Pain / Subacromial Pain",
+    condition: "Rotator Cuff–Related Shoulder Pain",
     goal: "Improve rotator cuff and scapular strength, reduce pain with elevation, and restore reaching and lifting tolerance.",
-    description: "Modern umbrella term that includes many cases previously labeled 'shoulder impingement.' Exercise therapy is first-line for subacromial/impingement-type shoulder pain.",
+    description: "Modern umbrella term that includes many cases previously labeled shoulder impingement. Exercise therapy is first-line treatment. Pain with lifting the arm does not by itself mean structural damage.",
     bodyRegion: "shoulder",
-    symptoms: ["pain lifting arm overhead", "pain reaching behind back", "shoulder ache at night", "pain with pushing or lifting"],
-    exercises: [
-      {
-        name: "Isometric External Rotation at Wall",
-        why: "Often useful when the shoulder is irritable, because it loads the cuff without much movement.",
-        instructions: [
-          "Stand with elbow bent to 90° and tucked at your side.",
-          "Place the back of your hand against a wall or door frame.",
-          "Gently push outward without moving the arm.",
-          "Hold 20 to 30 seconds.",
-          "Relax."
-        ],
-        dose: "4–5 holds, once or twice daily",
-        painRule: "Aim for tolerable discomfort only. Pain should not spike afterward.",
-        imageKey: "isometric-ext-rotation"
-      },
-      {
-        name: "Band External Rotation",
-        why: "Strengthens the rotator cuff dynamically.",
-        instructions: [
-          "Attach a band at elbow height.",
-          "Stand sideways to the anchor.",
-          "Keep a towel or your elbow lightly against your side.",
-          "Rotate the forearm outward.",
-          "Return slowly."
-        ],
-        dose: "3 sets × 10–15 reps, every other day",
-        keyCues: ["Elbow stays by the side.", "Shoulder stays down, not shrugged."],
-        imageKey: "band-ext-rotation"
-      },
-      {
-        name: "Scaption Raise",
-        why: "A common strengthening pattern for impingement-type and rotator cuff–related pain.",
-        instructions: [
-          "Hold a light weight.",
-          "Raise the arm about 30° forward from your side.",
-          "Keep the thumb up or neutral.",
-          "Lift only to a tolerable height, often shoulder height or below at first.",
-          "Lower slowly."
-        ],
-        dose: "2–3 sets × 8–12 reps, every other day",
-        keyCues: ["Stay below painful range at first."],
-        imageKey: "scaption-raise"
-      },
-      {
-        name: "Row with Band",
-        why: "Improves scapular support and posterior shoulder control.",
-        instructions: [
-          "Attach a band at chest height.",
-          "Pull elbows back close to the body.",
-          "Gently squeeze shoulder blades together.",
-          "Return slowly."
-        ],
-        dose: "3 sets × 10–15 reps, every other day",
-        imageKey: "band-row"
-      },
-      {
-        name: "Wall Push-Up Plus",
-        why: "Helps serratus anterior and upward-rotation mechanics.",
-        instructions: [
-          "Stand facing a wall with hands on the wall.",
-          "Perform a wall push-up.",
-          "At the top, push slightly farther so the shoulder blades glide forward.",
-          "Return with control."
-        ],
-        dose: "2–3 sets × 10–15 reps, every other day",
-        imageKey: "wall-pushup-plus"
-      },
-      {
-        name: "Codman Pendulum",
-        why: "Gentle movement to reduce stiffness and pain in the early/irritable phase.",
-        instructions: [
-          "Lean over a table, supporting yourself with the uninvolved arm.",
-          "Let the affected arm hang freely.",
-          "Use your torso to swing the arm in a clockwise circle.",
-          "Repeat in a counter-clockwise circle."
-        ],
-        dose: "50 reps each direction, twice daily",
-        keyCues: ["Let gravity do the work — keep the arm relaxed.", "Do not actively lift the arm."],
-        imageKey: "pendulum"
-      },
-      {
-        name: "YTWL Scapular Depression",
-        why: "Strengthens scapular stabilisers through multiple planes of movement.",
-        instructions: [
-          "Stand with straight arms raised above your head in a 'Y' position.",
-          "Squeeze shoulder blades together and downward.",
-          "Lower arms to shoulder level into a 'T' position.",
-          "Bend elbows so fingers point up, making a 'W'.",
-          "Lower elbows to your sides to form an 'L' and squeeze."
-        ],
-        dose: "3 sets × 10 reps, twice daily",
-        keyCues: ["Hold each position 1–2 seconds.", "Keep shoulder blades squeezed throughout."],
-        imageKey: "ytwl-scapular"
-      },
-      {
-        name: "Glenohumeral Internal Rotation Stretch",
-        why: "Restores internal rotation range, often limited in impingement presentations.",
-        instructions: [
-          "Sit with good posture.",
-          "Place the affected arm behind your back and reach toward the opposite hip.",
-          "Using the unaffected arm, gently pull the wrist further toward the opposite hip.",
-          "Pull gently to the point of tightness — stop if you feel sharp pain."
-        ],
-        dose: "10 reps, once per hour or as directed",
-        keyCues: ["Each pull should be slow and controlled.", "A stretch should be felt in the shoulder."],
-        imageKey: "gh-internal-rotation"
-      },
-      {
-        name: "Corner Pectoral Stretch",
-        why: "Opens the chest and anterior shoulder, counteracting forward shoulder posture.",
-        instructions: [
-          "Stand facing a corner with forearms on each wall, elbows at shoulder height.",
-          "Lean gently into the corner until a stretch is felt across the chest.",
-          "Hold 20–30 seconds.",
-          "Return to start."
-        ],
-        dose: "3–5 holds, twice daily",
-        keyCues: ["Keep elbows at or below shoulder height.", "Do not arch the lower back."],
-        imageKey: "corner-pec-stretch"
-      },
-      {
-        name: "Brugger with Band",
-        why: "Promotes scapular retraction and posterior chain activation to counteract impingement mechanics.",
-        instructions: [
-          "Sit or stand with an elastic band wrapped around your palms.",
-          "Begin with arms at your side, elbows bent, forearms forward.",
-          "Move hands apart to stretch the band while rotating palms out.",
-          "Straighten arms and pinch shoulder blades together as hands move behind hips.",
-          "Return to start."
-        ],
-        dose: "3 sets × 10 reps, daily",
-        imageKey: "brugger-band"
-      }
+    symptoms: ["pain lifting arm overhead", "pain reaching behind back", "shoulder ache at night", "pain with pushing or lifting", "shoulder impingement"],
+    bestFor: "People with gradual-onset shoulder pain aggravated by reaching, lifting, or overhead activity.",
+    notFor: [
+      "Traumatic inability to lift the arm",
+      "Suspected dislocation",
+      "Major sudden loss of active motion after injury",
+      "Marked weakness after trauma",
     ],
-    programAudit: "Consistent with modern RCRSP/subacromial pain guidance using exercise as first-line care."
+    selfManagementAdvice: [
+      "Pain with lifting the arm does not by itself mean structural damage.",
+      "Use symptom-guided loading and avoid painful shrugging or major compensation.",
+      "Modify aggravating tasks temporarily rather than stopping all activity.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Pain Management & Early Loading",
+        description: "Focus on reducing irritability with isometric loading and gentle movement.",
+        exercises: [
+          {
+            name: "Isometric External Rotation at Wall",
+            why: "Often useful when the shoulder is irritable, because it loads the cuff without much movement.",
+            instructions: [
+              "Stand with elbow bent to 90° and tucked at your side.",
+              "Place the back of your hand against a wall or door frame.",
+              "Gently push outward without moving the arm.",
+              "Hold 20 to 45 seconds.",
+              "Relax.",
+            ],
+            dose: "4–5 holds, once or twice daily",
+            commonMistakes: ["Shrugging the shoulder", "Pushing too hard", "Moving the arm away from the body"],
+            easierVersion: "Shorter holds of 10–15 seconds with less effort.",
+            harderVersion: "Increase effort gradually while maintaining comfort.",
+            equipmentNeeded: "Wall or door frame",
+            painRule: "Aim for tolerable discomfort only. Pain should not spike afterward.",
+            imageKey: "isometric-ext-rotation",
+          },
+          {
+            name: "Wall Slide",
+            why: "Helps regain shoulder elevation in an assisted, controlled way.",
+            instructions: [
+              "Face a wall.",
+              "Place forearms or hands on the wall.",
+              "Slide arms upward as high as comfortable.",
+              "Pause 1 to 2 seconds.",
+              "Slide back down slowly.",
+            ],
+            dose: "2–3 sets × 8–12 reps, daily",
+            commonMistakes: ["Shrugging the shoulders", "Arching the lower back", "Forcing through pain"],
+            easierVersion: "Slide only partway up within a comfortable range.",
+            harderVersion: "Increase range as tolerated.",
+            equipmentNeeded: "Wall",
+            imageKey: "wall-slide",
+          },
+          {
+            name: "Row with Band",
+            why: "Improves scapular support and posterior shoulder control.",
+            instructions: [
+              "Attach a band at chest height.",
+              "Pull elbows back close to the body.",
+              "Gently squeeze shoulder blades together.",
+              "Return slowly.",
+            ],
+            dose: "2–3 sets × 10–15 reps, every other day",
+            commonMistakes: ["Shrugging during the pull", "Using momentum", "Not controlling the return"],
+            easierVersion: "Use a lighter band.",
+            harderVersion: "Use a heavier band or add a pause at the end.",
+            equipmentNeeded: "Resistance band and anchor point",
+            imageKey: "band-row",
+          },
+          {
+            name: "Codman Pendulum",
+            why: "Gentle movement that can help reduce stiffness and pain in the early irritable phase. Optional — use only if it helps.",
+            instructions: [
+              "Lean over a table, supporting yourself with the uninvolved arm.",
+              "Let the affected arm hang freely.",
+              "Use your torso to swing the arm in small circles.",
+              "Repeat clockwise and counterclockwise.",
+            ],
+            dose: "30–60 seconds each direction, 1–2 times daily",
+            commonMistakes: ["Actively lifting the arm instead of letting it hang", "Making circles too large"],
+            easierVersion: "Smaller circles with less body sway.",
+            harderVersion: "Not applicable — this is a gentle mobility exercise.",
+            equipmentNeeded: "Table or counter for support",
+            imageKey: "pendulum",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Strength & Capacity",
+        description: "Progress when Phase 1 exercises are comfortable and symptoms are settling.",
+        exercises: [
+          {
+            name: "Band External Rotation",
+            why: "Strengthens the rotator cuff dynamically through its primary stabilizing action.",
+            instructions: [
+              "Attach a band at elbow height.",
+              "Stand sideways to the anchor.",
+              "Keep elbow lightly against your side.",
+              "Rotate the forearm outward.",
+              "Return slowly.",
+            ],
+            dose: "2–3 sets × 10–15 reps, every other day",
+            keyCues: ["Elbow stays by the side.", "Shoulder stays down, not shrugged."],
+            commonMistakes: ["Elbow drifting away from the body", "Shrugging", "Using momentum"],
+            easierVersion: "Lighter band, smaller range.",
+            harderVersion: "Heavier band or side-lying external rotation with a light dumbbell.",
+            equipmentNeeded: "Resistance band",
+            imageKey: "band-ext-rotation",
+          },
+          {
+            name: "Scaption Raise",
+            why: "A commonly used strengthening pattern for rotator cuff–related shoulder pain.",
+            instructions: [
+              "Hold a light weight.",
+              "Raise the arm about 30° forward from your side.",
+              "Keep the thumb up or neutral.",
+              "Lift only to a tolerable height, often shoulder height or below at first.",
+              "Lower slowly.",
+            ],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Shrugging the shoulder", "Lifting too high too soon", "Using momentum"],
+            easierVersion: "No weight, smaller range of motion.",
+            harderVersion: "Gradually increase weight or range.",
+            equipmentNeeded: "Light dumbbell or water bottle",
+            imageKey: "scaption-raise",
+          },
+          {
+            name: "Wall Push-Up Plus",
+            why: "Helps serratus anterior activation and supports upward-rotation mechanics.",
+            instructions: [
+              "Stand facing a wall with hands on the wall.",
+              "Perform a wall push-up.",
+              "At the top, push slightly farther so the shoulder blades glide forward.",
+              "Return with control.",
+            ],
+            dose: "2–3 sets × 10–15 reps, every other day",
+            commonMistakes: ["Flaring the elbows wide", "Not adding the 'plus' at the end", "Arching the lower back"],
+            easierVersion: "Stand closer to the wall.",
+            harderVersion: "Progress to incline push-up plus on a counter or bench.",
+            equipmentNeeded: "Wall",
+            imageKey: "wall-pushup-plus",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Functional Return",
+        description: "Progress when Phase 2 exercises are well controlled and daily tasks are improving.",
+        exercises: [
+          {
+            name: "Row with Band",
+            why: "Continued scapular and posterior shoulder strengthening for functional reach and carry.",
+            instructions: [
+              "Attach a band at chest height.",
+              "Pull elbows back close to the body.",
+              "Squeeze shoulder blades together.",
+              "Return slowly.",
+            ],
+            dose: "3–4 sets × 10–15 reps, every other day",
+            commonMistakes: ["Rounding the shoulders forward", "Using body momentum"],
+            easierVersion: "Lighter band.",
+            harderVersion: "Heavier band, single-arm row, or dumbbell row.",
+            equipmentNeeded: "Resistance band",
+            imageKey: "band-row",
+          },
+        ],
+      },
+    ],
+    progressionRules: DEFAULT_PROGRESSION_RULES,
+    flareUpRules: DEFAULT_FLARE_UP_RULES,
+    expectedTimeline: "Some symptom improvement may occur within 2 to 6 weeks. Full strength recovery often takes 8 to 12 weeks or longer.",
+    seekAssessment: [
+      "No improvement after 6–8 weeks of consistent effort",
+      "Sudden marked weakness",
+      "Significant night pain not improving",
+      "Traumatic onset with major loss of motion",
+    ],
+    requiredEquipment: ["Resistance band"],
+    optionalEquipment: ["Light dumbbell or water bottle", "Door anchor for band"],
+    noEquipmentAlternative: "Wall slides and isometric exercises can be done without bands. Use a water bottle or can as a light weight.",
+    urgentSigns: [
+      "Traumatic inability to lift the arm",
+      "Suspected dislocation",
+      "Major sudden loss of active motion after injury",
+      "Marked weakness after trauma",
+    ],
+    programAudit: "Consistent with modern RCRSP/subacromial pain guidance using exercise as first-line care.",
   },
 
-  // 3. Rotator Cuff Tear
+  // ───────────────────────────────────────────────────────────
+  // 3. ROTATOR CUFF TEAR (CONSERVATIVE)
+  // ───────────────────────────────────────────────────────────
   {
     id: "rc-tear",
-    condition: "Rotator Cuff Tear",
+    condition: "Rotator Cuff Tear (Conservative Management)",
     goal: "Maintain or improve shoulder function, rebuild tolerable strength, and support daily reaching and lifting within safe limits.",
-    description: "For symptomatic small to medium full-thickness rotator cuff tears, both physical therapy and operative treatment can improve outcomes. Tear size and muscle changes can progress over time with nonoperative care.",
+    description: "This program is best suited for symptomatic rotator cuff tears being managed conservatively and still allowing some active arm control. Acute traumatic loss of active elevation, sudden marked weakness, or inability to raise the arm after injury needs medical assessment.",
     bodyRegion: "shoulder",
-    symptoms: ["weakness lifting arm", "pain at rest or at night", "difficulty reaching overhead", "loss of strength with rotation"],
-    exercises: [
-      {
-        name: "Assisted Shoulder Flexion with Stick",
-        why: "Helps maintain elevation range without requiring full active cuff strength.",
-        instructions: [
-          "Lie on your back holding a stick or cane with both hands.",
-          "Use the unaffected arm to help lift the affected arm overhead.",
-          "Go only into a tolerable range.",
-          "Return slowly."
-        ],
-        dose: "2–3 sets × 8–12 reps, daily",
-        imageKey: "assisted-flexion-stick"
-      },
-      {
-        name: "Isometric External Rotation at Wall",
-        why: "Low-motion cuff loading can be a good starting point in a painful tear presentation.",
-        instructions: [
-          "Stand with elbow bent to 90° and tucked at your side.",
-          "Place the back of the hand against a wall.",
-          "Gently press outward without moving the arm.",
-          "Hold 10 to 20 seconds.",
-          "Relax."
-        ],
-        dose: "4–5 holds, once daily",
-        imageKey: "isometric-ext-rotation"
-      },
-      {
-        name: "Isometric Abduction at Wall",
-        why: "Allows some deltoid/cuff loading without repeated painful overhead motion.",
-        instructions: [
-          "Stand side-on beside a wall.",
-          "Keep the elbow bent and arm at your side.",
-          "Press the outside of the upper arm gently into the wall.",
-          "Do not let the arm move.",
-          "Hold 10 to 20 seconds."
-        ],
-        dose: "4–5 holds, once daily",
-        imageKey: "isometric-abduction"
-      },
-      {
-        name: "Band Row",
-        why: "Helps scapular control and posterior shoulder support, which can improve function even when the cuff is torn.",
-        instructions: [
-          "Attach a band at chest height.",
-          "Pull elbows backward close to your body.",
-          "Gently squeeze shoulder blades together.",
-          "Return slowly."
-        ],
-        dose: "3 sets × 10–15 reps, every other day",
-        imageKey: "band-row"
-      },
-      {
-        name: "Scaption to Tolerated Range",
-        why: "Helps rebuild functional elevation carefully, staying within a range that does not sharply provoke symptoms.",
-        instructions: [
-          "Hold no weight or a very light weight.",
-          "Raise the arm in the scapular plane, about 30° forward from your side.",
-          "Lift only as high as you can without a painful shrug or major compensation.",
-          "Lower slowly."
-        ],
-        dose: "2–3 sets × 6–10 reps, every other day",
-        important: "Marked weakness, sudden loss of active elevation, traumatic onset, or inability to lift the arm after injury warrants medical assessment.",
-        imageKey: "scaption-raise"
-      },
-      {
-        name: "YTWL Scapular Depression",
-        why: "Strengthens scapular stabilisers through multiple planes, supporting shoulder function even with a torn cuff.",
-        instructions: [
-          "Stand with straight arms raised above your head in a 'Y' position.",
-          "Squeeze shoulder blades together and downward.",
-          "Lower arms to shoulder level into a 'T' position.",
-          "Bend elbows so fingers point up, making a 'W'.",
-          "Lower elbows to your sides to form an 'L' and squeeze."
-        ],
-        dose: "3 sets × 10 reps, twice daily",
-        keyCues: ["Hold each position 1–2 seconds.", "Keep shoulder blades squeezed throughout."],
-        imageKey: "ytwl-scapular"
-      },
-      {
-        name: "Glenohumeral Internal Rotation Stretch",
-        why: "Restores internal rotation range that is often restricted with rotator cuff pathology.",
-        instructions: [
-          "Sit with good posture.",
-          "Place the affected arm behind your back and reach toward the opposite hip.",
-          "Using the unaffected arm, gently pull the wrist further toward the opposite hip.",
-          "Pull gently to the point of tightness — stop if you feel sharp pain."
-        ],
-        dose: "10 reps, once per hour or as directed",
-        keyCues: ["Each pull should be slow and controlled.", "A stretch should be felt in the shoulder."],
-        imageKey: "gh-internal-rotation"
-      },
-      {
-        name: "Corner Pectoral Stretch",
-        why: "Opens the chest and anterior shoulder to improve posture and reduce compressive load on the cuff.",
-        instructions: [
-          "Stand facing a corner with forearms on each wall, elbows at shoulder height.",
-          "Lean gently into the corner until a stretch is felt across the chest.",
-          "Hold 20–30 seconds.",
-          "Return to start."
-        ],
-        dose: "3–5 holds, twice daily",
-        keyCues: ["Keep elbows at or below shoulder height.", "Do not arch the lower back."],
-        imageKey: "corner-pec-stretch"
-      },
-      {
-        name: "Eccentric Supraspinatus",
-        why: "Targets the supraspinatus with a slow lowering phase to build tendon capacity.",
-        instructions: [
-          "Stand holding a weight with your arm outstretched at a 45° angle in front of you at shoulder level.",
-          "Thumb should be pointing down.",
-          "Slowly lower the weight to your thigh at a count of 4 seconds.",
-          "Use your other arm to return the weight to the starting position."
-        ],
-        dose: "3 sets × 10 reps, daily",
-        keyCues: ["Control the lowering — 4 seconds down.", "Only the lowering phase uses the affected arm."],
-        imageKey: "eccentric-supraspinatus"
-      },
-      {
-        name: "Eccentric Scapular Stabilizers",
-        why: "Builds eccentric scapular control to support shoulder mechanics during reaching and lifting.",
-        instructions: [
-          "Lie on your side holding a weight with your arm outstretched toward the ceiling.",
-          "Slowly lower the weight to the floor at a count of 4 seconds.",
-          "Return your arm to the starting position by keeping it close to your body."
-        ],
-        dose: "3 sets × 10 reps, daily",
-        keyCues: ["Focus on the slow lowering phase.", "Keep the movement controlled throughout."],
-        imageKey: "eccentric-scapular-stabilizers"
-      },
-      {
-        name: "Eccentric Teres Minor and Infraspinatus",
-        why: "Eccentrically loads the external rotators to improve tendon resilience and rotational strength.",
-        instructions: [
-          "Lie on your side with arm on your rib cage, elbow bent to 90°, forearm pointing up.",
-          "Slowly lower the weight toward the floor at a count of 4 seconds.",
-          "Use your other arm to return the weight to the starting position."
-        ],
-        dose: "3 sets × 10 reps, daily",
-        keyCues: ["Keep the elbow on your ribs throughout.", "Only the lowering phase uses the affected arm."],
-        imageKey: "eccentric-teres-infraspinatus"
-      }
+    symptoms: ["weakness lifting arm", "pain at rest or at night", "difficulty reaching overhead", "loss of strength with rotation", "rotator cuff tear"],
+    bestFor: "People with symptomatic rotator cuff tears who retain some active arm control and are managing conservatively.",
+    notFor: [
+      "Acute traumatic loss of active elevation",
+      "Sudden marked weakness or inability to raise the arm after injury",
+      "Suspected dislocation",
     ],
-    programAudit: "Consistent with AAOS guidance distinguishing tear management from tendinopathy and supporting PT as a valid option for many symptomatic tears."
+    selfManagementAdvice: [
+      "Many rotator cuff tears respond well to exercise-based rehabilitation.",
+      "Avoid repeatedly forcing through sharp pain, but gentle movement is encouraged.",
+      "Modify heavy overhead tasks temporarily while rebuilding tolerance.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Assisted Mobility & Isometric Loading",
+        description: "Gentle assisted movement and isometric cuff loading to maintain range and reduce pain.",
+        exercises: [
+          {
+            name: "Assisted Shoulder Flexion with Stick",
+            why: "Helps maintain elevation range without requiring full active cuff strength.",
+            instructions: [
+              "Lie on your back holding a stick or cane with both hands.",
+              "Use the unaffected arm to help lift the affected arm overhead.",
+              "Go only into a tolerable range.",
+              "Return slowly.",
+            ],
+            dose: "2–3 sets × 8–12 reps, daily",
+            commonMistakes: ["Forcing through sharp pain", "Lifting too fast", "Not letting the good arm assist enough"],
+            easierVersion: "Smaller range of motion.",
+            harderVersion: "Increase range as tolerated.",
+            equipmentNeeded: "Stick, cane, or broom handle",
+            imageKey: "assisted-flexion-stick",
+          },
+          {
+            name: "Isometric External Rotation at Wall",
+            why: "Low-motion cuff loading — a useful starting point in a painful tear presentation.",
+            instructions: [
+              "Stand with elbow bent to 90° and tucked at your side.",
+              "Place the back of the hand against a wall.",
+              "Gently press outward without moving the arm.",
+              "Hold 20 to 45 seconds.",
+              "Relax.",
+            ],
+            dose: "4–5 holds, once daily",
+            commonMistakes: ["Shrugging the shoulder", "Moving the arm away from the body"],
+            easierVersion: "Shorter holds with less effort.",
+            harderVersion: "Gradually increase effort.",
+            equipmentNeeded: "Wall",
+            imageKey: "isometric-ext-rotation",
+          },
+          {
+            name: "Isometric Abduction at Wall",
+            why: "Allows some deltoid and cuff loading without repeated painful overhead motion.",
+            instructions: [
+              "Stand side-on beside a wall.",
+              "Keep the elbow bent and arm at your side.",
+              "Press the outside of the upper arm gently into the wall.",
+              "Do not let the arm move.",
+              "Hold 20 to 45 seconds.",
+            ],
+            dose: "4–5 holds, once daily",
+            commonMistakes: ["Leaning into the wall", "Shrugging the shoulder"],
+            easierVersion: "Shorter holds with lighter pressure.",
+            harderVersion: "Increase hold duration.",
+            equipmentNeeded: "Wall",
+            imageKey: "isometric-abduction",
+          },
+          {
+            name: "Band Row",
+            why: "Supports scapular control and posterior shoulder function, which can improve function even when the cuff is torn.",
+            instructions: [
+              "Attach a band at chest height.",
+              "Pull elbows backward close to your body.",
+              "Gently squeeze shoulder blades together.",
+              "Return slowly.",
+            ],
+            dose: "2–3 sets × 10–15 reps, every other day",
+            commonMistakes: ["Shrugging during the pull", "Using momentum"],
+            easierVersion: "Lighter band.",
+            harderVersion: "Heavier band.",
+            equipmentNeeded: "Resistance band",
+            imageKey: "band-row",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Light Dynamic Strengthening",
+        description: "Progress when isometric exercises are comfortable and assisted range is improving.",
+        exercises: [
+          {
+            name: "Band External Rotation",
+            why: "Gentle dynamic cuff loading once isometrics are well tolerated.",
+            instructions: [
+              "Attach a band at elbow height.",
+              "Keep elbow at your side.",
+              "Rotate the forearm outward against the band.",
+              "Return slowly.",
+            ],
+            dose: "2–3 sets × 10–12 reps, every other day",
+            commonMistakes: ["Elbow drifting away from body", "Shrugging"],
+            easierVersion: "Very light band, smaller range.",
+            harderVersion: "Slightly heavier band.",
+            equipmentNeeded: "Resistance band",
+            imageKey: "band-ext-rotation",
+          },
+          {
+            name: "Scaption to Tolerated Range",
+            why: "Rebuilds functional elevation carefully within a range that does not sharply provoke symptoms.",
+            instructions: [
+              "Hold no weight or a very light weight.",
+              "Raise the arm about 30° forward from your side.",
+              "Lift only as high as you can without a painful shrug or major compensation.",
+              "Lower slowly.",
+            ],
+            dose: "2–3 sets × 6–10 reps, every other day",
+            commonMistakes: ["Shrugging to compensate", "Lifting too high too soon"],
+            easierVersion: "No weight, very small range.",
+            harderVersion: "Gradually increase range and add very light weight.",
+            equipmentNeeded: "None or very light weight",
+            important: "Marked weakness, sudden loss of active elevation, or traumatic onset warrants medical assessment.",
+            imageKey: "scaption-raise",
+          },
+          {
+            name: "Wall Push-Up Plus",
+            why: "Helps serratus anterior and scapular mechanics without heavy loading.",
+            instructions: [
+              "Stand facing a wall with hands on the wall.",
+              "Perform a wall push-up.",
+              "At the top, push slightly farther so the shoulder blades glide forward.",
+              "Return with control.",
+            ],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Flaring elbows wide", "Arching the lower back"],
+            easierVersion: "Smaller range push-up.",
+            harderVersion: "Incline push-up plus on a counter.",
+            equipmentNeeded: "Wall",
+            imageKey: "wall-pushup-plus",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Functional Carry & Reach",
+        description: "Progress when Phase 2 strength work is well tolerated and daily function is improving.",
+        exercises: [
+          {
+            name: "Band Row",
+            why: "Continued scapular strengthening for functional carrying and reaching.",
+            instructions: [
+              "Attach a band at chest height.",
+              "Pull elbows back, squeeze shoulder blades.",
+              "Return slowly.",
+            ],
+            dose: "3 sets × 12–15 reps, every other day",
+            commonMistakes: ["Rounding shoulders", "Using momentum"],
+            easierVersion: "Lighter band.",
+            harderVersion: "Heavier band or single-arm row.",
+            equipmentNeeded: "Resistance band",
+            imageKey: "band-row",
+          },
+        ],
+      },
+    ],
+    progressionRules: DEFAULT_PROGRESSION_RULES,
+    flareUpRules: DEFAULT_FLARE_UP_RULES,
+    expectedTimeline: "Some symptom improvement may occur within 4 to 8 weeks. Functional recovery often takes 3 to 6 months.",
+    seekAssessment: [
+      "No improvement after 8–12 weeks",
+      "Worsening weakness",
+      "Sudden loss of active elevation",
+      "Significant night pain not improving",
+    ],
+    requiredEquipment: ["Resistance band", "Stick or cane"],
+    optionalEquipment: ["Very light dumbbell"],
+    noEquipmentAlternative: "Isometric exercises and wall slides can be done without equipment.",
+    urgentSigns: [
+      "Traumatic inability to lift the arm",
+      "Sudden marked weakness after injury",
+      "Suspected dislocation",
+    ],
+    programAudit: "Consistent with guidance supporting conservative management with PT as a valid option for many symptomatic rotator cuff tears.",
   },
 
-  // 4. Knee Osteoarthritis
+  // ───────────────────────────────────────────────────────────
+  // 4. KNEE OSTEOARTHRITIS
+  // ───────────────────────────────────────────────────────────
   {
     id: "knee-oa",
     condition: "Knee Osteoarthritis",
-    goal: "Improve quadriceps, hip strength, and functional capacity.",
-    description: "Strengthening is a cornerstone treatment for knee OA and improves pain and function.",
+    goal: "Improve quadriceps and hip strength, reduce pain, and restore functional capacity for daily activities.",
+    description: "Strengthening is a cornerstone treatment for knee OA. Temporary discomfort during exercise is often acceptable if symptoms settle back near baseline by the next day.",
     bodyRegion: "knee",
-    symptoms: ["knee stiffness", "pain going up/down stairs", "knee swelling", "grinding or crepitus", "difficulty squatting"],
-    exercises: [
-      {
-        name: "Seated Knee Extension",
-        why: "Targets quadriceps directly.",
-        instructions: ["Sit tall in a chair.", "Straighten one knee until the leg is level.", "Pause 1 to 2 seconds.", "Lower slowly."],
-        dose: "3 sets × 10–15 reps per leg, every other day",
-        progression: "Add ankle weight if tolerated.",
-        imageKey: "seated-knee-ext"
-      },
-      {
-        name: "Sit-to-Stand",
-        why: "Functional quadriceps strengthening.",
-        instructions: ["Sit near the edge of a chair.", "Feet under knees.", "Lean forward slightly.", "Stand up.", "Sit down slowly."],
-        dose: "3 sets × 8–15 reps, every other day",
-        regression: "Use hands lightly or use a higher chair.",
-        imageKey: "sit-to-stand"
-      },
-      {
-        name: "Straight Leg Raise",
-        why: "Builds quadriceps strength with low knee motion.",
-        instructions: ["Lie on your back.", "Bend one knee and keep the other straight.", "Tighten the front of the thigh on the straight leg.", "Lift to the height of the other knee.", "Lower slowly."],
-        dose: "3 sets × 8–12 reps per side, every other day",
-        imageKey: "straight-leg-raise"
-      },
-      {
-        name: "Step-Up",
-        why: "Adds functional quadriceps and hip work.",
-        instructions: ["Use a low step.", "Step up with the affected leg.", "Fully straighten the knee and hip.", "Step down slowly."],
-        dose: "2–3 sets × 8–12 reps per side, every other day",
-        painRule: "Tolerable discomfort is okay. Joint swelling or pain flare lasting more than 24 hours means reduce load.",
-        imageKey: "step-up"
-      },
-      {
-        name: "Side-Lying Hip Abduction",
-        why: "Improves hip support for knee mechanics.",
-        instructions: ["Lie on your side with bottom knee bent for balance.", "Keep top leg straight.", "Lift the top leg about 20 to 30 cm.", "Lower slowly."],
-        dose: "2–3 sets × 10–15 reps per side, every other day",
-        keyCues: ["Toes point forward.", "Do not roll backward."],
-        imageKey: "hip-abduction"
-      }
+    symptoms: ["knee stiffness", "pain going up/down stairs", "knee swelling", "grinding or crepitus", "difficulty squatting", "knee osteoarthritis"],
+    bestFor: "People with knee osteoarthritis who want to manage pain, improve strength, and maintain daily function.",
+    notFor: [
+      "Major swelling, deformity, or locking",
+      "Inability to bear weight after trauma",
+      "Suspected fracture",
     ],
-    programAudit: "Consistent with OA guidance prioritizing strengthening and function."
+    selfManagementAdvice: [
+      "Walking or cycling are excellent complementary activities for knee OA.",
+      "Temporary discomfort during exercise is often acceptable if symptoms settle back near baseline by the next day.",
+      "Swelling that lasts more than 24 hours after exercise means reduce the load.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Low-Load Strengthening",
+        description: "Begin with gentle quadriceps and hip work to build a base of strength.",
+        exercises: [
+          {
+            name: "Quad Set",
+            why: "Activates the quadriceps with minimal joint stress.",
+            instructions: ["Sit or lie with the leg straight.", "Tighten the front of the thigh by pressing the knee gently downward.", "Hold 5 seconds.", "Relax."],
+            dose: "2–3 sets × 10 reps, daily",
+            commonMistakes: ["Not tightening enough", "Holding the breath"],
+            easierVersion: "Place a small towel under the knee to push into.",
+            harderVersion: "Add a straight leg raise after the quad set.",
+            equipmentNeeded: "None",
+            imageKey: "quad-set",
+          },
+          {
+            name: "Straight Leg Raise",
+            why: "Builds quadriceps strength with low knee-joint motion.",
+            instructions: ["Lie on your back.", "Bend one knee and keep the other straight.", "Tighten the front of the thigh on the straight leg.", "Lift to the height of the other knee.", "Lower slowly."],
+            dose: "2–3 sets × 8–12 reps per side, every other day",
+            commonMistakes: ["Letting the knee bend during the lift", "Lifting too fast"],
+            easierVersion: "Smaller range of motion.",
+            harderVersion: "Add an ankle weight.",
+            equipmentNeeded: "None",
+            imageKey: "straight-leg-raise",
+          },
+          {
+            name: "Seated Knee Extension",
+            why: "Targets quadriceps directly with controllable range.",
+            instructions: ["Sit tall in a chair.", "Straighten one knee until the leg is level.", "Pause 1 to 2 seconds.", "Lower slowly."],
+            dose: "2–3 sets × 10–15 reps per leg, every other day",
+            commonMistakes: ["Swinging the leg", "Not sitting tall"],
+            easierVersion: "Smaller range of motion.",
+            harderVersion: "Add an ankle weight.",
+            equipmentNeeded: "Chair",
+            imageKey: "seated-knee-ext",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Functional Strength",
+        description: "Progress when Phase 1 exercises are comfortable and swelling is manageable.",
+        exercises: [
+          {
+            name: "Sit-to-Stand",
+            why: "Highly functional quadriceps and hip strengthening for everyday activities.",
+            instructions: ["Sit near the edge of a chair.", "Feet under knees.", "Lean forward slightly.", "Stand up.", "Sit down slowly."],
+            dose: "2–4 sets × 8–15 reps, every other day",
+            commonMistakes: ["Using momentum", "Pushing off with hands when not needed"],
+            easierVersion: "Use hands lightly or a higher chair.",
+            harderVersion: "Lower chair or hold a light weight.",
+            equipmentNeeded: "Chair",
+            imageKey: "sit-to-stand",
+          },
+          {
+            name: "Step-Up",
+            why: "Adds functional quadriceps and hip work with a more demanding pattern.",
+            instructions: ["Use a low step.", "Step up with the affected leg.", "Fully straighten the knee and hip.", "Step down slowly."],
+            dose: "2–3 sets × 8–12 reps per side, every other day",
+            commonMistakes: ["Pushing off with the back leg", "Knee collapsing inward"],
+            easierVersion: "Lower step or hold support.",
+            harderVersion: "Higher step or hold light weights.",
+            equipmentNeeded: "Low step or sturdy platform",
+            painRule: "Tolerable discomfort is okay. Joint swelling or pain flare lasting more than 24 hours means reduce load.",
+            imageKey: "step-up",
+          },
+          {
+            name: "Side-Lying Hip Abduction",
+            why: "Improves hip support for knee mechanics and pelvic control.",
+            instructions: ["Lie on your side with bottom knee bent for balance.", "Keep top leg straight.", "Lift the top leg about 20 to 30 cm.", "Lower slowly."],
+            dose: "2–3 sets × 10–15 reps per side, every other day",
+            keyCues: ["Toes point forward.", "Do not roll backward."],
+            commonMistakes: ["Rolling the pelvis backward", "Lifting too high", "Rotating the toes upward"],
+            easierVersion: "Smaller range of motion.",
+            harderVersion: "Add an ankle weight or loop band.",
+            equipmentNeeded: "None",
+            imageKey: "hip-abduction",
+          },
+        ],
+      },
+    ],
+    progressionRules: [
+      ...DEFAULT_PROGRESSION_RULES,
+      "Sit-to-stand: higher chair → standard chair → lower chair → add load.",
+      "Step-up: low step → higher step → add load.",
+    ],
+    flareUpRules: [
+      ...DEFAULT_FLARE_UP_RULES,
+      "Swelling lasting more than 24 hours after exercise means reduce load or volume.",
+    ],
+    expectedTimeline: "Some symptom improvement may occur within 2 to 6 weeks. Strength and functional changes often take 6 to 12 weeks.",
+    seekAssessment: [
+      "Significant new swelling",
+      "Locking or catching",
+      "Inability to bear weight",
+      "No improvement after 8 weeks of consistent effort",
+    ],
+    requiredEquipment: ["Chair", "Low step"],
+    optionalEquipment: ["Ankle weight", "Loop band"],
+    noEquipmentAlternative: "All exercises can be performed with body weight and household furniture.",
+    urgentSigns: [
+      "Inability to bear weight after trauma",
+      "Major swelling, deformity, or locking",
+    ],
+    programAudit: "Consistent with OA guidance prioritizing strengthening and function.",
   },
 
-  // 5. Neck Pain
+  // ───────────────────────────────────────────────────────────
+  // 5. NON-SPECIFIC NECK PAIN
+  // ───────────────────────────────────────────────────────────
   {
     id: "neck-pain",
-    condition: "Neck Pain",
+    condition: "Non-Specific Neck Pain",
     goal: "Improve deep neck flexor endurance, scapular support, and neck/shoulder loading tolerance.",
     description: "Exercise is a core part of guideline-based care for many forms of neck pain, especially when combined with progressive strengthening and endurance work.",
     bodyRegion: "neck",
-    symptoms: ["neck stiffness", "headache from the neck", "pain turning the head", "tension across the shoulders", "pain with computer work"],
-    exercises: [
-      {
-        name: "Chin Tuck",
-        why: "Targets deep neck flexors and helps reduce forward-head loading.",
-        instructions: ["Lie on your back or sit upright.", "Gently draw your chin straight backward, as if making a 'double chin.'", "Keep your eyes level.", "Hold 5 seconds.", "Relax."],
-        dose: "2–3 sets × 8–12 reps, daily",
-        keyCues: ["Do not nod up or down.", "The motion is small."],
-        imageKey: "chin-tuck"
-      },
-      {
-        name: "Chin Tuck with Head Lift",
-        why: "Progresses deep neck flexor endurance.",
-        instructions: ["Lie on your back with knees bent.", "Perform a chin tuck.", "Keeping the chin tucked, lift your head 1 to 2 cm off the floor.", "Hold 3 to 5 seconds.", "Lower slowly."],
-        dose: "2 sets × 5–8 reps, every other day",
-        regression: "Do chin tucks only.",
-        imageKey: "chin-tuck-lift"
-      },
-      {
-        name: "Band Row",
-        why: "Supports scapular and upper thoracic posture.",
-        instructions: ["Attach a band at chest height.", "Hold the ends with arms straight.", "Pull elbows back.", "Gently squeeze shoulder blades together.", "Return slowly."],
-        dose: "3 sets × 10–15 reps, every other day",
-        imageKey: "band-row"
-      },
-      {
-        name: "Wall Slide",
-        why: "Improves shoulder blade upward rotation and upper-quarter control.",
-        instructions: ["Stand with forearms on a wall.", "Keep light pressure into the wall.", "Slide arms upward as high as comfortable.", "Lower slowly."],
-        dose: "2–3 sets × 8–12 reps, every other day",
-        imageKey: "wall-slide"
-      },
-      {
-        name: "Isometric Neck Extension",
-        why: "Builds neck strength without large movement.",
-        instructions: ["Sit upright.", "Place both hands on the back of your head.", "Press your head gently backward into your hands without moving.", "Hold 5 to 10 seconds.", "Relax."],
-        dose: "5 holds, once daily",
-        stopIf: "Arm numbness increases, dizziness appears, or symptoms worsen and stay aggravated beyond 24 hours.",
-        imageKey: "isometric-neck-ext"
-      }
+    symptoms: ["neck stiffness", "headache from the neck", "pain turning the head", "tension across the shoulders", "pain with computer work", "neck pain"],
+    bestFor: "People with gradual-onset or persistent neck pain without major neurologic signs.",
+    notFor: [
+      "Progressive arm weakness",
+      "Rapidly worsening numbness",
+      "Signs of spinal cord compression",
+      "Major trauma",
     ],
-    programAudit: "Consistent with neck-pain guideline recommendations favoring exercise and progressive strengthening/endurance."
+    selfManagementAdvice: [
+      "Frequent position changes are more important than any single posture.",
+      "Gentle neck movement throughout the day is generally helpful.",
+      "Avoid sustained end-range positions that clearly provoke symptoms.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Mobility & Deep Neck Flexor Activation",
+        description: "Focus on gentle movement and deep neck flexor engagement.",
+        exercises: [
+          {
+            name: "Chin Tuck",
+            why: "Targets deep neck flexors and can help reduce forward-head loading.",
+            instructions: ["Lie on your back or sit upright.", "Gently draw your chin straight backward, as if making a 'double chin.'", "Keep your eyes level.", "Hold 5 seconds.", "Relax."],
+            dose: "2–3 sets × 8–12 reps, daily",
+            keyCues: ["Do not nod up or down.", "The motion is small."],
+            commonMistakes: ["Nodding the head down", "Pushing too far", "Tensing the jaw"],
+            easierVersion: "Lying down with head supported.",
+            harderVersion: "Progress to chin tuck with head lift.",
+            equipmentNeeded: "None",
+            imageKey: "chin-tuck",
+          },
+          {
+            name: "Cervical Rotation Active Range of Motion",
+            why: "Maintains neck mobility and reduces stiffness in a comfortable range.",
+            instructions: ["Sit or stand upright.", "Slowly turn your head to one side as far as comfortable.", "Hold 2–3 seconds.", "Return to center and repeat to the other side."],
+            dose: "5–10 reps each direction, 1–2 times daily",
+            commonMistakes: ["Forcing into pain", "Rotating too quickly"],
+            easierVersion: "Smaller range of motion.",
+            harderVersion: "Gentle overpressure with hand at end range.",
+            equipmentNeeded: "None",
+            imageKey: "chin-tuck",
+          },
+          {
+            name: "Band Row",
+            why: "Supports scapular and upper thoracic posture.",
+            instructions: ["Attach a band at chest height.", "Hold the ends with arms straight.", "Pull elbows back.", "Gently squeeze shoulder blades together.", "Return slowly."],
+            dose: "2–3 sets × 10–15 reps, every other day",
+            commonMistakes: ["Shrugging during the pull", "Using momentum"],
+            easierVersion: "Lighter band.",
+            harderVersion: "Heavier band.",
+            equipmentNeeded: "Resistance band",
+            imageKey: "band-row",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Endurance & Strength",
+        description: "Progress when Phase 1 exercises are comfortable.",
+        exercises: [
+          {
+            name: "Chin Tuck with Head Lift",
+            why: "Progresses deep neck flexor endurance.",
+            instructions: ["Lie on your back with knees bent.", "Perform a chin tuck.", "Keeping the chin tucked, lift your head 1 to 2 cm off the floor.", "Hold 3 to 5 seconds.", "Lower slowly."],
+            dose: "2 sets × 5–8 reps, every other day",
+            commonMistakes: ["Lifting too high", "Losing the chin tuck", "Holding the breath"],
+            easierVersion: "Chin tucks without the head lift.",
+            harderVersion: "Longer holds of 8–10 seconds.",
+            equipmentNeeded: "None",
+            imageKey: "chin-tuck-lift",
+          },
+          {
+            name: "Wall Slide",
+            why: "Improves shoulder blade upward rotation and upper-quarter control.",
+            instructions: ["Stand with forearms on a wall.", "Keep light pressure into the wall.", "Slide arms upward as high as comfortable.", "Lower slowly."],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Shrugging the shoulders", "Arching the lower back"],
+            easierVersion: "Smaller range of motion.",
+            harderVersion: "Full range wall slide.",
+            equipmentNeeded: "Wall",
+            imageKey: "wall-slide",
+          },
+          {
+            name: "Isometric Neck Extension",
+            why: "Builds neck extensor strength without large movement. Optional — part of multidirectional strengthening.",
+            instructions: ["Sit upright.", "Place both hands on the back of your head.", "Press your head gently backward into your hands without moving.", "Hold 5 to 10 seconds.", "Relax."],
+            dose: "4–5 holds, once daily",
+            commonMistakes: ["Pressing too hard", "Moving the head"],
+            easierVersion: "Lighter pressure, shorter holds.",
+            harderVersion: "Add isometrics in other directions (sidebend, rotation).",
+            equipmentNeeded: "None",
+            stopIf: "Arm numbness increases, dizziness appears, or symptoms worsen and stay aggravated beyond 24 hours.",
+            imageKey: "isometric-neck-ext",
+          },
+        ],
+      },
+    ],
+    progressionRules: DEFAULT_PROGRESSION_RULES,
+    flareUpRules: DEFAULT_FLARE_UP_RULES,
+    expectedTimeline: "Some symptom improvement may occur within 2 to 6 weeks. Strength and endurance changes often take 6 to 12 weeks.",
+    seekAssessment: [
+      "Progressive arm numbness or weakness",
+      "Dizziness or unsteadiness",
+      "Severe headaches not improving",
+      "Symptoms not improving after 6–8 weeks",
+    ],
+    requiredEquipment: [],
+    optionalEquipment: ["Resistance band"],
+    noEquipmentAlternative: "All exercises can be done without equipment.",
+    urgentSigns: [
+      "Progressive arm weakness",
+      "Rapidly worsening numbness",
+      "New bowel or bladder changes",
+      "Unsteady gait or major balance decline",
+    ],
+    programAudit: "Consistent with neck-pain guideline recommendations favoring exercise and progressive strengthening/endurance.",
   },
 
-  // 6. Lumbar Radiculopathy / Sciatica
+  // ───────────────────────────────────────────────────────────
+  // 6. LUMBAR RADICULOPATHY / SCIATICA
+  // ───────────────────────────────────────────────────────────
   {
     id: "sciatica",
     condition: "Lumbar Radiculopathy / Sciatica",
-    goal: "Reduce nerve-root irritation sensitivity, restore trunk/hip support, and improve walking and function.",
-    description: "Recent guideline reviews support conservative care first in most cases, with education, activity, and exercise commonly emphasized.",
+    goal: "Reduce nerve-root irritation sensitivity, restore trunk and hip support, and improve walking and function.",
+    description: "Guideline reviews support conservative care first in most cases. Continue movements that reduce leg pain intensity or move symptoms upward toward the back. Stop movements that spread symptoms farther down the leg.",
     bodyRegion: "lower-back",
-    symptoms: ["leg pain or tingling", "shooting pain down the leg", "numbness in the leg or foot", "pain worse with sitting", "low back pain with radiation"],
-    exercises: [
-      {
-        name: "Prone Lying on Elbows",
-        why: "Often helps people whose leg pain centralizes with extension-based positions.",
-        instructions: ["Lie on your stomach.", "Prop onto your elbows.", "Let your low back relax into the position.", "Hold 30 to 60 seconds.", "Repeat."],
-        dose: "5–6 holds, 1–3 times daily",
-        important: "Continue only if leg pain moves upward out of the leg or becomes less intense. Stop if symptoms travel farther down the leg.",
-        imageKey: "prone-on-elbows"
-      },
-      {
-        name: "Standing Lumbar Extension",
-        why: "Extension loading can help some radicular presentations.",
-        instructions: ["Stand with feet shoulder-width apart.", "Place hands on hips.", "Gently bend backward.", "Return to neutral."],
-        dose: "1–2 sets × 10 reps, 2–4 times daily",
-        important: "Use only if symptoms improve or centralize.",
-        imageKey: "standing-extension"
-      },
-      {
-        name: "Sciatic Nerve Slider",
-        why: "May improve neural mobility without aggressive stretching.",
-        instructions: ["Sit tall near the edge of a chair.", "Straighten one knee while looking slightly upward.", "Then bend the knee back down while looking slightly downward.", "Move smoothly, not forcefully."],
-        dose: "1–2 sets × 10 reps per side, daily",
-        keyCues: ["This is a glide, not a hard stretch.", "Stop if it produces a lingering flare."],
-        imageKey: "nerve-slider"
-      },
-      {
-        name: "Bridge",
-        why: "Improves glute support and reduces repeated spinal strain.",
-        instructions: ["Lie on your back with knees bent.", "Tighten glutes and gently brace the abdomen.", "Lift hips to form a straight line from shoulders to knees.", "Hold 2 to 3 seconds.", "Lower slowly."],
-        dose: "3 sets × 8–12 reps, every other day",
-        imageKey: "bridge"
-      },
-      {
-        name: "Bird Dog",
-        why: "Improves trunk control with relatively low spinal motion.",
-        instructions: ["Start on hands and knees.", "Reach one leg back and the opposite arm forward.", "Keep pelvis level.", "Hold 3 seconds.", "Return and switch."],
-        dose: "2–3 sets × 6–8 reps per side, every other day",
-        imageKey: "bird-dog"
-      }
+    symptoms: ["leg pain or tingling", "shooting pain down the leg", "numbness in the leg or foot", "pain worse with sitting", "low back pain with radiation", "sciatica"],
+    bestFor: "People with low back–related leg pain who can manage symptoms with activity modification and exercise.",
+    notFor: [
+      "Progressive weakness or foot drop",
+      "Bowel or bladder changes",
+      "Saddle numbness",
+      "Severe unremitting pain not responding to any position",
     ],
-    urgentSigns: ["Progressive weakness", "Bowel or bladder changes", "Saddle numbness", "Severe unremitting pain"],
-    programAudit: "Aligned with guideline reviews favoring initial conservative management and exercise-based rehabilitation for many radicular presentations."
+    selfManagementAdvice: [
+      "Short, frequent walks can often help more than prolonged rest.",
+      "Continue movements that reduce leg pain intensity or move symptoms upward toward the back.",
+      "Stop movements that spread symptoms farther down the leg.",
+      "Some people feel better with flexion (bending forward), others with extension (arching back). Follow your symptom response.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Symptom Relief & Gentle Movement",
+        description: "Find positions and movements that reduce leg symptoms. Use short frequent walks.",
+        exercises: [
+          {
+            name: "Sciatic Nerve Slider",
+            why: "Can help improve neural mobility without aggressive stretching.",
+            instructions: ["Sit tall near the edge of a chair.", "Straighten one knee while looking slightly upward.", "Then bend the knee back down while looking slightly downward.", "Move smoothly, not forcefully."],
+            dose: "1–2 sets × 10 reps per side, daily",
+            keyCues: ["This is a glide, not a hard stretch.", "Stop if it produces a lingering flare."],
+            commonMistakes: ["Stretching too aggressively", "Holding at end range", "Bouncing"],
+            easierVersion: "Smaller range of motion.",
+            harderVersion: "Slightly greater knee extension as tolerated.",
+            equipmentNeeded: "Chair",
+            imageKey: "nerve-slider",
+          },
+          {
+            name: "Prone Lying on Elbows",
+            why: "Often helps people whose leg pain centralizes or reduces with extension-based positions. Optional — use only if it clearly helps.",
+            instructions: ["Lie on your stomach.", "Prop onto your elbows.", "Let your low back relax into the position.", "Hold 30 to 60 seconds.", "Repeat."],
+            dose: "5–6 holds, 1–3 times daily",
+            commonMistakes: ["Tensing the low back muscles", "Forcing the position when it worsens symptoms"],
+            easierVersion: "Lie flat on your stomach without propping up.",
+            harderVersion: "Press up onto hands (McKenzie press-up) only if symptoms improve.",
+            equipmentNeeded: "None",
+            important: "Continue only if leg pain moves upward out of the leg or becomes less intense. Stop if symptoms travel farther down the leg.",
+            imageKey: "prone-on-elbows",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Trunk & Hip Support",
+        description: "Progress when acute leg symptoms are settling and movement is more comfortable.",
+        exercises: [
+          {
+            name: "Bridge",
+            why: "Improves glute support and reduces repeated spinal strain.",
+            instructions: ["Lie on your back with knees bent.", "Tighten glutes and gently brace the abdomen.", "Lift hips to form a straight line from shoulders to knees.", "Hold 2 to 3 seconds.", "Lower slowly."],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Arching the low back", "Pushing through the toes"],
+            easierVersion: "Smaller range.",
+            harderVersion: "Hold for 5 seconds or add march.",
+            equipmentNeeded: "None",
+            imageKey: "bridge",
+          },
+          {
+            name: "Bird Dog",
+            why: "Improves trunk control with relatively low spinal motion.",
+            instructions: ["Start on hands and knees.", "Reach one leg back and the opposite arm forward.", "Keep pelvis level.", "Hold 3 seconds.", "Return and switch."],
+            dose: "2–3 sets × 6–8 reps per side, every other day",
+            commonMistakes: ["Rotating the pelvis", "Lifting too high"],
+            easierVersion: "Move only the arm or only the leg.",
+            harderVersion: "Longer holds.",
+            equipmentNeeded: "None",
+            imageKey: "bird-dog",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Functional Return",
+        description: "Progress when trunk exercises are comfortable and walking tolerance is improving.",
+        exercises: [
+          {
+            name: "Sit-to-Stand",
+            why: "Restores functional strength for daily activities.",
+            instructions: ["Sit near the front of a chair.", "Stand up without pushing off.", "Sit down slowly."],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Using momentum", "Avoiding the movement out of fear"],
+            easierVersion: "Use hands for assistance.",
+            harderVersion: "Lower chair or add weight.",
+            equipmentNeeded: "Chair",
+            imageKey: "sit-to-stand",
+          },
+        ],
+      },
+    ],
+    progressionRules: DEFAULT_PROGRESSION_RULES,
+    flareUpRules: [
+      ...DEFAULT_FLARE_UP_RULES,
+      "If leg symptoms spread farther down the leg during an exercise, stop that exercise and seek reassessment if it persists.",
+    ],
+    expectedTimeline: "Many radicular episodes improve within 6 to 12 weeks. Some take longer. Progressive neurologic changes need urgent review.",
+    seekAssessment: [
+      "Progressive weakness or foot drop",
+      "Bowel or bladder changes",
+      "Saddle numbness",
+      "Severe unremitting pain",
+      "No improvement after 6–8 weeks",
+    ],
+    requiredEquipment: ["Chair"],
+    optionalEquipment: ["Exercise mat"],
+    noEquipmentAlternative: "All exercises can be done on the floor.",
+    urgentSigns: [
+      "Progressive weakness or foot drop",
+      "Bowel or bladder changes",
+      "Saddle numbness",
+      "Severe unremitting pain",
+    ],
+    programAudit: "Aligned with guideline reviews favoring initial conservative management and exercise-based rehabilitation for many radicular presentations.",
   },
 
-  // 7. Patellofemoral Pain
+  // ───────────────────────────────────────────────────────────
+  // 7. PATELLOFEMORAL PAIN (merged)
+  // ───────────────────────────────────────────────────────────
   {
     id: "patellofemoral",
     condition: "Patellofemoral Pain",
-    goal: "Improve hip and knee strength, reduce patellofemoral joint stress, and restore stair/squat tolerance.",
-    description: "The strongest exercise recommendations emphasize combined hip and knee strengthening, which performs better than knee-only approaches.",
+    goal: "Improve hip and knee strength, reduce patellofemoral joint stress, and restore stair, squat, and activity tolerance.",
+    description: "The strongest exercise recommendations emphasize combined hip and knee strengthening, which performs better than knee-only approaches. Pain-guided progressive loading is the foundation.",
     bodyRegion: "knee",
-    symptoms: ["pain around or behind the kneecap", "pain going up/down stairs", "pain with squatting", "pain after prolonged sitting", "knee gives way feeling"],
-    exercises: [
-      {
-        name: "Side-Lying Hip Abduction",
-        why: "Strengthens gluteus medius to improve femur control.",
-        instructions: ["Lie on your side.", "Bottom knee bent for balance.", "Top leg straight, toes pointing forward.", "Lift top leg 20 to 30 cm.", "Lower slowly."],
-        dose: "3 sets × 12–15 reps per side, every other day",
-        imageKey: "hip-abduction"
-      },
-      {
-        name: "Clamshell",
-        why: "Targets posterolateral hip muscles.",
-        instructions: ["Lie on your side with hips and knees bent.", "Keep feet together.", "Lift the top knee without rolling pelvis backward.", "Lower slowly."],
-        dose: "3 sets × 12–15 reps per side, every other day",
-        imageKey: "clamshell"
-      },
-      {
-        name: "Sit-to-Stand",
-        why: "Functional quadriceps strengthening.",
-        instructions: ["Sit near the edge of a chair.", "Feet hip-width apart.", "Lean slightly forward.", "Stand up.", "Sit down slowly."],
-        dose: "3 sets × 8–15 reps, every other day",
-        painRule: "Mild discomfort is acceptable. Keep pain during exercise at a manageable level.",
-        imageKey: "sit-to-stand"
-      },
-      {
-        name: "Step-Down from Low Step",
-        why: "Improves eccentric knee control.",
-        instructions: ["Stand on a low step.", "Slowly lower the opposite heel toward the floor.", "Keep the knee aligned over the middle of the foot.", "Return to start."],
-        dose: "2–3 sets × 8–12 reps per side, every other day",
-        regression: "Use a lower step or hold support lightly.",
-        imageKey: "step-down"
-      },
-      {
-        name: "Wall Sit",
-        why: "Develops quadriceps endurance.",
-        instructions: ["Stand with back against a wall.", "Slide down into a partial squat.", "Knees remain behind or roughly over mid-foot.", "Hold 15 to 30 seconds.", "Stand back up."],
-        dose: "4–5 holds, every other day",
-        important: "Avoid deep painful squats and repeated stairs/hills if they flare symptoms badly.",
-        imageKey: "wall-sit"
-      }
+    symptoms: ["pain around or behind the kneecap", "pain going up/down stairs", "pain with squatting", "pain after prolonged sitting", "knee gives way feeling", "anterior knee pain", "knee pain with running"],
+    bestFor: "People with gradual-onset pain around or behind the kneecap, especially with stairs, squats, or prolonged sitting.",
+    notFor: [
+      "Knee locking or giving way with major instability",
+      "Significant swelling with no clear cause",
+      "Inability to bear weight after trauma",
     ],
-    programAudit: "Consistent with patellofemoral pain CPGs emphasizing combined hip and knee strengthening."
+    selfManagementAdvice: [
+      "Temporarily modify stairs, hills, running, and deep knee flexion during flare-ups rather than stopping all activity.",
+      "Progressive loading is the most effective treatment — rest alone often does not resolve the problem.",
+      "Watch for knee tracking over middle toes, pelvis level, and trunk controlled during exercises.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Isometric & Low-Load Strengthening",
+        description: "Pain-modulating isometric holds and low-demand hip and knee exercises.",
+        exercises: [
+          {
+            name: "Spanish Squat or Wall Sit",
+            why: "Isometric quadriceps loading that can reduce pain and build early strength.",
+            instructions: [
+              "For a Spanish squat: lean back into a strap or band behind the knees and hold a squat position.",
+              "For a wall sit: lean against a wall and hold a seated position at a tolerable bend angle.",
+            ],
+            dose: "4–5 holds × 20–45 seconds, daily or before aggravating activity",
+            commonMistakes: ["Going too deep", "Holding the breath", "Letting knees collapse inward"],
+            easierVersion: "Shallower angle or wall sit with less bend.",
+            harderVersion: "Increase hold time or depth gradually.",
+            equipmentNeeded: "Wall; optional strap for Spanish squat",
+            painRule: "Pain should remain tolerable during and settle quickly after.",
+            imageKey: "spanish-squat",
+          },
+          {
+            name: "Straight Leg Raise",
+            why: "Strengthens the quadriceps without significant kneecap loading.",
+            instructions: ["Lie on your back with one knee bent and the affected leg straight.", "Tighten the thigh and lift the straight leg upward.", "Lower slowly."],
+            dose: "2–3 sets × 10–15 reps, every other day",
+            commonMistakes: ["Letting the knee bend", "Lifting too fast"],
+            easierVersion: "Smaller range of motion.",
+            harderVersion: "Add ankle weight.",
+            equipmentNeeded: "None",
+            imageKey: "straight-leg-raise",
+          },
+          {
+            name: "Clamshell",
+            why: "Targets posterolateral hip muscles to improve femur control.",
+            instructions: ["Lie on your side with hips and knees bent.", "Keep feet together.", "Lift the top knee without rolling pelvis backward.", "Lower slowly."],
+            dose: "2–3 sets × 12–15 reps per side, every other day",
+            commonMistakes: ["Rolling the pelvis backward", "Lifting too high"],
+            easierVersion: "Smaller range of motion.",
+            harderVersion: "Add a loop band above the knees.",
+            equipmentNeeded: "None",
+            imageKey: "clamshell",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Functional Strength",
+        description: "Progress when Phase 1 exercises are comfortable and pain is manageable during daily activities.",
+        exercises: [
+          {
+            name: "Sit-to-Stand",
+            why: "Functional quadriceps and hip strengthening with controlled depth.",
+            instructions: ["Sit near the edge of a chair.", "Feet hip-width apart.", "Lean slightly forward.", "Stand up.", "Sit down slowly."],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            keyCues: ["Knee tracks over middle toes.", "Pelvis level.", "Push through heels."],
+            commonMistakes: ["Letting knees collapse inward", "Using momentum"],
+            easierVersion: "Higher chair, use hands.",
+            harderVersion: "Lower chair, hold weight.",
+            equipmentNeeded: "Chair",
+            imageKey: "sit-to-stand",
+          },
+          {
+            name: "Step-Down from Low Step",
+            why: "Improves eccentric knee control in a functional pattern.",
+            instructions: ["Stand on a low step.", "Slowly lower the opposite heel toward the floor.", "Keep the knee aligned over the middle of the foot.", "Return to start."],
+            dose: "2–3 sets × 8–12 reps per side, every other day",
+            commonMistakes: ["Knee collapsing inward", "Pelvis dropping", "Going too fast"],
+            easierVersion: "Use a lower step or hold support lightly.",
+            harderVersion: "Higher step.",
+            equipmentNeeded: "Low step",
+            imageKey: "step-down",
+          },
+          {
+            name: "Side-Lying Hip Abduction",
+            why: "Strengthens gluteus medius to improve femur control and pelvic stability.",
+            instructions: ["Lie on your side.", "Bottom knee bent for balance.", "Top leg straight, toes pointing forward.", "Lift top leg 20 to 30 cm.", "Lower slowly."],
+            dose: "2–3 sets × 12–15 reps per side, every other day",
+            commonMistakes: ["Rolling backward", "Rotating the toes upward"],
+            easierVersion: "Smaller range of motion.",
+            harderVersion: "Add ankle weight or loop band.",
+            equipmentNeeded: "None",
+            imageKey: "hip-abduction",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Advanced Strength & Return to Activity",
+        description: "Progress when Phase 2 exercises are well controlled with good movement quality.",
+        exercises: [
+          {
+            name: "Forward Lunge or Split Squat",
+            why: "Progressive single-leg strengthening for functional return.",
+            instructions: ["Take a step forward or stagger the stance and lower under control.", "Use a shallow range initially.", "Keep the knee aligned over the foot."],
+            dose: "2–3 sets × 6–10 reps per side, every other day",
+            commonMistakes: ["Knee collapsing inward", "Going too deep too soon"],
+            easierVersion: "Shallow range, hold support.",
+            harderVersion: "Increase depth, add weight.",
+            equipmentNeeded: "None",
+            painRule: "Reduce range if sharp kneecap pain occurs.",
+            imageKey: "split-squat",
+          },
+        ],
+      },
+    ],
+    progressionRules: [
+      ...DEFAULT_PROGRESSION_RULES,
+      "Isometric hold → sit-to-stand → split squat → step-down → single-leg squat pattern.",
+    ],
+    flareUpRules: DEFAULT_FLARE_UP_RULES,
+    expectedTimeline: "Some symptom improvement may occur within 2 to 6 weeks. Full recovery often takes 8 to 12 weeks or longer.",
+    seekAssessment: [
+      "Knee locking or giving way",
+      "Significant new swelling",
+      "No improvement after 6–8 weeks",
+    ],
+    requiredEquipment: ["Chair", "Low step"],
+    optionalEquipment: ["Loop band", "Ankle weight", "Strap for Spanish squat"],
+    noEquipmentAlternative: "Wall sits replace Spanish squats. All other exercises use body weight.",
+    urgentSigns: [
+      "Knee locking or giving way",
+      "Significant swelling with no clear cause",
+      "Inability to bear weight",
+    ],
+    programAudit: "Consistent with patellofemoral pain guidelines emphasizing combined hip and knee strengthening with pain-guided loading.",
   },
 
-  // 8. Lateral Ankle Sprain
+  // ───────────────────────────────────────────────────────────
+  // 8. LATERAL ANKLE SPRAIN
+  // ───────────────────────────────────────────────────────────
   {
     id: "ankle-sprain",
     condition: "Lateral Ankle Sprain",
@@ -650,790 +1218,1924 @@ export const programs: Program[] = [
     description: "Updated guidance supports optimal loading, exercise, and balance/proprioceptive retraining rather than prolonged rest alone.",
     bodyRegion: "ankle-foot",
     symptoms: ["ankle swelling", "ankle instability", "pain with walking", "difficulty on uneven ground", "repeated ankle rolling"],
-    exercises: [
-      {
-        name: "Ankle Eversion with Band",
-        why: "Strengthens the peroneal muscles that help protect against inversion sprains.",
-        instructions: ["Sit with legs out.", "Loop a band around the forefoot.", "Anchor the other end inward.", "Turn the foot outward against resistance.", "Return slowly."],
-        dose: "3 sets × 12–15 reps, every other day",
-        imageKey: "ankle-eversion"
-      },
-      {
-        name: "Calf Raise",
-        why: "Restores ankle strength and push-off.",
-        instructions: ["Stand holding a counter if needed.", "Raise onto your toes.", "Pause 1 second.", "Lower slowly."],
-        dose: "3 sets × 10–15 reps, every other day",
-        progression: "Single-leg calf raises.",
-        imageKey: "calf-raise"
-      },
-      {
-        name: "Single-Leg Balance",
-        why: "Improves proprioception and recurrence prevention.",
-        instructions: ["Stand on the injured leg.", "Keep knee slightly soft.", "Hold balance 20 to 30 seconds.", "Repeat."],
-        dose: "4–5 holds, daily",
-        progression: "Eyes closed, unstable surface, head turns.",
-        imageKey: "single-leg-balance"
-      },
-      {
-        name: "Step-Up",
-        why: "Restores functional ankle/knee control.",
-        instructions: ["Step onto a low step with the injured side.", "Straighten fully.", "Step down with control."],
-        dose: "2–3 sets × 8–12 reps, every other day",
-        imageKey: "step-up"
-      },
-      {
-        name: "Lateral Band Walk",
-        why: "Supports frontal-plane control of the whole lower limb.",
-        instructions: ["Place a loop band around ankles or above knees.", "Slight bend in knees and hips.", "Step sideways slowly.", "Keep toes forward."],
-        dose: "2–3 sets × 8–12 steps each direction, every other day",
-        imageKey: "lateral-band-walk"
-      }
+    bestFor: "People recovering from a lateral ankle sprain who want to reduce recurrence risk and restore function.",
+    notFor: [
+      "Suspected fracture (marked bony tenderness, inability to bear weight)",
+      "Gross instability or locking",
     ],
-    urgentSigns: ["Unable to bear weight after several days", "Marked bony tenderness", "Locking, gross instability, or suspected fracture"],
-    programAudit: "Consistent with ankle-sprain CPGs supporting exercise, optimal loading, and balance retraining."
+    selfManagementAdvice: [
+      "Early comfortable loading (walking as tolerated) is generally better than prolonged immobilization.",
+      "Ankle dorsiflexion mobility work can help if the ankle feels stiff.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Early Loading & Mobility",
+        description: "Begin gentle loading and ankle mobility as swelling allows.",
+        exercises: [
+          {
+            name: "Ankle Eversion with Band",
+            why: "Strengthens the peroneal muscles that help protect against inversion sprains.",
+            instructions: ["Sit with legs out.", "Loop a band around the forefoot.", "Anchor the other end inward.", "Turn the foot outward against resistance.", "Return slowly."],
+            dose: "2–3 sets × 12–15 reps, every other day",
+            commonMistakes: ["Moving the whole leg instead of the ankle", "Going too fast"],
+            easierVersion: "Lighter band.",
+            harderVersion: "Heavier band.",
+            equipmentNeeded: "Resistance band",
+            imageKey: "ankle-eversion",
+          },
+          {
+            name: "Calf Raise",
+            why: "Restores ankle strength and push-off function.",
+            instructions: ["Stand holding a counter if needed.", "Raise onto your toes.", "Pause 1 second.", "Lower slowly."],
+            dose: "2–3 sets × 10–15 reps, every other day",
+            commonMistakes: ["Rising unevenly", "Not lowering slowly"],
+            easierVersion: "Double-leg with support.",
+            harderVersion: "Single-leg calf raises.",
+            equipmentNeeded: "Counter or chair for balance",
+            imageKey: "calf-raise",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Balance & Strength",
+        description: "Progress when comfortable walking and Phase 1 exercises are tolerated.",
+        exercises: [
+          {
+            name: "Single-Leg Balance",
+            why: "Improves proprioception and is one of the strongest recurrence prevention strategies.",
+            instructions: ["Stand on the injured leg.", "Keep knee slightly soft.", "Hold balance 20 to 45 seconds.", "Repeat."],
+            dose: "3–5 holds, daily",
+            commonMistakes: ["Locking the knee", "Looking down instead of forward"],
+            easierVersion: "Firm surface, eyes open, near a wall.",
+            harderVersion: "Head turns → eyes closed → unstable surface.",
+            equipmentNeeded: "None",
+            imageKey: "single-leg-balance",
+          },
+          {
+            name: "Step-Up",
+            why: "Restores functional ankle and knee control.",
+            instructions: ["Step onto a low step with the injured side.", "Straighten fully.", "Step down with control."],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Pushing off with the back leg", "Not controlling the step down"],
+            easierVersion: "Lower step.",
+            harderVersion: "Higher step, hold weights.",
+            equipmentNeeded: "Low step",
+            imageKey: "step-up",
+          },
+          {
+            name: "Lateral Band Walk",
+            why: "Supports frontal-plane control of the whole lower limb.",
+            instructions: ["Place a loop band around ankles or above knees.", "Slight bend in knees and hips.", "Step sideways slowly.", "Keep toes forward."],
+            dose: "2–3 sets × 8–12 steps each direction, every other day",
+            commonMistakes: ["Standing too upright", "Steps too large"],
+            easierVersion: "Band above knees.",
+            harderVersion: "Band at ankles, heavier band.",
+            equipmentNeeded: "Loop band",
+            imageKey: "lateral-band-walk",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Return to Activity",
+        description: "Progress when walking is comfortable, single-leg balance is controlled, and calf raises are well tolerated.",
+        exercises: [
+          {
+            name: "Single-Leg Balance — Advanced",
+            why: "Prepares the ankle for unpredictable loading during sport and daily life.",
+            instructions: ["Stand on the injured leg on an unstable surface or with eyes closed.", "Maintain balance for 20 to 45 seconds."],
+            dose: "3–5 holds, daily",
+            commonMistakes: ["Giving up too quickly", "Not challenging balance enough"],
+            easierVersion: "Firm surface with eyes closed.",
+            harderVersion: "Unstable surface with head turns or ball catch.",
+            equipmentNeeded: "Pillow or balance pad (optional)",
+            imageKey: "single-leg-balance",
+          },
+        ],
+      },
+    ],
+    progressionRules: [
+      ...DEFAULT_PROGRESSION_RULES,
+      "Balance: firm surface eyes open → head turns → eyes closed → unstable surface.",
+      "Return to running/sport when walking is comfortable, single-leg balance is controlled, calf raises are well tolerated, and hopping can be performed without a major flare.",
+    ],
+    flareUpRules: DEFAULT_FLARE_UP_RULES,
+    expectedTimeline: "Mild sprains may improve in 2 to 4 weeks. Moderate sprains often take 6 to 12 weeks for full activity return.",
+    seekAssessment: [
+      "Unable to bear weight after several days",
+      "Marked bony tenderness",
+      "Persistent instability",
+      "Not improving after 4–6 weeks",
+    ],
+    requiredEquipment: ["Resistance band"],
+    optionalEquipment: ["Loop band", "Low step", "Balance pad or pillow"],
+    noEquipmentAlternative: "Balance work and calf raises can be done without equipment.",
+    urgentSigns: [
+      "Unable to bear weight after several days",
+      "Marked bony tenderness",
+      "Gross instability or suspected fracture",
+    ],
+    programAudit: "Consistent with ankle-sprain guidelines supporting exercise, optimal loading, and balance retraining.",
   },
 
-  // 9. Achilles Tendinopathy
+  // ───────────────────────────────────────────────────────────
+  // 9. ACHILLES TENDINOPATHY (merged)
+  // ───────────────────────────────────────────────────────────
   {
     id: "achilles",
     condition: "Achilles Tendinopathy",
-    goal: "Progressively reload the tendon and improve calf capacity.",
-    description: "Current guidance identifies tendon-loading exercise as first-line treatment for midportion Achilles tendinopathy.",
+    goal: "Progressively reload the Achilles tendon and improve calf capacity for walking, stairs, and sport.",
+    description: "Tendon-loading exercise is first-line treatment. Next-day pain and stiffness are important load monitors. Use a controlled tempo, especially on the lowering phase.",
     bodyRegion: "lower-leg",
-    symptoms: ["pain at the back of the heel/ankle", "morning stiffness in the Achilles", "pain with walking or running", "tendon thickening or swelling"],
-    exercises: [
-      {
-        name: "Double-Leg Calf Raise",
-        why: "Initial loading when the tendon is irritable.",
-        instructions: ["Stand holding a support.", "Rise onto both toes.", "Pause 1 second.", "Lower slowly over 2 to 3 seconds."],
-        dose: "3 sets × 12–15 reps, every other day",
-        imageKey: "calf-raise"
-      },
-      {
-        name: "Single-Leg Calf Raise",
-        why: "Increases tendon and calf loading.",
-        instructions: ["Stand on the affected leg.", "Rise onto the toes.", "Lower slowly."],
-        dose: "3 sets × 6–12 reps, every other day",
-        regression: "Use both legs up, one leg down.",
-        imageKey: "single-leg-calf-raise"
-      },
-      {
-        name: "Bent-Knee Calf Raise",
-        why: "Adds more soleus emphasis.",
-        instructions: ["Stand holding support.", "Bend knees slightly.", "Rise onto the toes.", "Lower slowly."],
-        dose: "3 sets × 10–15 reps, every other day",
-        imageKey: "bent-knee-calf-raise"
-      },
-      {
-        name: "Eccentric Heel Drop from Step",
-        why: "A classic loading option for suitable patients.",
-        instructions: ["Stand on a step on both forefeet.", "Rise up with both feet.", "Shift weight to the affected side.", "Lower heel slowly below the step.", "Use both feet to come back up if needed."],
-        dose: "3 sets × 10–15 reps, every other day",
-        important: "Avoid if insertional Achilles pain is aggravated by dropping below step level.",
-        imageKey: "eccentric-heel-drop"
-      },
-      {
-        name: "Seated Calf Raise",
-        why: "Adds controlled load with less balance demand.",
-        instructions: ["Sit with feet flat.", "Place weight over knees if tolerated.", "Raise heels.", "Lower slowly."],
-        dose: "3 sets × 12–15 reps, every other day",
-        painRule: "Mild to moderate tendon discomfort during loading can be acceptable. Next-day pain and stiffness should stay manageable.",
-        imageKey: "seated-calf-raise"
-      }
+    symptoms: ["pain at the back of the heel/ankle", "morning stiffness in the Achilles", "pain with walking or running", "tendon thickening or swelling", "Achilles tendon pain", "pain on stairs"],
+    bestFor: "People with gradual-onset Achilles tendon pain aggravated by loading activities.",
+    notFor: [
+      "Sudden snap or pop with immediate weakness (possible rupture)",
+      "Inability to push off or stand on toes",
+      "Significant swelling or bruising around the ankle",
     ],
-    programAudit: "Consistent with 2024 Achilles CPGs prioritizing tendon-loading exercise."
+    selfManagementAdvice: [
+      "Rest alone is usually not enough — the tendon typically needs graded reloading.",
+      "Next-day pain and stiffness are your most important load monitors.",
+      "For insertional Achilles pain, avoid dropping the heel below step level early if that aggravates symptoms.",
+      "Use a controlled tempo, especially on the lowering phase.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Initial Loading",
+        description: "Begin with manageable bilateral loading or isometric holds.",
+        exercises: [
+          {
+            name: "Double-Leg Calf Raise",
+            why: "Initiates tendon loading at a manageable level using both legs.",
+            instructions: ["Stand holding a support.", "Rise onto both toes.", "Pause 1 second.", "Lower slowly over 2 to 3 seconds."],
+            dose: "3 sets × 12–15 reps, every other day",
+            commonMistakes: ["Rising unevenly", "Lowering too fast", "Not using full range"],
+            easierVersion: "Partial range or supported.",
+            harderVersion: "Single-leg calf raise.",
+            equipmentNeeded: "Counter or chair for balance",
+            painRule: "Some tendon discomfort is acceptable if it remains manageable and settles by the next day.",
+            imageKey: "calf-raise",
+          },
+          {
+            name: "Isometric Calf Raise Hold",
+            why: "Sustained tendon loading that can help with pain management.",
+            instructions: ["Rise onto the balls of both feet and hold the position.", "Keep weight evenly distributed."],
+            dose: "4–5 holds × 20–45 seconds, daily",
+            commonMistakes: ["Holding the breath", "Shifting weight to one side"],
+            easierVersion: "Both legs, shorter holds.",
+            harderVersion: "Single-leg holds.",
+            equipmentNeeded: "Counter or chair for balance",
+            imageKey: "calf-raise",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Progressive Calf Strengthening",
+        description: "Progress when Phase 1 is well tolerated and next-day symptoms are manageable.",
+        exercises: [
+          {
+            name: "Straight-Knee Calf Raise",
+            why: "Targets the gastrocnemius component for comprehensive tendon loading.",
+            instructions: ["Stand on the floor or edge of a step.", "Keeping the knee straight, rise up onto the ball of the foot.", "Pause and lower slowly."],
+            dose: "3–4 sets × 8–15 reps, every other day",
+            keyCues: ["Keep knee straight.", "Slow 3-second lower."],
+            commonMistakes: ["Bending the knee", "Rushing the lowering phase"],
+            easierVersion: "Double-leg.",
+            harderVersion: "Single-leg, then add weight.",
+            equipmentNeeded: "Step edge (optional)",
+            imageKey: "calf-raise",
+          },
+          {
+            name: "Bent-Knee Calf Raise",
+            why: "Adds soleus emphasis for deeper calf and tendon strengthening.",
+            instructions: ["Perform a calf raise with the knees slightly bent.", "Rise up, pause, and lower slowly."],
+            dose: "3–4 sets × 8–15 reps, every other day",
+            commonMistakes: ["Straightening the knees", "Not using full range"],
+            easierVersion: "Double-leg.",
+            harderVersion: "Single-leg or add weight.",
+            equipmentNeeded: "Counter for balance",
+            imageKey: "bent-knee-calf-raise",
+          },
+          {
+            name: "Seated Calf Raise",
+            why: "Adds controlled soleus load with less balance demand.",
+            instructions: ["Sit with feet flat.", "Place weight over knees if tolerated.", "Raise heels.", "Lower slowly."],
+            dose: "3 sets × 12–15 reps, every other day",
+            commonMistakes: ["Bouncing", "Not adding load when ready"],
+            easierVersion: "Body weight only.",
+            harderVersion: "Add weight on the knees.",
+            equipmentNeeded: "Chair; optional weight",
+            imageKey: "seated-calf-raise",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Heavy Loading & Single-Leg Progression",
+        description: "Progress when Phase 2 exercises are comfortable with good control.",
+        exercises: [
+          {
+            name: "Single-Leg Calf Raise",
+            why: "Increases tendon and calf loading toward functional demands.",
+            instructions: ["Stand on the affected leg.", "Rise onto the toes.", "Lower slowly."],
+            dose: "3–4 sets × 6–12 reps, every other day",
+            commonMistakes: ["Rushing", "Not using full range"],
+            easierVersion: "Use both legs up, one leg down.",
+            harderVersion: "Add external weight.",
+            equipmentNeeded: "Counter for balance",
+            imageKey: "single-leg-calf-raise",
+          },
+          {
+            name: "Eccentric Heel Drop from Step",
+            why: "A classic loading option for Achilles tendinopathy — loads the tendon eccentrically.",
+            instructions: ["Stand on a step on both forefeet.", "Rise up with both feet.", "Shift weight to the affected side.", "Lower heel slowly below the step.", "Use both feet to come back up."],
+            dose: "3 sets × 10–15 reps, every other day",
+            commonMistakes: ["Dropping too fast", "Not going below step level (unless insertional)"],
+            easierVersion: "Double-leg eccentric.",
+            harderVersion: "Add weight with a backpack.",
+            equipmentNeeded: "Step",
+            important: "Avoid dropping below step level if insertional Achilles pain is aggravated by this.",
+            imageKey: "eccentric-heel-drop",
+          },
+          {
+            name: "Heavy Slow Resistance Calf Raise",
+            why: "Progressive heavy loading to build tendon capacity and calf strength for return to activity.",
+            instructions: ["Perform calf raises slowly using added weight.", "Use both straight-knee and bent-knee versions.", "3 seconds up, 3 seconds down."],
+            dose: "3–4 sets × 6–8 reps, 3 days per week",
+            commonMistakes: ["Going too fast", "Too much weight too soon"],
+            easierVersion: "Lighter weight.",
+            harderVersion: "Increase weight gradually.",
+            equipmentNeeded: "Dumbbell, backpack, or machine",
+            painRule: "Load should be challenging but pain should remain tolerable.",
+            imageKey: "heavy-slow-calf-raise",
+          },
+        ],
+      },
+      {
+        name: "Phase 4: Return to Running & Sport",
+        description: "Progress when Phase 3 exercises are well controlled and daily activities are comfortable.",
+        exercises: [
+          {
+            name: "Single-Leg Calf Raise",
+            why: "Maintain strength as a foundation for energy-storage and running activities.",
+            instructions: ["Continue single-leg calf raises with added load as tolerated.", "Maintain 3 times per week."],
+            dose: "3–4 sets × 8–12 reps, 3 times per week",
+            commonMistakes: ["Dropping the exercise once running resumes"],
+            easierVersion: "Body weight single-leg.",
+            harderVersion: "Loaded single-leg.",
+            equipmentNeeded: "Weight (optional)",
+            imageKey: "single-leg-calf-raise",
+          },
+        ],
+      },
+    ],
+    progressionRules: [
+      ...DEFAULT_PROGRESSION_RULES,
+      "Double-leg calf raise → single-leg → loaded single-leg → heavy slow resistance.",
+      "Return to running when daily walking is comfortable and single-leg calf raises are well controlled.",
+    ],
+    flareUpRules: [
+      ...DEFAULT_FLARE_UP_RULES,
+      "If next-day morning stiffness is clearly worse than usual, reduce the previous session's load or volume.",
+    ],
+    expectedTimeline: "Strength and tendon capacity changes often take 6 to 12 weeks or longer. Some improvement may be noticeable within 3 to 6 weeks.",
+    seekAssessment: [
+      "Sudden snap or pop in the tendon",
+      "Inability to push off or stand on toes",
+      "No improvement after 8–12 weeks of consistent loading",
+    ],
+    requiredEquipment: ["Counter or chair for balance"],
+    optionalEquipment: ["Step", "Dumbbell or backpack for added weight"],
+    noEquipmentAlternative: "Body-weight calf raises can be done anywhere with a wall for balance.",
+    urgentSigns: [
+      "Sudden snap or pop in the tendon with immediate weakness",
+      "Inability to push off or stand on toes",
+      "Significant swelling or bruising around the ankle",
+    ],
+    programAudit: "Consistent with Achilles tendinopathy guidelines prioritizing progressive tendon-loading exercise, including eccentric and heavy slow resistance approaches.",
   },
 
-  // 10. Adhesive Capsulitis (Frozen Shoulder)
+  // ───────────────────────────────────────────────────────────
+  // 10. ADHESIVE CAPSULITIS / FROZEN SHOULDER
+  // ───────────────────────────────────────────────────────────
   {
     id: "frozen-shoulder",
     condition: "Adhesive Capsulitis (Frozen Shoulder)",
     goal: "Restore shoulder motion gradually, then rebuild shoulder strength as irritability settles.",
-    description: "The JOSPT clinical practice guideline supports staged, impairment-based management, including stretching/mobility and progressive exercise.",
+    description: "Frozen shoulder often improves slowly over months rather than days. Treatment is staged based on irritability — high irritability means gentle mobility within tolerance, not aggressive stretching.",
     bodyRegion: "shoulder",
-    symptoms: ["gradual loss of shoulder movement", "pain at end range of motion", "difficulty reaching overhead or behind back", "night pain", "stiffness that came on gradually"],
-    exercises: [
-      {
-        name: "Pendulum",
-        why: "Low-load movement that can help maintain motion when the shoulder is painful.",
-        instructions: ["Lean forward and support yourself with the other hand on a table.", "Let the affected arm hang relaxed.", "Gently sway your body to create small circles with the arm.", "Do circles clockwise and counterclockwise.", "Keep the shoulder relaxed."],
-        dose: "30–60 seconds × 2–3 rounds, 1–2 times daily",
-        imageKey: "pendulum"
-      },
-      {
-        name: "Assisted Flexion with Stick",
-        why: "Helps regain shoulder elevation with assistance rather than forcing through painful resistance.",
-        instructions: ["Lie on your back holding a stick or cane with both hands.", "Use the unaffected arm to help raise the affected arm overhead.", "Move only into tolerable stretch.", "Pause 2 to 3 seconds.", "Return slowly."],
-        dose: "2–3 sets × 8–12 reps, daily",
-        imageKey: "assisted-flexion-stick"
-      },
-      {
-        name: "External Rotation with Stick",
-        why: "External rotation is commonly limited in adhesive capsulitis and is a key target for restoring motion.",
-        instructions: ["Lie on your back or sit upright.", "Keep elbows close to your sides.", "Hold a stick with both hands.", "Use the unaffected side to gently rotate the affected forearm outward.", "Pause briefly, then return."],
-        dose: "2–3 sets × 8–12 reps, daily",
-        imageKey: "ext-rotation-stick"
-      },
-      {
-        name: "Wall Slide",
-        why: "Progresses active-assisted elevation and helps bridge toward active control.",
-        instructions: ["Face a wall.", "Place a towel under the affected hand if needed.", "Slide the hand upward as high as tolerable.", "Pause 1 to 2 seconds.", "Slide back down slowly."],
-        dose: "2–3 sets × 8–12 reps, daily",
-        imageKey: "wall-slide"
-      },
-      {
-        name: "Isometric External Rotation",
-        why: "Once motion work is tolerated, light isometrics can begin rebuilding cuff strength without large movement.",
-        instructions: ["Stand with elbow bent 90° and tucked at your side.", "Place the back of the hand against a wall or door frame.", "Gently push outward without moving the arm.", "Hold 10 to 20 seconds.", "Relax."],
-        dose: "4–5 holds, once daily",
-        painRule: "Frozen shoulder exercises should create a tolerable stretch, not a sharp flare. If pain or stiffness is clearly worse the next day, reduce range or volume.",
-        imageKey: "isometric-ext-rotation"
-      }
+    symptoms: ["gradual loss of shoulder movement", "pain at end range of motion", "difficulty reaching overhead or behind back", "night pain", "stiffness that came on gradually", "frozen shoulder"],
+    bestFor: "People with gradual-onset shoulder stiffness and loss of movement, especially if external rotation is significantly limited.",
+    notFor: [
+      "Traumatic inability to lift the arm",
+      "Suspected fracture or dislocation",
+      "Major sudden loss of motion after injury",
     ],
-    programAudit: "Aligned with the adhesive capsulitis CPG emphasizing staged exercise based on pain, mobility loss, and irritability."
+    selfManagementAdvice: [
+      "Frozen shoulder often improves slowly over months rather than days. Be patient.",
+      "When irritability is high, focus on gentle movement within tolerance, not aggressive stretching.",
+      "As stiffness improves and pain reduces, gradually increase stretch tolerance and strength work.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Gentle Mobility (High Irritability)",
+        description: "Focus on gentle movement within tolerance. Do not force through sharp pain.",
+        exercises: [
+          {
+            name: "Pendulum",
+            why: "Low-load movement that can help maintain motion when the shoulder is painful.",
+            instructions: ["Lean forward and support yourself with the other hand.", "Let the affected arm hang relaxed.", "Gently sway your body to create small circles.", "Repeat clockwise and counterclockwise.", "Keep the shoulder relaxed."],
+            dose: "30–60 seconds × 2–3 rounds, 1–2 times daily",
+            commonMistakes: ["Actively lifting the arm", "Making circles too large", "Tensing the shoulder"],
+            easierVersion: "Smaller circles.",
+            harderVersion: "Not applicable — this is a gentle mobility exercise.",
+            equipmentNeeded: "Table or counter for support",
+            imageKey: "pendulum",
+          },
+          {
+            name: "Assisted Flexion with Stick",
+            why: "Helps regain shoulder elevation with assistance rather than forcing through resistance.",
+            instructions: ["Lie on your back holding a stick with both hands.", "Use the unaffected arm to help raise the affected arm overhead.", "Move only into tolerable stretch.", "Pause 2 to 3 seconds.", "Return slowly."],
+            dose: "2–3 sets × 8–12 reps, daily",
+            commonMistakes: ["Forcing through sharp pain", "Moving too fast"],
+            easierVersion: "Smaller range of motion.",
+            harderVersion: "Increase range as tolerated.",
+            equipmentNeeded: "Stick, cane, or broom handle",
+            imageKey: "assisted-flexion-stick",
+          },
+          {
+            name: "External Rotation with Stick",
+            why: "External rotation is commonly limited in adhesive capsulitis and is a key target.",
+            instructions: ["Lie on your back or sit upright.", "Keep elbows close to your sides.", "Hold a stick with both hands.", "Use the unaffected side to gently rotate the affected forearm outward.", "Pause briefly, then return."],
+            dose: "2–3 sets × 8–12 reps, daily",
+            commonMistakes: ["Forcing into sharp pain", "Moving too fast"],
+            easierVersion: "Smaller range.",
+            harderVersion: "Increase range as tolerated.",
+            equipmentNeeded: "Stick or cane",
+            imageKey: "ext-rotation-stick",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Progressive Mobility & Early Strength",
+        description: "Progress when pain is settling and range of motion is gradually improving.",
+        exercises: [
+          {
+            name: "Wall Slide",
+            why: "Progresses active-assisted elevation toward active control.",
+            instructions: ["Face a wall.", "Place hands on the wall.", "Slide the hand upward as high as tolerable.", "Pause 1 to 2 seconds.", "Slide back down slowly."],
+            dose: "2–3 sets × 8–12 reps, daily",
+            commonMistakes: ["Shrugging", "Forcing past pain"],
+            easierVersion: "Smaller range.",
+            harderVersion: "Increase range progressively.",
+            equipmentNeeded: "Wall",
+            imageKey: "wall-slide",
+          },
+          {
+            name: "Isometric External Rotation",
+            why: "Light cuff loading to begin rebuilding strength without large movement.",
+            instructions: ["Stand with elbow bent 90° and tucked at your side.", "Place the back of the hand against a wall.", "Gently push outward without moving.", "Hold 20 to 45 seconds.", "Relax."],
+            dose: "4–5 holds, once daily",
+            commonMistakes: ["Shrugging", "Pushing too hard"],
+            easierVersion: "Lighter pressure, shorter holds.",
+            harderVersion: "Increase effort gradually.",
+            equipmentNeeded: "Wall",
+            painRule: "Frozen shoulder exercises should create a tolerable stretch, not a sharp flare. If pain or stiffness is clearly worse the next day, reduce range or volume.",
+            imageKey: "isometric-ext-rotation",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Strength & Function",
+        description: "Progress when range of motion is meaningfully improved and pain is well controlled.",
+        exercises: [
+          {
+            name: "Band External Rotation",
+            why: "Dynamic cuff strengthening once mobility and pain allow.",
+            instructions: ["Attach a band at elbow height.", "Keep elbow at your side.", "Rotate forearm outward.", "Return slowly."],
+            dose: "2–3 sets × 10–12 reps, every other day",
+            commonMistakes: ["Elbow drifting away", "Shrugging"],
+            easierVersion: "Very light band.",
+            harderVersion: "Heavier band.",
+            equipmentNeeded: "Resistance band",
+            imageKey: "band-ext-rotation",
+          },
+        ],
+      },
+    ],
+    progressionRules: DEFAULT_PROGRESSION_RULES,
+    flareUpRules: DEFAULT_FLARE_UP_RULES,
+    expectedTimeline: "Frozen shoulder may improve slowly over months. Some cases take 12 to 18 months. Be patient with progress.",
+    seekAssessment: [
+      "No improvement after 3–4 months",
+      "Rapidly worsening stiffness",
+      "Significant night pain not improving",
+    ],
+    requiredEquipment: ["Stick or cane"],
+    optionalEquipment: ["Resistance band"],
+    noEquipmentAlternative: "Pendulums and assisted stretches can be done with household items.",
+    urgentSigns: [
+      "Traumatic inability to lift the arm",
+      "Major sudden loss of motion after injury",
+    ],
+    programAudit: "Aligned with adhesive capsulitis guidelines emphasizing staged, irritability-based management.",
   },
 
-  // 11. Lateral Epicondylalgia
+  // ───────────────────────────────────────────────────────────
+  // 11. LATERAL EPICONDYLALGIA / TENNIS ELBOW
+  // ───────────────────────────────────────────────────────────
   {
     id: "lateral-epicondylalgia",
     condition: "Lateral Epicondylalgia (Tennis Elbow)",
     goal: "Improve tendon load tolerance of the wrist extensors and restore grip function.",
-    description: "The 2022 JOSPT clinical practice guideline supports exercise-based management, especially progressive loading.",
+    description: "Progressive resisted loading is the center of treatment. Stretching, if used, is optional and secondary to progressive loading.",
     bodyRegion: "elbow-wrist-hand",
-    symptoms: ["outer elbow pain", "pain gripping objects", "pain lifting or twisting", "weakness in grip", "pain carrying bags"],
-    exercises: [
-      {
-        name: "Isometric Wrist Extension",
-        why: "Useful when the elbow is irritable and resisted movement is painful.",
-        instructions: ["Sit with forearm supported on a table, palm facing down.", "Make a gentle fist.", "Use the other hand to resist as you try to lift the knuckles upward.", "Do not allow visible movement.", "Hold 20 to 30 seconds."],
-        dose: "4–5 holds, once or twice daily",
-        imageKey: "isometric-wrist-ext"
-      },
-      {
-        name: "Eccentric Wrist Extension",
-        why: "Progressive extensor tendon loading is central in tendinopathy rehab.",
-        instructions: ["Sit with forearm supported, palm down, hand off the edge.", "Hold a light weight.", "Use the other hand to help lift the wrist up.", "Slowly lower the wrist down using the affected side over 3 to 5 seconds.", "Reset and repeat."],
-        dose: "3 sets × 8–12 reps, every other day",
-        imageKey: "eccentric-wrist-ext"
-      },
-      {
-        name: "Concentric-Eccentric Wrist Extension",
-        why: "Progresses from eccentric-dominant loading toward full strengthening.",
-        instructions: ["Sit with forearm supported, palm down.", "Lift the wrist up with the affected arm.", "Lower slowly with control.", "Keep the movement isolated to the wrist."],
-        dose: "3 sets × 10–15 reps, every other day",
-        imageKey: "wrist-extension"
-      },
-      {
-        name: "Supination with Hammer or Dumbbell",
-        why: "The lateral elbow region often benefits from progressive forearm loading.",
-        instructions: ["Sit with elbow at 90° and tucked at your side.", "Hold a hammer or dumbbell vertically.", "Rotate the forearm so the palm turns upward.", "Return slowly."],
-        dose: "2–3 sets × 10–12 reps, every other day",
-        imageKey: "supination"
-      },
-      {
-        name: "Towel Squeeze or Putty Grip",
-        why: "Grip strengthening is functionally relevant once symptoms are manageable.",
-        instructions: ["Hold a rolled towel or therapy putty.", "Squeeze gradually, not maximally at first.", "Hold 3 seconds.", "Relax slowly."],
-        dose: "2–3 sets × 10 reps, every other day",
-        painRule: "Mild pain during tendon loading can be acceptable. Next-day symptoms should remain tolerable.",
-        imageKey: "towel-squeeze"
-      }
+    symptoms: ["outer elbow pain", "pain gripping objects", "pain lifting or twisting", "weakness in grip", "pain carrying bags", "tennis elbow"],
+    bestFor: "People with gradual-onset outer elbow pain aggravated by gripping, lifting, or twisting.",
+    notFor: [
+      "Progressive numbness or weakness",
+      "Constant worsening neurologic symptoms",
     ],
-    programAudit: "Aligned with the lateral elbow pain CPG and tendinopathy-loading principles."
+    selfManagementAdvice: [
+      "Modify repetitive gripping, lifting, and wrist-extension-heavy tasks during flare-ups.",
+      "Progressive loading is the most effective treatment — rest alone often does not resolve tendinopathy.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Isometric Loading",
+        description: "Begin with isometric holds when the tendon is irritable.",
+        exercises: [
+          {
+            name: "Isometric Wrist Extension",
+            why: "Useful when the elbow is irritable and resisted movement is painful.",
+            instructions: ["Sit with forearm supported on a table, palm facing down.", "Make a gentle fist.", "Use the other hand to resist as you try to lift the knuckles upward.", "Do not allow visible movement.", "Hold 20 to 45 seconds."],
+            dose: "4–5 holds, once or twice daily",
+            commonMistakes: ["Pushing too hard", "Allowing the wrist to move"],
+            easierVersion: "Lighter effort, shorter holds.",
+            harderVersion: "Increase effort gradually.",
+            equipmentNeeded: "Table",
+            imageKey: "isometric-wrist-ext",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Eccentric & Progressive Loading",
+        description: "Progress when isometric holds are comfortable.",
+        exercises: [
+          {
+            name: "Eccentric Wrist Extension",
+            why: "Progressive extensor tendon loading is central in tendinopathy rehab.",
+            instructions: ["Sit with forearm supported, palm down, hand off the edge.", "Hold a light weight.", "Use the other hand to help lift the wrist up.", "Slowly lower the wrist down over 3 to 5 seconds using the affected side only.", "Reset and repeat."],
+            dose: "3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Lowering too fast", "Using too much weight"],
+            easierVersion: "Very light weight or no weight.",
+            harderVersion: "Gradually increase weight.",
+            equipmentNeeded: "Light dumbbell or water bottle",
+            imageKey: "eccentric-wrist-ext",
+          },
+          {
+            name: "Concentric-Eccentric Wrist Extension",
+            why: "Full-range strengthening to rebuild tendon capacity.",
+            instructions: ["Sit with forearm supported, palm down.", "Lift the wrist up with the affected arm.", "Lower slowly with control.", "Keep the movement isolated to the wrist."],
+            dose: "3 sets × 10–15 reps, every other day",
+            commonMistakes: ["Using the whole arm", "Going too fast"],
+            easierVersion: "No weight.",
+            harderVersion: "Gradually increase weight.",
+            equipmentNeeded: "Light dumbbell",
+            imageKey: "wrist-extension",
+          },
+          {
+            name: "Supination with Hammer or Dumbbell",
+            why: "The lateral elbow region often benefits from progressive forearm loading.",
+            instructions: ["Sit with elbow at 90° and tucked at your side.", "Hold a hammer or dumbbell vertically.", "Rotate the forearm so the palm turns upward.", "Return slowly."],
+            dose: "2–3 sets × 10–12 reps, every other day",
+            commonMistakes: ["Moving the elbow", "Going too fast"],
+            easierVersion: "Hold near the weight end for less resistance.",
+            harderVersion: "Hold at the far end of the hammer.",
+            equipmentNeeded: "Hammer or dumbbell",
+            imageKey: "supination",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Grip Strength & Function",
+        description: "Progress when wrist loading is comfortable and daily tasks are improving.",
+        exercises: [
+          {
+            name: "Towel Squeeze or Putty Grip",
+            why: "Grip strengthening is functionally relevant once symptoms are manageable.",
+            instructions: ["Hold a rolled towel or therapy putty.", "Squeeze gradually, not maximally at first.", "Hold 3 seconds.", "Relax slowly."],
+            dose: "2–3 sets × 10 reps, every other day",
+            commonMistakes: ["Squeezing too hard too soon", "Ignoring pain signals"],
+            easierVersion: "Very soft putty or lighter squeeze.",
+            harderVersion: "Firmer putty or longer holds.",
+            equipmentNeeded: "Towel or therapy putty",
+            painRule: "Mild pain during tendon loading can be acceptable. Next-day symptoms should remain tolerable.",
+            imageKey: "towel-squeeze",
+          },
+        ],
+      },
+    ],
+    progressionRules: [
+      ...DEFAULT_PROGRESSION_RULES,
+      "Use a controlled tempo, especially on the lowering phase.",
+    ],
+    flareUpRules: DEFAULT_FLARE_UP_RULES,
+    expectedTimeline: "Some improvement may occur within 4 to 6 weeks. Full tendon capacity recovery often takes 3 to 6 months.",
+    seekAssessment: [
+      "No improvement after 8–12 weeks",
+      "Progressive numbness or weakness",
+      "Symptoms worsening despite load management",
+    ],
+    requiredEquipment: ["Table"],
+    optionalEquipment: ["Light dumbbell", "Hammer", "Therapy putty", "Towel"],
+    noEquipmentAlternative: "Isometric exercises can be done with the opposite hand for resistance. Use a water bottle as a light weight.",
+    urgentSigns: [
+      "Progressive numbness or weakness",
+      "Constant worsening neurologic symptoms",
+    ],
+    programAudit: "Aligned with lateral elbow pain guidelines and tendinopathy-loading principles.",
   },
 
-  // 12. Hip Osteoarthritis
+  // ───────────────────────────────────────────────────────────
+  // 12. HIP OSTEOARTHRITIS
+  // ───────────────────────────────────────────────────────────
   {
     id: "hip-oa",
     condition: "Hip Osteoarthritis",
     goal: "Improve hip strength, motion, walking tolerance, and functional capacity.",
-    description: "The updated hip osteoarthritis CPG supports individualized exercise programs to improve motion, strength, and function.",
+    description: "Exercise programs improve pain and function in hip OA. Avoid forcing into pinching end-range positions.",
     bodyRegion: "hip-groin",
-    symptoms: ["hip stiffness", "groin pain with walking", "difficulty putting on shoes/socks", "pain with stairs", "reduced hip range of motion"],
-    exercises: [
-      {
-        name: "Sit-to-Stand",
-        why: "Highly functional lower-limb strengthening for everyday activities.",
-        instructions: ["Sit near the edge of a chair.", "Feet hip-width apart.", "Lean forward slightly.", "Stand up without pushing through the hands if possible.", "Sit down slowly."],
-        dose: "3 sets × 8–15 reps, every other day",
-        imageKey: "sit-to-stand"
-      },
-      {
-        name: "Bridge",
-        why: "Strengthens gluteals and posterior chain with relatively low joint irritation.",
-        instructions: ["Lie on your back with knees bent.", "Tighten the glutes.", "Lift hips until shoulders, hips, and knees form a straight line.", "Hold 2 to 3 seconds.", "Lower slowly."],
-        dose: "3 sets × 8–12 reps, every other day",
-        imageKey: "bridge"
-      },
-      {
-        name: "Side-Lying Hip Abduction",
-        why: "Hip abductor strength is important for pelvic control, gait, and stair function.",
-        instructions: ["Lie on your side with the bottom knee bent.", "Keep the top leg straight and toes forward.", "Lift the top leg 20 to 30 cm.", "Lower slowly."],
-        dose: "2–3 sets × 10–15 reps per side, every other day",
-        imageKey: "hip-abduction"
-      },
-      {
-        name: "Step-Up",
-        why: "Restores functional hip and knee extension strength.",
-        instructions: ["Use a low step.", "Step up with the affected side.", "Straighten fully.", "Step down slowly."],
-        dose: "2–3 sets × 8–12 reps per side, every other day",
-        imageKey: "step-up"
-      },
-      {
-        name: "Standing Hip Extension with Band",
-        why: "Targets gluteus maximus and supports walking and climbing.",
-        instructions: ["Attach a band behind you at ankle level.", "Stand tall while holding support.", "Move the affected leg backward without arching your back.", "Return slowly."],
-        dose: "2–3 sets × 10–15 reps per side, every other day",
-        painRule: "Tolerable OA discomfort during exercise is acceptable. Swelling or flare lasting more than 24 hours means reduce load.",
-        imageKey: "hip-extension-band"
-      }
+    symptoms: ["hip stiffness", "groin pain with walking", "difficulty putting on shoes/socks", "pain with stairs", "reduced hip range of motion", "hip osteoarthritis"],
+    bestFor: "People with hip OA who want to improve strength, walking tolerance, and daily function.",
+    notFor: [
+      "Inability to bear weight after trauma",
+      "Suspected fracture",
+      "Major sudden onset of hip pain without injury",
     ],
-    programAudit: "Consistent with hip OA CPGs recommending individualized strengthening and functional exercise."
+    selfManagementAdvice: [
+      "Walking or cycling are excellent complementary activities for hip OA.",
+      "Gentle mobility in tolerated ranges can help if useful, but do not force into pinching end-range positions.",
+      "Temporary discomfort during exercise is acceptable if symptoms settle by the next day.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Low-Load Strengthening",
+        description: "Begin with functional and floor-based strengthening.",
+        exercises: [
+          {
+            name: "Sit-to-Stand",
+            why: "Highly functional lower-limb strengthening for everyday activities.",
+            instructions: ["Sit near the edge of a chair.", "Feet hip-width apart.", "Lean forward slightly.", "Stand up.", "Sit down slowly."],
+            dose: "2–3 sets × 8–15 reps, every other day",
+            commonMistakes: ["Using momentum", "Pushing off with hands"],
+            easierVersion: "Higher chair, use hands.",
+            harderVersion: "Lower chair, hold weight.",
+            equipmentNeeded: "Chair",
+            imageKey: "sit-to-stand",
+          },
+          {
+            name: "Bridge",
+            why: "Strengthens gluteals and posterior chain with relatively low joint irritation.",
+            instructions: ["Lie on your back with knees bent.", "Tighten the glutes.", "Lift hips until shoulders, hips, and knees form a straight line.", "Hold 2 to 3 seconds.", "Lower slowly."],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Arching the low back", "Pushing through toes"],
+            easierVersion: "Smaller range.",
+            harderVersion: "Longer hold or add band.",
+            equipmentNeeded: "None",
+            imageKey: "bridge",
+          },
+          {
+            name: "Side-Lying Hip Abduction",
+            why: "Hip abductor strength is important for pelvic control, gait, and stair function.",
+            instructions: ["Lie on your side with bottom knee bent.", "Keep top leg straight and toes forward.", "Lift the top leg 20 to 30 cm.", "Lower slowly."],
+            dose: "2–3 sets × 10–15 reps per side, every other day",
+            commonMistakes: ["Rolling backward", "Rotating toes upward"],
+            easierVersion: "Smaller range.",
+            harderVersion: "Add ankle weight.",
+            equipmentNeeded: "None",
+            imageKey: "hip-abduction",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Functional Progression",
+        description: "Progress when Phase 1 is comfortable and daily activities are manageable.",
+        exercises: [
+          {
+            name: "Step-Up",
+            why: "Restores functional hip and knee extension strength.",
+            instructions: ["Use a low step.", "Step up with the affected side.", "Straighten fully.", "Step down slowly."],
+            dose: "2–3 sets × 8–12 reps per side, every other day",
+            commonMistakes: ["Pushing off with back leg", "Knee collapsing inward"],
+            easierVersion: "Lower step, hold support.",
+            harderVersion: "Higher step, hold weight.",
+            equipmentNeeded: "Low step",
+            imageKey: "step-up",
+          },
+          {
+            name: "Standing Hip Extension with Band",
+            why: "Targets gluteus maximus and supports walking and climbing.",
+            instructions: ["Attach a band behind you at ankle level.", "Stand tall while holding support.", "Move the affected leg backward without arching your back.", "Return slowly."],
+            dose: "2–3 sets × 10–15 reps per side, every other day",
+            commonMistakes: ["Arching the lower back", "Leaning forward"],
+            easierVersion: "Lighter band.",
+            harderVersion: "Heavier band.",
+            equipmentNeeded: "Resistance band",
+            painRule: "Tolerable discomfort during exercise is acceptable. Swelling or flare lasting more than 24 hours means reduce load.",
+            imageKey: "hip-extension-band",
+          },
+        ],
+      },
+    ],
+    progressionRules: DEFAULT_PROGRESSION_RULES,
+    flareUpRules: DEFAULT_FLARE_UP_RULES,
+    expectedTimeline: "Some symptom improvement may occur within 2 to 6 weeks. Strength and functional changes often take 6 to 12 weeks.",
+    seekAssessment: [
+      "Significant new pain without clear trigger",
+      "Night pain not improving",
+      "No improvement after 8 weeks",
+    ],
+    requiredEquipment: ["Chair"],
+    optionalEquipment: ["Resistance band", "Low step", "Ankle weight"],
+    noEquipmentAlternative: "Sit-to-stand, bridges, and hip abduction can all be done without equipment.",
+    urgentSigns: [
+      "Inability to bear weight after trauma",
+      "Major swelling or deformity",
+    ],
+    programAudit: "Consistent with hip OA guidelines recommending individualized strengthening and functional exercise.",
   },
 
-  // 13. Greater Trochanteric Pain Syndrome
+  // ───────────────────────────────────────────────────────────
+  // 13. GREATER TROCHANTERIC PAIN SYNDROME / GLUTEAL TENDINOPATHY
+  // ───────────────────────────────────────────────────────────
   {
     id: "gtps",
     condition: "Greater Trochanteric Pain Syndrome / Gluteal Tendinopathy",
     goal: "Reduce compressive irritation at the gluteal tendons and build abductor loading tolerance.",
-    description: "JOSPT sources support education plus exercise and emphasize load management for gluteal tendinopathy.",
+    description: "Education plus exercise is first-line. Load management — especially reducing compressive postures — is critical early on.",
     bodyRegion: "hip-groin",
     symptoms: ["outer hip pain", "pain lying on the affected side", "pain with stairs", "pain standing on one leg", "hip pain with walking"],
-    exercises: [
-      {
-        name: "Isometric Wall Press for Hip Abductors",
-        why: "Low-irritability starting point for gluteal tendon loading.",
-        instructions: ["Stand sideways next to a wall with the affected leg farthest from the wall.", "Bend the knee of the unaffected leg and place that side against the wall.", "Push the wall sideways using the bent leg so the affected outer hip works to hold you level.", "Hold 20 to 30 seconds.", "Relax."],
-        dose: "4–5 holds, once daily",
-        imageKey: "isometric-hip-wall"
-      },
-      {
-        name: "Side-Lying Hip Abduction",
-        why: "Classic gluteus medius strengthening, dosed carefully based on irritability.",
-        instructions: ["Lie on your side with the painful side up.", "Bottom knee bent for balance.", "Keep the top leg straight and slightly behind the trunk.", "Lift the top leg 20 to 30 cm.", "Lower slowly."],
-        dose: "2–3 sets × 8–12 reps, every other day",
-        imageKey: "hip-abduction"
-      },
-      {
-        name: "Bridge with Band Around Knees",
-        why: "Improves gluteal recruitment while avoiding prolonged hip-adduction compression.",
-        instructions: ["Lie on your back with knees bent.", "Place a loop band around the knees.", "Gently press knees outward.", "Lift hips into a bridge.", "Lower slowly."],
-        dose: "3 sets × 8–12 reps, every other day",
-        imageKey: "bridge-band"
-      },
-      {
-        name: "Lateral Band Walk",
-        why: "Progressive standing hip-abductor loading.",
-        instructions: ["Place a loop band around the ankles or above the knees.", "Slight bend in hips and knees.", "Step sideways slowly.", "Keep pelvis level and toes forward."],
-        dose: "2–3 sets × 8–12 steps each direction, every other day",
-        imageKey: "lateral-band-walk"
-      },
-      {
-        name: "Step-Up",
-        why: "Functional single-leg loading progression when symptoms allow.",
-        instructions: ["Use a low step.", "Step up with the affected leg.", "Keep the pelvis level.", "Step down slowly."],
-        dose: "2–3 sets × 8–10 reps, every other day",
-        important: "Avoid lying on the painful side. Avoid standing with the hip pushed out to one side. Avoid crossing legs, especially early on.",
-        imageKey: "step-up"
-      }
+    bestFor: "People with outer hip or lateral thigh pain aggravated by lying on the side, stairs, or standing on one leg.",
+    notFor: [
+      "Inability to bear weight after trauma",
+      "Suspected fracture",
     ],
-    programAudit: "Consistent with gluteal tendinopathy literature emphasizing load management plus progressive exercise."
+    selfManagementAdvice: [
+      "Avoid crossing legs, especially early on.",
+      "Avoid hanging on one hip when standing.",
+      "Avoid lying on the painful side — place a pillow between the knees if side-sleeping.",
+      "Avoid prolonged hip-adduction postures during the irritable phase.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Isometric Loading & Compression Management",
+        description: "Begin with isometric hip abductor loading and compression-management education.",
+        exercises: [
+          {
+            name: "Isometric Wall Press for Hip Abductors",
+            why: "Low-irritability starting point for gluteal tendon loading.",
+            instructions: ["Stand sideways next to a wall with the affected leg farthest from the wall.", "Bend the knee of the unaffected leg and place that side against the wall.", "Push the wall sideways so the affected outer hip works to hold you level.", "Hold 20 to 45 seconds.", "Relax."],
+            dose: "4–5 holds, once daily",
+            commonMistakes: ["Leaning into the wall", "Not engaging the outer hip"],
+            easierVersion: "Shorter holds, less effort.",
+            harderVersion: "Longer holds.",
+            equipmentNeeded: "Wall",
+            imageKey: "isometric-hip-wall",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Progressive Hip Strengthening",
+        description: "Progress when isometric exercises are comfortable and compression is being managed.",
+        exercises: [
+          {
+            name: "Side-Lying Hip Abduction",
+            why: "Classic gluteus medius strengthening, dosed carefully based on irritability.",
+            instructions: ["Lie on your side with the painful side up.", "Bottom knee bent for balance.", "Keep the top leg straight and slightly behind the trunk.", "Lift the top leg 20 to 30 cm.", "Lower slowly."],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            keyCues: ["Slight extension.", "Pelvis stacked.", "Stop before trunk roll."],
+            commonMistakes: ["Rolling the pelvis backward", "Rotating toes upward", "Lifting too high"],
+            easierVersion: "Smaller range of motion.",
+            harderVersion: "Add ankle weight.",
+            equipmentNeeded: "None",
+            imageKey: "hip-abduction",
+          },
+          {
+            name: "Bridge with Band Around Knees",
+            why: "Improves gluteal recruitment while avoiding hip-adduction compression.",
+            instructions: ["Lie on your back with knees bent.", "Place a loop band around the knees.", "Gently press knees outward.", "Lift hips into a bridge.", "Lower slowly."],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Letting knees cave in", "Arching the back"],
+            easierVersion: "Bridge without band.",
+            harderVersion: "Longer hold at top.",
+            equipmentNeeded: "Loop band",
+            imageKey: "bridge-band",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Functional Loading",
+        description: "Progress when Phase 2 exercises are well tolerated.",
+        exercises: [
+          {
+            name: "Lateral Band Walk",
+            why: "Progressive standing hip-abductor loading.",
+            instructions: ["Place a loop band around the ankles or above the knees.", "Slight bend in hips and knees.", "Step sideways slowly.", "Keep pelvis level and toes forward."],
+            dose: "2–3 sets × 8–12 steps each direction, every other day",
+            commonMistakes: ["Standing too upright", "Steps too large"],
+            easierVersion: "Band above knees.",
+            harderVersion: "Band at ankles, heavier resistance.",
+            equipmentNeeded: "Loop band",
+            imageKey: "lateral-band-walk",
+          },
+          {
+            name: "Step-Up",
+            why: "Functional single-leg loading progression.",
+            instructions: ["Use a low step.", "Step up with the affected leg.", "Keep the pelvis level.", "Step down slowly."],
+            dose: "2–3 sets × 8–10 reps, every other day",
+            commonMistakes: ["Pelvis dropping on the non-standing side", "Pushing off with back leg"],
+            easierVersion: "Lower step, hold support.",
+            harderVersion: "Higher step.",
+            equipmentNeeded: "Low step",
+            important: "Avoid lying on the painful side. Avoid standing with the hip pushed out to one side.",
+            imageKey: "step-up",
+          },
+        ],
+      },
+    ],
+    progressionRules: DEFAULT_PROGRESSION_RULES,
+    flareUpRules: DEFAULT_FLARE_UP_RULES,
+    expectedTimeline: "Some symptom improvement may occur within 4 to 8 weeks. Tendon capacity changes often take 8 to 12 weeks or longer.",
+    seekAssessment: [
+      "No improvement after 8–12 weeks",
+      "Night pain not improving",
+      "Progressive hip weakness",
+    ],
+    requiredEquipment: ["Loop band"],
+    optionalEquipment: ["Low step", "Ankle weight"],
+    noEquipmentAlternative: "Isometric wall press and side-lying abduction can be done without equipment.",
+    urgentSigns: [
+      "Inability to bear weight after trauma",
+      "Major swelling or deformity",
+    ],
+    programAudit: "Consistent with gluteal tendinopathy literature emphasizing load management plus progressive exercise.",
   },
 
-  // 14. Plantar Heel Pain
+  // ───────────────────────────────────────────────────────────
+  // 14. PLANTAR HEEL PAIN / PLANTAR FASCIOPATHY
+  // ───────────────────────────────────────────────────────────
   {
     id: "plantar-heel",
     condition: "Plantar Heel Pain / Plantar Fasciopathy",
     goal: "Progressively load the plantar fascia–calf complex and improve foot intrinsic support.",
-    description: "Exercise-based care is widely supported. Plantar fascia–specific plus calf loading is commonly used in conservative management.",
+    description: "Plantar fascia–specific stretching and calf stretching are commonly used alongside progressive loading. The heel raise with towel under toes is the main loading progression.",
     bodyRegion: "ankle-foot",
-    symptoms: ["heel pain first thing in the morning", "pain with first steps after rest", "arch pain", "pain after prolonged standing", "heel tenderness"],
-    exercises: [
-      {
-        name: "Plantar Fascia Stretch",
-        why: "Specifically targets the plantar fascia, especially useful first thing in the morning.",
-        instructions: ["Sit with the affected ankle crossed over the other leg.", "Pull the toes and forefoot upward with your hand.", "You should feel stretch in the arch.", "Hold 20 to 30 seconds."],
-        dose: "4–5 holds, 2–3 times daily",
-        imageKey: "plantar-stretch"
-      },
-      {
-        name: "Standing Calf Stretch",
-        why: "Limited calf flexibility can contribute to heel loading.",
-        instructions: ["Stand facing a wall.", "Place the affected leg behind you with knee straight.", "Lean forward until you feel a calf stretch.", "Keep the heel down."],
-        dose: "3–5 holds of 30 seconds, daily",
-        imageKey: "calf-stretch"
-      },
-      {
-        name: "Bent-Knee Calf Stretch",
-        why: "Adds more soleus emphasis.",
-        instructions: ["Same setup as standing calf stretch.", "Bend the back knee slightly while keeping the heel down.", "Lean forward into the stretch.", "Hold."],
-        dose: "3–5 holds of 30 seconds, daily",
-        imageKey: "bent-knee-calf-stretch"
-      },
-      {
-        name: "Heel Raise with Towel Under Toes",
-        why: "Progressive loading with the toes extended loads the plantar fascia more directly.",
-        instructions: ["Place a rolled towel under the toes.", "Stand holding support.", "Rise onto the toes.", "Lower slowly."],
-        dose: "3 sets × 8–12 reps, every other day",
-        imageKey: "heel-raise-towel"
-      },
-      {
-        name: "Towel Scrunch / Short-Foot Exercise",
-        why: "Helps strengthen the foot intrinsics and arch control.",
-        instructions: ["Sit with the foot on a towel.", "Curl the toes to draw the towel inward, or gently shorten the foot by drawing the ball of the foot toward the heel without clawing.", "Relax slowly."],
-        dose: "2–3 sets × 10–15 reps, daily",
-        painRule: "Heel discomfort with loading can be mild to moderate. Severe morning pain increase the next day means reduce volume.",
-        imageKey: "towel-scrunch"
-      }
+    symptoms: ["heel pain first thing in the morning", "pain with first steps after rest", "arch pain", "pain after prolonged standing", "heel tenderness", "plantar fasciitis"],
+    bestFor: "People with gradual-onset heel or arch pain, especially with first steps in the morning.",
+    notFor: [
+      "Suspected fracture",
+      "Major swelling or deformity",
     ],
-    programAudit: "Aligned with plantar heel pain rehab principles emphasizing stretching and progressive loading."
+    selfManagementAdvice: [
+      "If first-step pain is clearly worse the next morning, reduce the previous day's loading.",
+      "Manage load by avoiding sudden increases in standing time, step count, or running volume.",
+      "Supportive footwear can help — avoid flat, unsupportive shoes during the irritable phase.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Stretching & Symptom Management",
+        description: "Focus on plantar fascia and calf stretching.",
+        exercises: [
+          {
+            name: "Plantar Fascia Stretch",
+            why: "Specifically targets the plantar fascia, especially useful first thing in the morning.",
+            instructions: ["Sit with the affected ankle crossed over the other leg.", "Pull the toes and forefoot upward with your hand.", "You should feel stretch in the arch.", "Hold 20 to 30 seconds."],
+            dose: "4–5 holds, 2–3 times daily",
+            commonMistakes: ["Not doing it before first steps in the morning", "Pulling too aggressively"],
+            easierVersion: "Lighter pull.",
+            harderVersion: "Slightly more pull if tolerated.",
+            equipmentNeeded: "None",
+            imageKey: "plantar-stretch",
+          },
+          {
+            name: "Standing Calf Stretch",
+            why: "Limited calf flexibility can contribute to heel loading.",
+            instructions: ["Stand facing a wall.", "Place the affected leg behind you with knee straight.", "Lean forward until you feel a calf stretch.", "Keep the heel down."],
+            dose: "3–5 holds × 20–30 seconds, daily",
+            commonMistakes: ["Letting the heel come up", "Bending the back knee"],
+            easierVersion: "Lean less far forward.",
+            harderVersion: "Move the foot farther back.",
+            equipmentNeeded: "Wall",
+            imageKey: "calf-stretch",
+          },
+          {
+            name: "Bent-Knee Calf Stretch",
+            why: "Adds soleus emphasis.",
+            instructions: ["Same setup as standing calf stretch.", "Bend the back knee slightly while keeping the heel down.", "Lean forward into the stretch."],
+            dose: "3–5 holds × 20–30 seconds, daily",
+            commonMistakes: ["Letting the heel come up", "Not bending the knee enough"],
+            easierVersion: "Lean less far forward.",
+            harderVersion: "Move foot farther back.",
+            equipmentNeeded: "Wall",
+            imageKey: "bent-knee-calf-stretch",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Progressive Loading",
+        description: "Progress when stretching is comfortable and morning pain is manageable.",
+        exercises: [
+          {
+            name: "Heel Raise with Towel Under Toes",
+            why: "Progressive loading with the toes extended loads the plantar fascia more directly. This is the main loading exercise.",
+            instructions: ["Place a rolled towel under the toes.", "Stand holding support.", "Rise onto the toes.", "Lower slowly."],
+            dose: "3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Going too fast", "Not using full range"],
+            easierVersion: "Double-leg.",
+            harderVersion: "Single-leg, then add weight.",
+            equipmentNeeded: "Small towel, counter for balance",
+            imageKey: "heel-raise-towel",
+          },
+          {
+            name: "Towel Scrunch / Short-Foot Exercise",
+            why: "Helps strengthen the foot intrinsics and arch control. Accessory exercise.",
+            instructions: ["Sit with the foot on a towel.", "Curl the toes to draw the towel inward, or gently shorten the foot by drawing the ball toward the heel without clawing.", "Relax slowly."],
+            dose: "2–3 sets × 10–15 reps, daily",
+            commonMistakes: ["Clawing the toes", "Not relaxing between reps"],
+            easierVersion: "Seated with less effort.",
+            harderVersion: "Standing.",
+            equipmentNeeded: "Small towel",
+            painRule: "Heel discomfort with loading can be mild to moderate. Severe morning pain increase the next day means reduce volume.",
+            imageKey: "towel-scrunch",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Single-Leg Loading",
+        description: "Progress when double-leg heel raises are comfortable.",
+        exercises: [
+          {
+            name: "Single-Leg Heel Raise with Towel",
+            why: "Increases load demand on the plantar fascia and calf complex.",
+            instructions: ["Place a rolled towel under the toes of the affected foot.", "Stand on one leg holding support.", "Rise onto the toes.", "Lower slowly."],
+            dose: "3 sets × 6–10 reps, every other day",
+            commonMistakes: ["Going too fast", "Losing balance"],
+            easierVersion: "Double-leg heel raise.",
+            harderVersion: "Add external weight.",
+            equipmentNeeded: "Small towel, counter for balance",
+            imageKey: "heel-raise-towel",
+          },
+        ],
+      },
+    ],
+    progressionRules: [
+      ...DEFAULT_PROGRESSION_RULES,
+      "Double-leg heel raise → single-leg heel raise → loaded single-leg heel raise.",
+    ],
+    flareUpRules: [
+      ...DEFAULT_FLARE_UP_RULES,
+      "If first-step morning pain is clearly worse, reduce the previous day's loading volume.",
+    ],
+    expectedTimeline: "Some improvement may occur within 4 to 6 weeks. Full recovery often takes 3 to 6 months.",
+    seekAssessment: [
+      "No improvement after 8–12 weeks",
+      "Significant night pain",
+      "Numbness or tingling in the foot",
+    ],
+    requiredEquipment: ["Small towel"],
+    optionalEquipment: ["Counter for balance"],
+    noEquipmentAlternative: "All exercises can be done at home with a towel and wall.",
+    urgentSigns: [
+      "Inability to bear weight after trauma",
+      "Suspected fracture",
+    ],
+    programAudit: "Aligned with plantar heel pain rehab principles emphasizing stretching and progressive loading.",
   },
 
-  // 15. Carpal Tunnel Syndrome
+  // ───────────────────────────────────────────────────────────
+  // 15. CARPAL TUNNEL SYNDROME
+  // ───────────────────────────────────────────────────────────
   {
     id: "carpal-tunnel",
     condition: "Carpal Tunnel Syndrome",
-    goal: "Reduce median nerve irritation sensitivity, maintain tendon and nerve mobility, and gradually rebuild hand/wrist function.",
-    description: "Current AAOS and physical therapy guidance include conservative care options such as nerve and tendon gliding, splinting, and activity modification.",
+    goal: "Reduce median nerve irritation, maintain tendon and nerve mobility, and gradually rebuild hand and wrist function.",
+    description: "Exercises alone are not the only management strategy. Night splinting and activity modification are core self-management strategies alongside nerve and tendon gliding.",
     bodyRegion: "elbow-wrist-hand",
-    symptoms: ["numbness or tingling in thumb, index, and middle fingers", "hand weakness", "dropping objects", "night symptoms in the hand", "wrist pain"],
-    exercises: [
-      {
-        name: "Median Nerve Glide",
-        why: "Gentle nerve gliding is commonly used to improve median nerve mobility without aggressive tensioning.",
-        instructions: ["Start with your arm at your side, elbow bent, wrist neutral, fingers and thumb gently curled.", "Slowly open the hand.", "Extend the wrist back gently.", "Straighten the elbow a little at a time only as tolerated.", "Reverse the sequence to return to start."],
-        dose: "1–2 sets × 5–10 reps, 1–2 times daily",
-        keyCues: ["This should feel like a mild glide, not a strong stretch.", "Stop short of tingling that lingers after the exercise."],
-        imageKey: "nerve-glide"
-      },
-      {
-        name: "Tendon-Gliding Sequence",
-        why: "Tendon glides help the flexor tendons move more freely through the carpal tunnel.",
-        instructions: ["Move through these hand positions slowly: straight hand → hook fist → full fist → tabletop position → straight fist.", "Return to straight hand after each position."],
-        dose: "1 set × 5 rounds through the full sequence, 1–2 times daily",
-        imageKey: "tendon-glide"
-      },
-      {
-        name: "Wrist Flexor Stretch",
-        why: "Gentle forearm flexibility work can reduce stiffness around the wrist and hand.",
-        instructions: ["Extend the affected arm in front of you with elbow straight.", "Palm faces upward.", "Use the other hand to gently extend the wrist and fingers backward.", "Hold a mild stretch only."],
-        dose: "3–5 holds × 20 seconds each, daily",
-        imageKey: "wrist-flexor-stretch"
-      },
-      {
-        name: "Wrist Extension with Light Resistance",
-        why: "Once symptoms are calmer, light wrist strengthening can help restore function.",
-        instructions: ["Rest the forearm on a table, palm facing down, hand over the edge.", "Hold a very light weight.", "Lift the back of the hand upward.", "Lower slowly."],
-        dose: "2–3 sets × 10–12 reps, every other day",
-        imageKey: "wrist-extension"
-      },
-      {
-        name: "Soft Putty or Towel Squeeze",
-        why: "Light grip strengthening can be added after irritability decreases.",
-        instructions: ["Hold soft putty or a rolled towel.", "Squeeze gradually, not maximally.", "Hold 2 to 3 seconds.", "Relax fully."],
-        dose: "2 sets × 8–12 reps, every other day",
-        stopIf: "Progressive thumb weakness, persistent numbness worsening, symptoms severe at night despite splinting, or thenar wasting.",
-        imageKey: "towel-squeeze"
-      }
+    symptoms: ["numbness or tingling in thumb, index, and middle fingers", "hand weakness", "dropping objects", "night symptoms in the hand", "wrist pain", "carpal tunnel"],
+    bestFor: "People with mild to moderate carpal tunnel symptoms who want to manage conservatively.",
+    notFor: [
+      "Progressive thumb weakness or thenar wasting",
+      "Persistent severe numbness",
+      "Worsening night symptoms despite splinting",
+      "Frequently dropping objects due to weakness",
     ],
-    programAudit: "Aligned with AAOS and PT guidance supporting conservative exercise options for appropriate CTS presentations."
+    selfManagementAdvice: [
+      "A neutral-wrist night splint is one of the most effective conservative treatments.",
+      "Modify activities that involve prolonged wrist flexion, repetitive high-force gripping, vibration exposure, or sustained wrist positions.",
+      "Exercises are a complement to splinting and activity modification, not a standalone treatment.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Splinting, Education & Nerve/Tendon Glides",
+        description: "Focus on night splinting, activity modification, and gentle nerve and tendon mobility.",
+        exercises: [
+          {
+            name: "Tendon-Gliding Sequence",
+            why: "Helps the flexor tendons move more freely through the carpal tunnel.",
+            instructions: ["Move through these hand positions slowly: straight hand → hook fist → full fist → tabletop position → straight fist.", "Return to straight hand after each position."],
+            dose: "1 set × 5 rounds through the full sequence, 1–2 times daily",
+            commonMistakes: ["Moving too fast", "Skipping positions"],
+            easierVersion: "Fewer positions.",
+            harderVersion: "More rounds.",
+            equipmentNeeded: "None",
+            imageKey: "tendon-glide",
+          },
+          {
+            name: "Median Nerve Glide",
+            why: "Gentle nerve gliding can help improve median nerve mobility.",
+            instructions: ["Start with arm at your side, elbow bent, wrist neutral, fingers gently curled.", "Slowly open the hand.", "Extend the wrist back gently.", "Straighten the elbow a little at a time only as tolerated.", "Reverse the sequence to return."],
+            dose: "1–2 sets × 5–10 reps, 1–2 times daily",
+            keyCues: ["This should feel like a mild glide, not a strong stretch.", "Stop short of tingling that lingers."],
+            commonMistakes: ["Stretching too aggressively", "Holding at end range"],
+            easierVersion: "Smaller range.",
+            harderVersion: "Slightly more extension as tolerated.",
+            equipmentNeeded: "None",
+            imageKey: "nerve-glide",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Light Strengthening",
+        description: "Add light strengthening once irritability has settled.",
+        exercises: [
+          {
+            name: "Wrist Extension with Light Resistance",
+            why: "Light wrist strengthening helps restore function once symptoms are calmer.",
+            instructions: ["Rest the forearm on a table, palm facing down, hand over the edge.", "Hold a very light weight.", "Lift the back of the hand upward.", "Lower slowly."],
+            dose: "2–3 sets × 10–12 reps, every other day",
+            commonMistakes: ["Using too much weight", "Going too fast"],
+            easierVersion: "No weight.",
+            harderVersion: "Slightly heavier weight.",
+            equipmentNeeded: "Very light weight or water bottle",
+            imageKey: "wrist-extension",
+          },
+          {
+            name: "Soft Putty or Towel Squeeze",
+            why: "Light grip strengthening after irritability decreases.",
+            instructions: ["Hold soft putty or a rolled towel.", "Squeeze gradually, not maximally.", "Hold 2 to 3 seconds.", "Relax fully."],
+            dose: "2 sets × 8–12 reps, every other day",
+            commonMistakes: ["Squeezing too hard", "Gripping for too long"],
+            easierVersion: "Softer putty, lighter squeeze.",
+            harderVersion: "Firmer putty.",
+            equipmentNeeded: "Soft putty or towel",
+            stopIf: "Progressive thumb weakness, persistent numbness worsening, symptoms severe at night despite splinting, or thenar wasting.",
+            imageKey: "towel-squeeze",
+          },
+        ],
+      },
+    ],
+    progressionRules: DEFAULT_PROGRESSION_RULES,
+    flareUpRules: DEFAULT_FLARE_UP_RULES,
+    expectedTimeline: "Some symptom improvement may occur within 2 to 6 weeks with splinting and activity modification. Strength changes take longer.",
+    seekAssessment: [
+      "Progressive numbness or thumb weakness",
+      "Thenar wasting",
+      "Worsening night symptoms despite splinting",
+      "Frequently dropping objects due to weakness or numbness",
+    ],
+    requiredEquipment: [],
+    optionalEquipment: ["Neutral-wrist night splint (strongly recommended)", "Soft therapy putty", "Light weight"],
+    noEquipmentAlternative: "Nerve and tendon glides require no equipment. Use a towel for grip work.",
+    urgentSigns: [
+      "Progressive numbness or weakness",
+      "Thenar wasting",
+      "Frequent dropping of objects",
+    ],
+    programAudit: "Aligned with AAOS and PT guidance supporting conservative exercise options alongside splinting and activity modification for CTS.",
   },
 
-  // 16. Medial Epicondylitis
+  // ───────────────────────────────────────────────────────────
+  // 16. MEDIAL EPICONDYLALGIA / GOLFER'S ELBOW
+  // ───────────────────────────────────────────────────────────
   {
     id: "medial-epicondylitis",
-    condition: "Medial Epicondylitis (Golfer's Elbow)",
+    condition: "Medial Epicondylalgia (Golfer's Elbow)",
     goal: "Restore tendon load tolerance of the wrist flexors and flexor-pronator mass, reduce pain, and rebuild grip and forearm function.",
-    description: "Conservative management emphasizes progressive loading, starting with isometric holds and advancing through eccentric and concentric strengthening. Stretching and grip work are added as symptoms allow.",
+    description: "Progressive resisted loading is the priority. Stretching is secondary and optional. Modify gripping, throwing, lifting, and repeated wrist-flexion tasks during the irritable phase.",
     bodyRegion: "elbow-wrist-hand",
-    symptoms: ["inner elbow pain", "pain gripping objects", "pain with wrist flexion", "forearm tightness", "pain throwing or lifting"],
-    exercises: [
-      {
-        name: "Isometric Wrist Flexion",
-        why: "Good starting exercise when the tendon is irritable. Progressive loading approaches for medial epicondylitis commonly begin with symptom-limited strengthening.",
-        instructions: [
-          "Sit with forearm supported on a table, palm up.",
-          "Make a gentle fist.",
-          "Use the other hand to resist as you try to curl the wrist upward.",
-          "Do not let the wrist move.",
-          "Hold 20–30 seconds."
-        ],
-        dose: "4–5 holds, 1–2 times daily",
-        imageKey: "isometric-wrist-flexion"
-      },
-      {
-        name: "Eccentric Wrist Flexion",
-        why: "One of the most cited exercises for painful medial epicondylitis in AAOS exercise materials.",
-        instructions: [
-          "Sit with forearm supported on a table, palm up, wrist just past the edge.",
-          "Hold a light dumbbell.",
-          "Use the other hand to help lift the wrist up.",
-          "Then slowly lower the wrist down over 3–5 seconds using the affected side only.",
-          "Reset and repeat."
-        ],
-        dose: "3 sets × 8–12 reps, every other day",
-        keyCues: ["Focus on the slow lowering phase.", "Keep the forearm flat on the table throughout."],
-        imageKey: "eccentric-wrist-flexion"
-      },
-      {
-        name: "Concentric-Eccentric Wrist Flexion",
-        why: "Progresses from eccentric-only loading toward fuller strengthening. General epicondylitis rehab programs include this type of progressive forearm strengthening.",
-        instructions: [
-          "Same setup: forearm supported, palm up, light weight in hand.",
-          "Curl the wrist upward slowly.",
-          "Lower slowly.",
-          "Keep the movement at the wrist only."
-        ],
-        dose: "3 sets × 10–15 reps, every other day",
-        progression: "Gradually increase weight as tolerated.",
-        imageKey: "concentric-wrist-flexion"
-      },
-      {
-        name: "Forearm Pronation with Hammer or Dumbbell",
-        why: "The flexor-pronator mass is involved in medial epicondylitis, so pronation loading is commonly included in rehab.",
-        instructions: [
-          "Sit with elbow bent to 90° and tucked at your side.",
-          "Hold a hammer near the end or hold a dumbbell vertically.",
-          "Start with the forearm in a neutral position.",
-          "Slowly rotate the palm downward into pronation.",
-          "Return slowly to neutral."
-        ],
-        dose: "2–3 sets × 10–12 reps, every other day",
-        imageKey: "forearm-pronation"
-      },
-      {
-        name: "Wrist Flexor Stretch",
-        why: "Stretching is commonly included in conservative medial epicondylitis programs alongside strengthening.",
-        instructions: [
-          "Straighten the affected arm in front of you with the palm up.",
-          "Use the opposite hand to gently pull the fingers and palm down and back.",
-          "You should feel a stretch along the inside/front of the forearm.",
-          "Hold 20–30 seconds."
-        ],
-        dose: "3–5 holds, daily",
-        imageKey: "wrist-flexor-stretch"
-      },
-      {
-        name: "Soft Towel or Putty Squeeze",
-        why: "Light grip strengthening added once the elbow is calmer.",
-        instructions: [
-          "Hold a soft towel or therapy putty.",
-          "Squeeze gradually, not maximally.",
-          "Hold 2–3 seconds.",
-          "Relax fully."
-        ],
-        dose: "2 sets × 8–12 reps, every other day",
-        painRule: "Mild discomfort during exercise is acceptable. Pain should settle back near baseline by the next day. If next-day pain is clearly worse, reduce load, range, or volume.",
-        imageKey: "towel-squeeze"
-      }
+    symptoms: ["inner elbow pain", "pain gripping objects", "pain with wrist flexion", "forearm tightness", "pain throwing or lifting", "golfer's elbow"],
+    bestFor: "People with gradual-onset inner elbow pain aggravated by gripping, flexion, or pronation activities.",
+    notFor: [
+      "Progressive numbness or weakness",
+      "Constant worsening neurologic symptoms",
     ],
-    programAudit: "Aligned with AAOS exercise guidance and current tendinopathy loading principles for medial epicondylitis."
+    selfManagementAdvice: [
+      "Modify gripping, throwing, lifting, keyboard/mouse use, and repeated wrist-flexion tasks during flare-ups.",
+      "Progressive loading is the most effective treatment.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Isometric Loading",
+        description: "Begin with isometric holds when the tendon is irritable.",
+        exercises: [
+          {
+            name: "Isometric Wrist Flexion",
+            why: "Useful starting exercise when the tendon is irritable.",
+            instructions: ["Sit with forearm supported on a table, palm up.", "Make a gentle fist.", "Use the other hand to resist as you try to curl the wrist upward.", "Do not let the wrist move.", "Hold 20 to 45 seconds."],
+            dose: "4–5 holds, 1–2 times daily",
+            commonMistakes: ["Pushing too hard", "Allowing movement"],
+            easierVersion: "Lighter effort, shorter holds.",
+            harderVersion: "Increase effort gradually.",
+            equipmentNeeded: "Table",
+            imageKey: "isometric-wrist-flexion",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Eccentric & Progressive Loading",
+        description: "Progress when isometric holds are comfortable.",
+        exercises: [
+          {
+            name: "Eccentric Wrist Flexion",
+            why: "Progressive flexor tendon loading is central in medial epicondylitis rehab.",
+            instructions: ["Sit with forearm supported, palm up, wrist past the edge.", "Hold a light dumbbell.", "Use the other hand to help lift the wrist up.", "Slowly lower the wrist down over 3 to 5 seconds.", "Reset and repeat."],
+            dose: "3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Lowering too fast", "Using too much weight"],
+            easierVersion: "Very light weight.",
+            harderVersion: "Gradually increase weight.",
+            equipmentNeeded: "Light dumbbell",
+            imageKey: "eccentric-wrist-flexion",
+          },
+          {
+            name: "Concentric-Eccentric Wrist Flexion",
+            why: "Full-range strengthening toward complete tendon rehabilitation.",
+            instructions: ["Same setup: forearm supported, palm up, light weight.", "Curl the wrist upward slowly.", "Lower slowly.", "Keep the movement at the wrist only."],
+            dose: "3 sets × 10–15 reps, every other day",
+            commonMistakes: ["Using the whole arm", "Going too fast"],
+            easierVersion: "No weight.",
+            harderVersion: "Gradually increase weight.",
+            equipmentNeeded: "Light dumbbell",
+            imageKey: "concentric-wrist-flexion",
+          },
+          {
+            name: "Forearm Pronation with Hammer or Dumbbell",
+            why: "The flexor-pronator mass is involved in medial epicondylitis, so pronation loading is commonly included.",
+            instructions: ["Sit with elbow bent to 90° and tucked at your side.", "Hold a hammer near the end or hold a dumbbell vertically.", "Start with forearm neutral.", "Slowly rotate the palm downward.", "Return slowly to neutral."],
+            dose: "2–3 sets × 10–12 reps, every other day",
+            commonMistakes: ["Moving the elbow", "Going too fast"],
+            easierVersion: "Hold near the weight end.",
+            harderVersion: "Hold at far end of hammer.",
+            equipmentNeeded: "Hammer or dumbbell",
+            imageKey: "forearm-pronation",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Grip Strength & Function",
+        description: "Progress when wrist loading is comfortable.",
+        exercises: [
+          {
+            name: "Soft Towel or Putty Squeeze",
+            why: "Light grip strengthening once the elbow is calmer.",
+            instructions: ["Hold a soft towel or therapy putty.", "Squeeze gradually, not maximally.", "Hold 2 to 3 seconds.", "Relax fully."],
+            dose: "2 sets × 8–12 reps, every other day",
+            commonMistakes: ["Squeezing too hard too soon"],
+            easierVersion: "Softer putty.",
+            harderVersion: "Firmer putty.",
+            equipmentNeeded: "Towel or therapy putty",
+            painRule: "Mild discomfort during exercise is acceptable. Pain should settle back near baseline by the next day.",
+            imageKey: "towel-squeeze",
+          },
+          {
+            name: "Wrist Flexor Stretch (Optional)",
+            why: "Optional stretch — secondary to progressive loading.",
+            instructions: ["Straighten the affected arm with palm up.", "Use the opposite hand to gently pull fingers and palm back.", "Feel stretch along inside of forearm.", "Hold 20 to 30 seconds."],
+            dose: "3–5 holds, daily (optional)",
+            commonMistakes: ["Stretching too aggressively", "Doing this instead of strengthening"],
+            easierVersion: "Lighter pull.",
+            harderVersion: "Slightly more pull if tolerated.",
+            equipmentNeeded: "None",
+            imageKey: "wrist-flexor-stretch",
+          },
+        ],
+      },
+    ],
+    progressionRules: [
+      ...DEFAULT_PROGRESSION_RULES,
+      "Use a controlled tempo, especially on the lowering phase.",
+    ],
+    flareUpRules: DEFAULT_FLARE_UP_RULES,
+    expectedTimeline: "Some improvement may occur within 4 to 6 weeks. Full tendon capacity recovery often takes 3 to 6 months.",
+    seekAssessment: [
+      "No improvement after 8–12 weeks",
+      "Progressive numbness or weakness",
+    ],
+    requiredEquipment: ["Table"],
+    optionalEquipment: ["Light dumbbell", "Hammer", "Therapy putty"],
+    noEquipmentAlternative: "Isometric exercises can be done with the opposite hand for resistance.",
+    urgentSigns: [
+      "Progressive numbness or weakness",
+      "Constant worsening neurologic symptoms",
+    ],
+    programAudit: "Aligned with tendinopathy loading principles for medial epicondylitis.",
   },
 
-  // 17. Hamstring Strain
+  // ───────────────────────────────────────────────────────────
+  // 17. HAMSTRING STRAIN
+  // ───────────────────────────────────────────────────────────
   {
     id: "hamstring-strain",
     condition: "Hamstring Strain",
     goal: "Restore pain-free strength, especially eccentric strength, then rebuild running and sprint tolerance.",
-    description: "The JOSPT hamstring strain guidance emphasizes progressive loading and specifically supports eccentric strengthening.",
+    description: "Progressive loading and eccentric strengthening are well supported. Avoid aggressive stretching in the acute irritable phase.",
     bodyRegion: "thigh",
     symptoms: ["sudden sharp pain at the back of the thigh", "pain with sprinting or kicking", "tenderness in the hamstring", "bruising behind the thigh", "difficulty bending forward"],
-    exercises: [
-      {
-        name: "Isometric Heel Dig Bridge",
-        why: "Useful early to load the hamstrings with relatively low irritation.",
-        instructions: ["Lie on your back with knees bent and heels on the floor.", "Dig your heels into the floor.", "Lift your hips slightly into a bridge.", "Hold 10 to 20 seconds.", "Lower slowly."],
-        dose: "4–5 holds, once daily",
-        imageKey: "heel-dig-bridge"
-      },
-      {
-        name: "Bridge Walkout",
-        why: "Increases hamstring demand through a longer lever.",
-        instructions: ["Start in a bridge position.", "Slowly walk the feet away from the hips a few small steps.", "Keep hips lifted as able.", "Walk feet back in.", "Lower."],
-        dose: "2–3 sets × 5–8 reps, every other day",
-        imageKey: "bridge-walkout"
-      },
-      {
-        name: "Romanian Deadlift",
-        why: "Loads the hamstrings through hip hinge mechanics and helps restore functional posterior-chain strength.",
-        instructions: ["Stand tall holding light weights.", "Slight bend in the knees.", "Hinge at the hips, sending them backward.", "Keep the back neutral.", "Lower until a hamstring stretch is felt.", "Return to standing by driving the hips forward."],
-        dose: "3 sets × 6–10 reps, every other day",
-        imageKey: "romanian-deadlift"
-      },
-      {
-        name: "Prone Hamstring Curl with Band",
-        why: "Restores direct knee-flexor strength with adjustable resistance.",
-        instructions: ["Lie on your stomach.", "Attach a band to the ankle.", "Bend the knee, bringing the heel toward the buttock.", "Lower slowly."],
-        dose: "2–3 sets × 10–15 reps, every other day",
-        imageKey: "hamstring-curl"
-      },
-      {
-        name: "Nordic Hamstring Exercise",
-        why: "One of the best-supported eccentric hamstring exercises, especially in prevention and high-level return phases.",
-        instructions: ["Kneel with ankles held or anchored.", "Keep the hips extended and trunk straight.", "Slowly lean forward from the knees.", "Use your hands to catch yourself as needed.", "Push lightly off the floor to return."],
-        dose: "2–3 sets × 4–6 reps, every other day",
-        important: "This is an advanced exercise. Do not start with this if walking is still painful.",
-        imageKey: "nordic-hamstring"
-      }
+    bestFor: "People recovering from a hamstring strain who want to rebuild strength and return to activity safely.",
+    notFor: [
+      "Suspected complete rupture with major bruising and weakness",
+      "Inability to bear weight",
     ],
-    programAudit: "Aligned with hamstring-strain guidance emphasizing progressive strengthening, eccentric loading, and staged return to running."
+    selfManagementAdvice: [
+      "Avoid aggressive stretching in the acute irritable phase.",
+      "Progressive strengthening is more effective than rest or stretching alone.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Isometric & Early Loading",
+        description: "Begin with low-demand isometric loading.",
+        exercises: [
+          {
+            name: "Isometric Heel Dig Bridge",
+            why: "Useful early to load the hamstrings with relatively low irritation.",
+            instructions: ["Lie on your back with knees bent and heels on the floor.", "Dig your heels into the floor.", "Lift your hips slightly into a bridge.", "Hold 10 to 20 seconds.", "Lower slowly."],
+            dose: "4–5 holds, once daily",
+            commonMistakes: ["Lifting too high", "Arching the back"],
+            easierVersion: "Lighter dig, smaller bridge.",
+            harderVersion: "Longer holds.",
+            equipmentNeeded: "None",
+            imageKey: "heel-dig-bridge",
+          },
+          {
+            name: "Bridge",
+            why: "Builds posterior chain support with manageable hamstring demand.",
+            instructions: ["Lie on your back with knees bent.", "Squeeze glutes.", "Lift hips.", "Hold 2–3 seconds.", "Lower slowly."],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Arching the back", "Pushing through toes"],
+            easierVersion: "Smaller range.",
+            harderVersion: "Hold longer.",
+            equipmentNeeded: "None",
+            imageKey: "bridge",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Progressive Strengthening",
+        description: "Progress when Phase 1 exercises are comfortable and walking is normal.",
+        exercises: [
+          {
+            name: "Bridge Walkout",
+            why: "Increases hamstring demand through a longer lever.",
+            instructions: ["Start in a bridge position.", "Slowly walk the feet away from the hips.", "Keep hips lifted.", "Walk feet back in.", "Lower."],
+            dose: "2–3 sets × 5–8 reps, every other day",
+            commonMistakes: ["Walking too far too fast", "Dropping the hips"],
+            easierVersion: "Fewer steps out.",
+            harderVersion: "More steps out.",
+            equipmentNeeded: "None",
+            imageKey: "bridge-walkout",
+          },
+          {
+            name: "Prone Hamstring Curl with Band",
+            why: "Restores direct knee-flexor strength with adjustable resistance.",
+            instructions: ["Lie on your stomach.", "Attach a band to the ankle.", "Bend the knee, bringing the heel toward the buttock.", "Lower slowly."],
+            dose: "2–3 sets × 10–15 reps, every other day",
+            commonMistakes: ["Arching the back", "Going too fast"],
+            easierVersion: "Lighter band.",
+            harderVersion: "Heavier band.",
+            equipmentNeeded: "Resistance band",
+            imageKey: "hamstring-curl",
+          },
+          {
+            name: "Romanian Deadlift",
+            why: "Loads the hamstrings through hip hinge mechanics for functional posterior-chain strength.",
+            instructions: ["Stand tall holding light weights.", "Slight bend in the knees.", "Hinge at the hips, sending them backward.", "Keep the back neutral.", "Lower until a hamstring stretch is felt.", "Return to standing."],
+            dose: "3 sets × 6–10 reps, every other day",
+            commonMistakes: ["Rounding the back", "Going too deep too soon"],
+            easierVersion: "Body weight only, smaller range.",
+            harderVersion: "Increase weight gradually.",
+            equipmentNeeded: "Light dumbbells or water bottles",
+            imageKey: "romanian-deadlift",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Eccentric & Return to Running",
+        description: "Progress when brisk walking is comfortable, strength work is tolerated, and there is no major limp.",
+        exercises: [
+          {
+            name: "Nordic Hamstring Exercise",
+            why: "One of the best-supported eccentric hamstring exercises for injury prevention and return.",
+            instructions: ["Kneel with ankles held or anchored.", "Keep hips extended and trunk straight.", "Slowly lean forward from the knees.", "Use hands to catch yourself.", "Push lightly off the floor to return."],
+            dose: "2–3 sets × 4–6 reps, every other day",
+            commonMistakes: ["Bending at the hips", "Falling too fast"],
+            easierVersion: "Smaller range of forward lean.",
+            harderVersion: "Greater range, slower tempo.",
+            equipmentNeeded: "Anchor point for ankles (couch, partner)",
+            important: "This is an advanced exercise. Do not start with this if walking is still painful.",
+            imageKey: "nordic-hamstring",
+          },
+        ],
+      },
+    ],
+    progressionRules: DEFAULT_PROGRESSION_RULES,
+    flareUpRules: DEFAULT_FLARE_UP_RULES,
+    expectedTimeline: "Mild strains may improve in 2 to 4 weeks. Moderate strains often take 6 to 12 weeks for full sport return.",
+    seekAssessment: [
+      "Major bruising and marked weakness suggesting significant tear",
+      "No improvement after 4–6 weeks",
+      "Recurrent strains",
+    ],
+    requiredEquipment: [],
+    optionalEquipment: ["Resistance band", "Light dumbbells", "Ankle anchor for Nordics"],
+    noEquipmentAlternative: "Bridges and walkouts require no equipment.",
+    urgentSigns: [
+      "Inability to bear weight",
+      "Suspected complete rupture",
+    ],
+    programAudit: "Aligned with hamstring-strain guidance emphasizing progressive strengthening, eccentric loading, and staged return to running.",
   },
 
-  // 17. Adductor / Groin Strain
+  // ───────────────────────────────────────────────────────────
+  // 18. ADDUCTOR / GROIN STRAIN
+  // ───────────────────────────────────────────────────────────
   {
     id: "groin-strain",
     condition: "Adductor / Groin Strain",
     goal: "Restore adductor strength, pelvic control, and tolerance for cutting, lunging, and directional change.",
-    description: "Recent groin-pain literature supports strengthening-based rehabilitation, with Copenhagen adduction exercise being one of the best-known options.",
+    description: "Strengthening-based rehabilitation is well supported. Copenhagen adduction exercise is clearly later-stage, not early-stage.",
     bodyRegion: "hip-groin",
     symptoms: ["inner thigh or groin pain", "pain with kicking", "pain with quick direction changes", "groin tenderness", "pain with lunging"],
-    exercises: [
-      {
-        name: "Ball Squeeze Isometric",
-        why: "A simple low-irritability starting exercise for adductor loading.",
-        instructions: ["Lie on your back with knees bent.", "Place a ball or rolled towel between the knees.", "Squeeze gently to moderately.", "Hold 10 seconds.", "Relax."],
-        dose: "5 holds, once daily",
-        imageKey: "ball-squeeze"
-      },
-      {
-        name: "Side-Lying Hip Adduction",
-        why: "Directly strengthens the adductors with controllable load.",
-        instructions: ["Lie on the unaffected side.", "Cross the top leg over and place that foot on the floor.", "Keep the bottom leg straight.", "Lift the bottom leg upward.", "Lower slowly."],
-        dose: "2–3 sets × 10–15 reps, every other day",
-        imageKey: "hip-adduction"
-      },
-      {
-        name: "Standing Lateral Lunge",
-        why: "Restores controlled adductor loading in a more functional position.",
-        instructions: ["Stand tall.", "Step out to the side.", "Sit the hips back into the stepping leg.", "Keep the other leg straight.", "Push back to start."],
-        dose: "2–3 sets × 8–10 reps per side, every other day",
-        imageKey: "lateral-lunge"
-      },
-      {
-        name: "Copenhagen Adduction (Short Lever)",
-        why: "Widely used to build adductor strength with one of the strongest evidence profiles.",
-        instructions: ["Lie on your side with your top knee supported on a bench or chair.", "Support your body on your lower forearm.", "Lift the lower hip off the floor so the top leg presses into the support.", "Hold briefly.", "Lower with control."],
-        dose: "2 sets × 5–8 reps or short holds, every other day",
-        important: "Start with the short-lever version only. This is advanced and should not be the first exercise in an acute strain.",
-        imageKey: "copenhagen-adduction"
-      },
-      {
-        name: "Split Squat",
-        why: "Helps bridge adductor rehab into more functional lower-body strengthening.",
-        instructions: ["Stand in a staggered stance.", "Lower straight down into a partial lunge.", "Keep trunk upright.", "Push back up."],
-        dose: "2–3 sets × 8–12 reps, every other day",
-        imageKey: "split-squat"
-      }
+    bestFor: "People recovering from an adductor or groin strain who want to rebuild strength and return to activity.",
+    notFor: [
+      "Groin pain with coughing or abdominal features (may need further assessment)",
+      "Major swelling or suspected rupture",
     ],
-    programAudit: "Consistent with modern groin-pain rehab emphasizing progressive strengthening of the adductors and surrounding hip/pelvic musculature."
+    selfManagementAdvice: [
+      "Progressive strengthening is the primary treatment.",
+      "If groin pain persists, is poorly localized, or is aggravated by coughing, kicking, or high-level sport demands, further assessment may be needed.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Isometric Loading",
+        description: "Begin with gentle isometric adductor loading.",
+        exercises: [
+          {
+            name: "Ball Squeeze Isometric",
+            why: "A simple low-irritability starting exercise for adductor loading.",
+            instructions: ["Lie on your back with knees bent.", "Place a ball or rolled towel between the knees.", "Squeeze gently to moderately.", "Hold 10 seconds.", "Relax."],
+            dose: "4–5 holds × 20–30 seconds, once daily",
+            commonMistakes: ["Squeezing too hard", "Holding the breath"],
+            easierVersion: "Lighter squeeze.",
+            harderVersion: "Harder squeeze, longer hold.",
+            equipmentNeeded: "Ball, pillow, or rolled towel",
+            imageKey: "ball-squeeze",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Progressive Strengthening",
+        description: "Progress when isometric exercises are comfortable.",
+        exercises: [
+          {
+            name: "Side-Lying Hip Adduction",
+            why: "Directly strengthens the adductors with controllable load.",
+            instructions: ["Lie on the unaffected side.", "Cross the top leg over.", "Keep the bottom leg straight.", "Lift the bottom leg upward.", "Lower slowly."],
+            dose: "2–3 sets × 10–15 reps, every other day",
+            commonMistakes: ["Using momentum", "Rolling the pelvis"],
+            easierVersion: "Smaller range.",
+            harderVersion: "Add ankle weight.",
+            equipmentNeeded: "None",
+            imageKey: "hip-adduction",
+          },
+          {
+            name: "Split Squat",
+            why: "Bridges adductor rehab into more functional lower-body strengthening.",
+            instructions: ["Stand in a staggered stance.", "Lower straight down.", "Keep trunk upright.", "Push back up."],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Knee collapsing inward", "Leaning too far forward"],
+            easierVersion: "Smaller range, hold support.",
+            harderVersion: "Deeper range, add weight.",
+            equipmentNeeded: "None",
+            imageKey: "split-squat",
+          },
+          {
+            name: "Standing Lateral Lunge",
+            why: "Restores controlled adductor loading in a functional position.",
+            instructions: ["Stand tall.", "Step out to the side.", "Sit hips back into the stepping leg.", "Keep the other leg straight.", "Push back to start."],
+            dose: "2–3 sets × 8–10 reps per side, every other day",
+            commonMistakes: ["Letting the knee cave in", "Rounding the back"],
+            easierVersion: "Smaller step.",
+            harderVersion: "Wider step, add weight.",
+            equipmentNeeded: "None",
+            imageKey: "lateral-lunge",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Advanced Strengthening",
+        description: "Progress when Phase 2 exercises are well controlled and daily activities are comfortable.",
+        exercises: [
+          {
+            name: "Copenhagen Adduction (Short Lever)",
+            why: "Widely used to build adductor strength — one of the strongest evidence profiles. Clearly a later-stage exercise.",
+            instructions: ["Lie on your side with your top knee supported on a bench or chair.", "Support your body on your lower forearm.", "Lift the lower hip off the floor.", "Hold briefly.", "Lower with control."],
+            dose: "2 sets × 5–8 reps or short holds, every other day",
+            commonMistakes: ["Starting this too early", "Dropping the hip"],
+            easierVersion: "Shorter holds, shorter lever.",
+            harderVersion: "Longer lever (support at ankle instead of knee).",
+            equipmentNeeded: "Bench or sturdy chair",
+            important: "Start with the short-lever version only. This is an advanced exercise.",
+            imageKey: "copenhagen-adduction",
+          },
+        ],
+      },
+    ],
+    progressionRules: [
+      ...DEFAULT_PROGRESSION_RULES,
+      "Ball squeeze → side-lying adduction → split squat / lateral lunge → short-lever Copenhagen → cutting and directional change prep.",
+    ],
+    flareUpRules: DEFAULT_FLARE_UP_RULES,
+    expectedTimeline: "Mild strains may improve in 2 to 4 weeks. Moderate strains often take 6 to 12 weeks for full sport return.",
+    seekAssessment: [
+      "Groin pain persists and is poorly localized",
+      "Pain aggravated by coughing",
+      "No improvement after 6 weeks",
+    ],
+    requiredEquipment: [],
+    optionalEquipment: ["Ball or pillow", "Bench for Copenhagen"],
+    noEquipmentAlternative: "Ball squeeze with a pillow and body-weight lunges can be done anywhere.",
+    urgentSigns: [
+      "Inability to bear weight after trauma",
+      "Major swelling or suspected rupture",
+    ],
+    programAudit: "Consistent with modern groin-pain rehab emphasizing progressive adductor strengthening.",
   },
 
-  // 18. Meniscal Irritation
+  // ───────────────────────────────────────────────────────────
+  // 19. MENISCAL IRRITATION / DEGENERATIVE MENISCAL PAIN
+  // ───────────────────────────────────────────────────────────
   {
     id: "meniscal",
     condition: "Meniscal Irritation / Degenerative Meniscal Pain",
-    goal: "Reduce pain and swelling, restore quadriceps strength, improve knee control, and return to walking, stairs, and squatting tolerance.",
-    description: "Recent consensus statements support nonoperative treatment including physical therapy as the first approach for degenerative meniscal lesions.",
+    goal: "Reduce pain and swelling, restore quadriceps strength, and return to walking, stairs, and squatting tolerance.",
+    description: "Recent consensus supports nonoperative management including exercise as the first approach for degenerative meniscal lesions.",
     bodyRegion: "knee",
     symptoms: ["knee pain with twisting", "knee swelling", "catching or locking sensation", "pain with deep squatting", "joint line tenderness"],
-    exercises: [
-      {
-        name: "Quad Set",
-        why: "Useful early when the knee is painful or swollen and stronger exercise is not yet well tolerated.",
-        instructions: ["Sit or lie with the leg straight.", "Tighten the front of the thigh by pressing the knee gently downward.", "Hold 5 seconds.", "Relax."],
-        dose: "2–3 sets × 10 reps, daily",
-        imageKey: "quad-set"
-      },
-      {
-        name: "Straight Leg Raise",
-        why: "Builds quadriceps strength with low knee motion.",
-        instructions: ["Lie on your back.", "Bend one knee and keep the other straight.", "Tighten the thigh of the straight leg.", "Lift it to the height of the opposite knee.", "Lower slowly."],
-        dose: "3 sets × 8–12 reps, every other day",
-        imageKey: "straight-leg-raise"
-      },
-      {
-        name: "Sit-to-Stand",
-        why: "Restores functional lower-limb strength and daily activity tolerance.",
-        instructions: ["Sit near the edge of a chair.", "Lean forward slightly.", "Stand up without using the hands if possible.", "Sit down slowly."],
-        dose: "3 sets × 8–15 reps, every other day",
-        imageKey: "sit-to-stand"
-      },
-      {
-        name: "Step-Up",
-        why: "Adds functional quadriceps and hip work with controllable depth and load.",
-        instructions: ["Step onto a low platform.", "Straighten fully.", "Step down slowly.", "Keep the knee aligned over the middle of the foot."],
-        dose: "2–3 sets × 8–12 reps per side, every other day",
-        imageKey: "step-up"
-      },
-      {
-        name: "Single-Leg Balance",
-        why: "Consensus guidance includes neuromuscular training as part of nonoperative management.",
-        instructions: ["Stand on the affected leg.", "Keep a slight bend in the knee.", "Hold 20 to 30 seconds.", "Repeat."],
-        dose: "4–5 holds, daily",
-        important: "Avoid deep painful squatting early. Avoid repeated twisting/pivoting if it provokes catching. Locked knee, major extension block, or large recurrent swelling warrants medical reassessment.",
-        imageKey: "single-leg-balance"
-      }
+    bestFor: "People with degenerative meniscal symptoms who want to manage conservatively.",
+    notFor: [
+      "True locked knee (cannot straighten the knee at all)",
+      "Major recurrent swelling",
+      "Suspected rupture with major instability",
     ],
-    programAudit: "Aligned with recent consensus statements supporting PT-first management for degenerative meniscal lesions."
+    selfManagementAdvice: [
+      "Avoid repeated twisting/pivoting and deep forced squatting during the irritable phase.",
+      "Gentle knee range-of-motion work within tolerance can help.",
+      "Swelling is your guide — increase in swelling means reduce activity.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Low-Load Strengthening",
+        description: "Begin with gentle quad activation and leg work.",
+        exercises: [
+          {
+            name: "Quad Set",
+            why: "Useful early when the knee is painful or swollen.",
+            instructions: ["Sit or lie with the leg straight.", "Tighten the front of the thigh by pressing the knee downward.", "Hold 5 seconds.", "Relax."],
+            dose: "2–3 sets × 10 reps, daily",
+            commonMistakes: ["Not tightening enough", "Holding breath"],
+            easierVersion: "Place a towel under the knee.",
+            harderVersion: "Add straight leg raise.",
+            equipmentNeeded: "None",
+            imageKey: "quad-set",
+          },
+          {
+            name: "Straight Leg Raise",
+            why: "Builds quadriceps strength with low knee motion.",
+            instructions: ["Lie on your back.", "Bend one knee, keep the other straight.", "Tighten the thigh.", "Lift to the height of the opposite knee.", "Lower slowly."],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Letting the knee bend", "Lifting too fast"],
+            easierVersion: "Smaller range.",
+            harderVersion: "Add ankle weight.",
+            equipmentNeeded: "None",
+            imageKey: "straight-leg-raise",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Functional Strength & Balance",
+        description: "Progress when swelling is manageable and Phase 1 is comfortable.",
+        exercises: [
+          {
+            name: "Sit-to-Stand",
+            why: "Restores functional lower-limb strength.",
+            instructions: ["Sit near the edge.", "Lean forward slightly.", "Stand up.", "Sit down slowly."],
+            dose: "2–3 sets × 8–15 reps, every other day",
+            commonMistakes: ["Using momentum", "Not controlling descent"],
+            easierVersion: "Higher chair, use hands.",
+            harderVersion: "Lower chair.",
+            equipmentNeeded: "Chair",
+            imageKey: "sit-to-stand",
+          },
+          {
+            name: "Step-Up",
+            why: "Functional quadriceps and hip work.",
+            instructions: ["Step onto a low platform.", "Straighten fully.", "Step down slowly."],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Pushing off with back leg", "Knee collapsing"],
+            easierVersion: "Lower step.",
+            harderVersion: "Higher step.",
+            equipmentNeeded: "Low step",
+            imageKey: "step-up",
+          },
+          {
+            name: "Single-Leg Balance",
+            why: "Neuromuscular training is part of nonoperative management.",
+            instructions: ["Stand on the affected leg.", "Slight bend in the knee.", "Hold 20 to 30 seconds."],
+            dose: "3–5 holds, daily",
+            commonMistakes: ["Locking the knee", "Looking down"],
+            easierVersion: "Near a wall for support.",
+            harderVersion: "Eyes closed or unstable surface.",
+            equipmentNeeded: "None",
+            important: "Avoid deep painful squatting early. Locked knee, major extension block, or large recurrent swelling warrants medical reassessment.",
+            imageKey: "single-leg-balance",
+          },
+        ],
+      },
+    ],
+    progressionRules: DEFAULT_PROGRESSION_RULES,
+    flareUpRules: [
+      ...DEFAULT_FLARE_UP_RULES,
+      "Increased swelling after activity means reduce load or volume.",
+    ],
+    expectedTimeline: "Some improvement may occur within 2 to 6 weeks. Functional recovery often takes 6 to 12 weeks.",
+    seekAssessment: [
+      "True locked knee",
+      "Major extension block",
+      "Large recurrent swelling",
+      "No improvement after 6–8 weeks",
+    ],
+    requiredEquipment: ["Chair"],
+    optionalEquipment: ["Low step"],
+    noEquipmentAlternative: "All exercises can be done with body weight and household furniture.",
+    urgentSigns: [
+      "True locked knee",
+      "Major swelling or deformity",
+      "Inability to bear weight after trauma",
+    ],
+    programAudit: "Aligned with consensus statements supporting PT-first management for degenerative meniscal lesions.",
   },
 
-  // 19. ACL Rehabilitation
+  // ───────────────────────────────────────────────────────────
+  // 20. ACL REHABILITATION
+  // ───────────────────────────────────────────────────────────
   {
     id: "acl-rehab",
     condition: "ACL Rehabilitation",
     goal: "Restore full extension, quadriceps strength, neuromuscular control, and progressive functional capacity.",
-    description: "Recent ACL rehabilitation literature supports criterion-based rehab with both open- and closed-chain strengthening.",
+    description: "ACL rehabilitation is criterion-based, not time-based. Especially after ACL reconstruction, supervised rehab is strongly recommended. This program should be framed as a structured support tool, not a complete standalone replacement for formal ACL rehabilitation.",
     bodyRegion: "knee",
-    symptoms: ["knee instability or giving way", "post-ACL surgery recovery", "knee swelling after injury", "difficulty with pivoting or cutting", "reduced confidence in the knee"],
-    exercises: [
-      {
-        name: "Quad Set with Towel Under Knee",
-        why: "Early quadriceps activation is fundamental after ACL injury or reconstruction.",
-        instructions: ["Sit with the leg straight.", "Place a small towel under the knee.", "Tighten the thigh to push the knee downward into the towel.", "Hold 5 seconds.", "Relax."],
-        dose: "2–3 sets × 10 reps, daily",
-        imageKey: "quad-set-towel"
-      },
-      {
-        name: "Straight Leg Raise",
-        why: "Common early strengthening progression once a strong quad set is present.",
-        instructions: ["Lie on your back with the involved leg straight.", "Tighten the quadriceps fully.", "Lift the leg to the height of the opposite knee.", "Lower slowly."],
-        dose: "3 sets × 8–12 reps, every other day",
-        important: "Do not continue if the knee sags into extension lag during the lift.",
-        imageKey: "straight-leg-raise"
-      },
-      {
-        name: "Terminal Knee Extension with Band",
-        why: "Helps restore end-range knee extension strength and gait mechanics.",
-        instructions: ["Anchor a band behind the knee.", "Start with the knee slightly bent.", "Straighten the knee fully against the band.", "Pause 1 to 2 seconds.", "Return slowly."],
-        dose: "3 sets × 10–15 reps, every other day",
-        imageKey: "terminal-knee-ext"
-      },
-      {
-        name: "Mini Squat",
-        why: "Closed-chain loading is a standard ACL rehab component.",
-        instructions: ["Stand with feet hip-width apart.", "Sit the hips back into a shallow squat.", "Keep knees aligned over the feet.", "Return to standing."],
-        dose: "3 sets × 10–15 reps, every other day",
-        imageKey: "mini-squat"
-      },
-      {
-        name: "Step-Up",
-        why: "Progresses closed-chain control and single-leg function.",
-        instructions: ["Use a low step.", "Step up with the involved leg.", "Straighten fully without collapsing inward.", "Step down slowly."],
-        dose: "2–3 sets × 8–12 reps, every other day",
-        important: "Rehab should be criterion-based, not just time-based, with swelling, pain, extension range, strength, and movement quality all guiding progression.",
-        imageKey: "step-up"
-      }
+    symptoms: ["knee instability or giving way", "post-ACL surgery recovery", "knee swelling after injury", "difficulty with pivoting or cutting", "reduced confidence in the knee", "ACL injury"],
+    bestFor: "People in ACL rehabilitation who want structured exercise guidance alongside clinical supervision.",
+    notFor: [
+      "Acute post-surgical cases without clearance from surgeon or physiotherapist",
+      "Major swelling or inability to straighten the knee",
     ],
-    programAudit: "Aligned with recent ACL rehabilitation updates emphasizing criterion-based progression and progressive quadriceps plus functional strengthening."
+    selfManagementAdvice: [
+      "Full knee extension is one of the most important early goals.",
+      "Swelling control and quadriceps activation are critical in early rehab.",
+      "Progression is based on criteria (extension, strength, swelling, movement quality), not just time.",
+      "Supervised rehabilitation is strongly recommended, especially after reconstruction.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Extension, Quad Activation & Swelling Control",
+        description: "Focus on full extension, strong quad set, and swelling management.",
+        exercises: [
+          {
+            name: "Quad Set with Towel Under Knee",
+            why: "Early quadriceps activation is fundamental after ACL injury or reconstruction.",
+            instructions: ["Sit with the leg straight.", "Place a small towel under the knee.", "Tighten the thigh to push the knee into the towel.", "Hold 5 seconds.", "Relax."],
+            dose: "2–3 sets × 10 reps, daily",
+            commonMistakes: ["Not tightening enough", "Holding breath"],
+            easierVersion: "Lighter effort.",
+            harderVersion: "Add straight leg raise.",
+            equipmentNeeded: "Small towel",
+            imageKey: "quad-set-towel",
+          },
+          {
+            name: "Straight Leg Raise",
+            why: "Common early strengthening progression once a strong quad set is present.",
+            instructions: ["Lie on your back with the involved leg straight.", "Tighten the quadriceps fully.", "Lift the leg to the height of the opposite knee.", "Lower slowly."],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Extension lag (knee bending during lift)", "Lifting too fast"],
+            easierVersion: "Quad set only.",
+            harderVersion: "Add ankle weight.",
+            equipmentNeeded: "None",
+            important: "Do not continue if the knee sags into extension lag during the lift.",
+            imageKey: "straight-leg-raise",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Early Strength & Control",
+        description: "Progress when full extension is achieved, swelling is minimal, and quad set is strong with no lag.",
+        exercises: [
+          {
+            name: "Terminal Knee Extension with Band",
+            why: "Restores end-range knee extension strength and gait mechanics.",
+            instructions: ["Anchor a band behind the knee.", "Start with the knee slightly bent.", "Straighten the knee fully against the band.", "Pause 1 to 2 seconds.", "Return slowly."],
+            dose: "3 sets × 10–15 reps, every other day",
+            commonMistakes: ["Not achieving full extension", "Going too fast"],
+            easierVersion: "Lighter band.",
+            harderVersion: "Heavier band.",
+            equipmentNeeded: "Resistance band",
+            imageKey: "terminal-knee-ext",
+          },
+          {
+            name: "Mini Squat",
+            why: "Closed-chain loading is a standard ACL rehab component.",
+            instructions: ["Stand with feet hip-width apart.", "Sit the hips back into a shallow squat.", "Keep knees aligned over the feet.", "Return to standing."],
+            dose: "2–3 sets × 10–15 reps, every other day",
+            commonMistakes: ["Knees collapsing inward", "Going too deep too soon"],
+            easierVersion: "Shallower squat, hold support.",
+            harderVersion: "Deeper squat.",
+            equipmentNeeded: "None",
+            imageKey: "mini-squat",
+          },
+          {
+            name: "Step-Up",
+            why: "Progresses closed-chain control and single-leg function.",
+            instructions: ["Use a low step.", "Step up with the involved leg.", "Straighten fully.", "Step down slowly."],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Pushing off with back leg", "Knee collapsing inward"],
+            easierVersion: "Lower step.",
+            harderVersion: "Higher step.",
+            equipmentNeeded: "Low step",
+            imageKey: "step-up",
+          },
+          {
+            name: "Calf Raise",
+            why: "Restores calf strength for push-off and gait normalization.",
+            instructions: ["Stand holding support.", "Rise onto toes.", "Lower slowly."],
+            dose: "2–3 sets × 10–15 reps, every other day",
+            commonMistakes: ["Rising unevenly", "Going too fast"],
+            easierVersion: "Double-leg.",
+            harderVersion: "Single-leg.",
+            equipmentNeeded: "Counter for balance",
+            imageKey: "calf-raise",
+          },
+          {
+            name: "Single-Leg Balance",
+            why: "Neuromuscular control is critical for ACL rehabilitation.",
+            instructions: ["Stand on the involved leg.", "Slight bend in the knee.", "Hold 20 to 30 seconds."],
+            dose: "3–5 holds, daily",
+            commonMistakes: ["Locking the knee", "Looking down"],
+            easierVersion: "Near a wall.",
+            harderVersion: "Eyes closed or unstable surface.",
+            equipmentNeeded: "None",
+            imageKey: "single-leg-balance",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Progressive Functional Strength",
+        description: "Progress when mini squats and step-ups are well controlled with good movement quality.",
+        exercises: [
+          {
+            name: "Split Squat or Lunge",
+            why: "Progressive single-leg strengthening.",
+            instructions: ["Stand in a staggered stance.", "Lower under control.", "Keep knee aligned.", "Push back up."],
+            dose: "2–3 sets × 8–12 reps per side, every other day",
+            commonMistakes: ["Knee collapsing inward", "Going too deep too soon"],
+            easierVersion: "Shallow range.",
+            harderVersion: "Deeper range, add weight.",
+            equipmentNeeded: "None",
+            imageKey: "split-squat",
+          },
+          {
+            name: "Romanian Deadlift",
+            why: "Develops posterior chain strength for functional movement.",
+            instructions: ["Stand tall holding weights.", "Slight knee bend.", "Hinge at hips.", "Keep back neutral.", "Return to standing."],
+            dose: "2–3 sets × 8–10 reps, every other day",
+            commonMistakes: ["Rounding the back", "Going too deep"],
+            easierVersion: "Body weight only.",
+            harderVersion: "Increase weight.",
+            equipmentNeeded: "Light dumbbells (optional)",
+            imageKey: "romanian-deadlift",
+          },
+        ],
+      },
+      {
+        name: "Phase 4: Running, Jumping & Return to Sport",
+        description: "Progress only when criteria are met: full extension, minimal swelling, no SLR lag, acceptable movement quality, progressive strength recovery.",
+        exercises: [
+          {
+            name: "Single-Leg Squat Pattern",
+            why: "Tests and builds single-leg control needed for sport demands.",
+            instructions: ["Stand on the involved leg.", "Squat down to a tolerable depth.", "Keep knee aligned over foot.", "Return to standing."],
+            dose: "2–3 sets × 6–10 reps, every other day",
+            commonMistakes: ["Knee collapsing inward", "Trunk sway"],
+            easierVersion: "Squat to chair.",
+            harderVersion: "Deeper range, add weight.",
+            equipmentNeeded: "None",
+            imageKey: "sit-to-stand",
+          },
+        ],
+      },
+    ],
+    progressionRules: [
+      ...DEFAULT_PROGRESSION_RULES,
+      "ACL rehabilitation is criterion-based. Criteria include: full knee extension, minimal swelling, no straight-leg-raise lag, acceptable movement quality, and progressive strength recovery.",
+    ],
+    flareUpRules: [
+      ...DEFAULT_FLARE_UP_RULES,
+      "Increased swelling after activity means reduce load.",
+    ],
+    expectedTimeline: "ACL rehabilitation typically takes 9 to 12 months or longer after reconstruction. Non-surgical management timelines vary. Return to sport should be criterion-based.",
+    seekAssessment: [
+      "Persistent swelling",
+      "Loss of extension",
+      "Giving way",
+      "Difficulty progressing through rehabilitation milestones",
+    ],
+    requiredEquipment: ["Small towel", "Low step"],
+    optionalEquipment: ["Resistance band", "Light dumbbells"],
+    noEquipmentAlternative: "Quad sets, leg raises, mini squats, and balance work can all be done without equipment.",
+    urgentSigns: [
+      "Major swelling or deformity",
+      "Inability to bear weight",
+      "Suspected fracture",
+    ],
+    programAudit: "Aligned with ACL rehabilitation updates emphasizing criterion-based progression and progressive quadriceps plus functional strengthening. Supervised rehab is strongly recommended.",
   },
 
-  // 20. Patellar Tendinopathy
+  // ───────────────────────────────────────────────────────────
+  // 21. PATELLAR TENDINOPATHY
+  // ───────────────────────────────────────────────────────────
   {
     id: "patellar-tendinopathy",
     condition: "Patellar Tendinopathy (Jumper's Knee)",
     goal: "Improve tendon load tolerance, quadriceps strength, and return to jumping, stairs, squatting, and sport.",
-    description: "Current clinical guidance supports progressive tendon-loading exercise as the foundation of treatment.",
+    description: "Progressive tendon-loading exercise is the foundation. Rest alone is usually not enough — the tendon typically needs graded reloading. Use next-day pain and stiffness as the load monitor.",
     bodyRegion: "knee",
-    symptoms: ["pain just below the kneecap", "pain with jumping or landing", "pain going up stairs", "pain with squatting", "stiffness after sitting"],
-    exercises: [
-      {
-        name: "Spanish Squat Isometric",
-        why: "A well-known isometric option that can load the patellar tendon while being relatively well tolerated.",
-        instructions: ["Loop a strong strap or band behind both knees and anchor it in front of you.", "Lean back into the strap so it supports you.", "Sit into a squat with a fairly upright trunk.", "Keep weight through the mid-foot.", "Hold 20 to 45 seconds.", "Stand back up slowly."],
-        dose: "4–5 holds, once daily or before activity",
-        keyCues: ["Aim for tolerable tendon discomfort, not sharp pain.", "Knees should track over the middle of the feet."],
-        imageKey: "spanish-squat"
-      },
-      {
-        name: "Decline Squat / Heel-Elevated Squat",
-        why: "Progressive squat loading is a mainstay of patellar tendon rehab.",
-        instructions: ["Stand on a small decline board, wedge, or with heels elevated.", "Slowly squat down to a tolerable depth.", "Keep the trunk controlled and knees aligned.", "Return to standing slowly."],
-        dose: "3 sets × 8–12 reps, every other day",
-        regression: "Use body weight only or reduce range.",
-        imageKey: "decline-squat"
-      },
-      {
-        name: "Leg Extension, Slow Tempo",
-        why: "Isolated quadriceps loading commonly used in heavy slow resistance progression.",
-        instructions: ["Sit in a knee-extension machine or use a resistance band.", "Straighten the knee slowly over 2 to 3 seconds.", "Lower slowly over 2 to 3 seconds.", "Stay within a tolerable pain range."],
-        dose: "3 sets × 8–12 reps, every other day",
-        imageKey: "leg-extension"
-      },
-      {
-        name: "Step-Down",
-        why: "Builds eccentric quadriceps control and functional tendon loading.",
-        instructions: ["Stand on a low step.", "Slowly lower the opposite heel toward the floor.", "Keep the working knee aligned over the middle of the foot.", "Return to start."],
-        dose: "2–3 sets × 8–12 reps per side, every other day",
-        imageKey: "step-down"
-      },
-      {
-        name: "Split Squat",
-        why: "Progresses tendon and quadriceps loading into a more functional single-leg pattern.",
-        instructions: ["Stand in a staggered stance.", "Lower straight down into a lunge.", "Keep front knee aligned with the foot.", "Push back up slowly."],
-        dose: "3 sets × 8–12 reps per side, every other day",
-        painRule: "Mild to moderate tendon discomfort during loading can be acceptable. Next-day pain and stiffness should remain manageable.",
-        imageKey: "split-squat"
-      }
+    symptoms: ["pain just below the kneecap", "pain with jumping or landing", "pain going up stairs", "pain with squatting", "stiffness after sitting", "jumper's knee"],
+    bestFor: "People with gradual-onset pain below the kneecap, especially with jumping, stairs, or squatting.",
+    notFor: [
+      "Suspected patellar tendon rupture (sudden loss of ability to straighten the knee)",
+      "Major swelling or deformity",
     ],
-    programAudit: "Consistent with contemporary patellar tendinopathy guidance prioritizing progressive tendon loading."
+    selfManagementAdvice: [
+      "Rest alone is usually not enough — the tendon typically needs graded reloading.",
+      "Use next-day pain and stiffness as your load monitor.",
+      "Use a controlled tempo, especially on the lowering phase.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Isometric Pain-Modulating Loading",
+        description: "Isometric holds to manage pain and begin tendon loading.",
+        exercises: [
+          {
+            name: "Spanish Squat Isometric",
+            why: "A well-known isometric option that can load the patellar tendon while being relatively well tolerated.",
+            instructions: ["Loop a strong strap behind both knees and anchor it.", "Lean back into the strap.", "Sit into a squat with an upright trunk.", "Hold 20 to 45 seconds.", "Stand back up slowly."],
+            dose: "4–5 holds, once daily or before activity",
+            keyCues: ["Aim for tolerable tendon discomfort, not sharp pain.", "Knees track over middle toes."],
+            commonMistakes: ["Going too deep", "Holding breath"],
+            easierVersion: "Wall sit instead.",
+            harderVersion: "Deeper angle, longer hold.",
+            equipmentNeeded: "Strap or strong band",
+            imageKey: "spanish-squat",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Slow Strengthening",
+        description: "Progress when isometric holds are comfortable.",
+        exercises: [
+          {
+            name: "Decline Squat / Heel-Elevated Squat",
+            why: "Progressive squat loading is a mainstay of patellar tendon rehab.",
+            instructions: ["Stand on a decline board, wedge, or with heels elevated.", "Slowly squat to tolerable depth.", "Keep trunk controlled and knees aligned.", "Return to standing slowly."],
+            dose: "3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Going too deep too soon", "Losing trunk control"],
+            easierVersion: "Body weight, shallow range.",
+            harderVersion: "Add weight, increase depth.",
+            equipmentNeeded: "Decline board, wedge, or heel elevation",
+            imageKey: "decline-squat",
+          },
+          {
+            name: "Leg Extension, Slow Tempo",
+            why: "Isolated quadriceps loading used in heavy slow resistance progression.",
+            instructions: ["Sit in a knee-extension machine or use a band.", "Straighten the knee slowly over 2 to 3 seconds.", "Lower slowly over 2 to 3 seconds.", "Stay within tolerable range."],
+            dose: "3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Going too fast", "Forcing through sharp pain"],
+            easierVersion: "Lighter resistance.",
+            harderVersion: "Increase resistance.",
+            equipmentNeeded: "Resistance band or machine",
+            imageKey: "leg-extension",
+          },
+          {
+            name: "Step-Down",
+            why: "Builds eccentric quadriceps control and functional tendon loading.",
+            instructions: ["Stand on a low step.", "Slowly lower the opposite heel toward the floor.", "Keep the knee aligned.", "Return to start."],
+            dose: "2–3 sets × 8–12 reps per side, every other day",
+            commonMistakes: ["Going too fast", "Knee collapsing inward"],
+            easierVersion: "Lower step.",
+            harderVersion: "Higher step.",
+            equipmentNeeded: "Low step",
+            imageKey: "step-down",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Heavy Strengthening & Sport Reload",
+        description: "Progress when Phase 2 exercises are well tolerated with good control.",
+        exercises: [
+          {
+            name: "Split Squat",
+            why: "Progresses tendon and quadriceps loading into a functional single-leg pattern.",
+            instructions: ["Stand in a staggered stance.", "Lower straight down.", "Keep front knee aligned.", "Push back up slowly."],
+            dose: "3 sets × 8–12 reps per side, every other day",
+            commonMistakes: ["Knee collapsing inward", "Rushing"],
+            easierVersion: "Shallower range.",
+            harderVersion: "Add weight, increase depth.",
+            equipmentNeeded: "None",
+            painRule: "Mild to moderate tendon discomfort during loading can be acceptable. Next-day pain and stiffness should remain manageable.",
+            imageKey: "split-squat",
+          },
+        ],
+      },
+    ],
+    progressionRules: [
+      ...DEFAULT_PROGRESSION_RULES,
+      "Use a controlled tempo, especially on the lowering phase.",
+      "For jumping athletes: add energy-storage progression (hopping, jumping) in later stages.",
+    ],
+    flareUpRules: [
+      ...DEFAULT_FLARE_UP_RULES,
+      "If next-day pain and stiffness are clearly worse, reduce load or volume.",
+    ],
+    expectedTimeline: "Strength and tendon capacity changes often take 6 to 12 weeks or longer. Some improvement may be noticeable within 3 to 6 weeks.",
+    seekAssessment: [
+      "No improvement after 8–12 weeks of consistent loading",
+      "Sudden loss of ability to straighten the knee",
+    ],
+    requiredEquipment: ["Low step"],
+    optionalEquipment: ["Decline board or wedge", "Resistance band or machine", "Strap for Spanish squat"],
+    noEquipmentAlternative: "Wall sit for isometrics. Step-downs and split squats can be done with body weight.",
+    urgentSigns: [
+      "Sudden loss of ability to straighten the knee (possible rupture)",
+      "Major swelling or deformity",
+    ],
+    programAudit: "Consistent with contemporary patellar tendinopathy guidance prioritizing progressive tendon loading.",
   },
 
-  // 21. Posterior Hip / Piriformis-Related Buttock Pain
+  // ───────────────────────────────────────────────────────────
+  // 22. POSTERIOR HIP / DEEP GLUTEAL–TYPE BUTTOCK PAIN (merged)
+  // ───────────────────────────────────────────────────────────
   {
     id: "posterior-hip",
-    condition: "Posterior Hip / Piriformis-Related Buttock Pain",
+    condition: "Posterior Hip / Deep Gluteal–Type Buttock Pain",
     goal: "Improve hip external rotator and abductor strength, reduce compressive/irritable postures, and restore walking, stairs, and sitting tolerance.",
-    description: "Conservative treatment commonly includes activity modification plus hip strengthening and mobility work.",
+    description: "Conservative treatment commonly includes activity modification plus hip strengthening and mobility work. Emphasize symptom behavior and posture/activity modification more than aggressive stretching.",
     bodyRegion: "hip-groin",
-    symptoms: ["deep buttock pain", "pain sitting on hard surfaces", "pain radiating down the back of the leg", "piriformis tenderness", "hip tightness"],
-    exercises: [
-      {
-        name: "Figure-4 Stretch",
-        why: "Can reduce posterior hip stiffness when tolerated.",
-        instructions: ["Lie on your back with both knees bent.", "Cross the affected ankle over the opposite knee.", "Lift the opposite thigh toward your chest.", "Hold a mild stretch in the buttock.", "Breathe normally."],
-        dose: "3–5 holds × 20–30 seconds, daily",
-        stopIf: "It reproduces strong tingling or clear nerve pain down the leg.",
-        imageKey: "figure-4-stretch"
-      },
-      {
-        name: "Clamshell",
-        why: "Strengthens deep hip external rotators and posterolateral hip muscles.",
-        instructions: ["Lie on your side with hips and knees bent.", "Keep feet together.", "Lift the top knee without rolling the pelvis backward.", "Lower slowly."],
-        dose: "3 sets × 12–15 reps per side, every other day",
-        imageKey: "clamshell"
-      },
-      {
-        name: "Side-Lying Hip Abduction",
-        why: "Improves gluteus medius strength and pelvic control.",
-        instructions: ["Lie on your side with the bottom knee bent.", "Keep the top leg straight and toes pointing forward.", "Lift the top leg 20 to 30 cm.", "Lower slowly."],
-        dose: "2–3 sets × 10–15 reps per side, every other day",
-        imageKey: "hip-abduction"
-      },
-      {
-        name: "Bridge",
-        why: "Strengthens gluteus maximus and posterior chain without requiring large hip rotation.",
-        instructions: ["Lie on your back with knees bent.", "Tighten the glutes.", "Lift the hips until shoulders, hips, and knees align.", "Hold 2 to 3 seconds.", "Lower slowly."],
-        dose: "3 sets × 8–12 reps, every other day",
-        imageKey: "bridge"
-      },
-      {
-        name: "Lateral Band Walk",
-        why: "Progresses hip-abductor and external-rotator loading in standing.",
-        instructions: ["Place a loop band around the ankles or above the knees.", "Slight bend at hips and knees.", "Step sideways slowly.", "Keep toes forward and pelvis level."],
-        dose: "2–3 sets × 8–12 steps each direction, every other day",
-        important: "Avoid prolonged sitting positions that clearly provoke buttock or leg symptoms. Avoid aggressive stretching if it reproduces radiating pain. Progressive weakness, marked numbness, or worsening radiating pain warrants reassessment.",
-        imageKey: "lateral-band-walk"
-      }
+    symptoms: ["deep buttock pain", "pain sitting on hard surfaces", "pain radiating down the back of the leg", "piriformis tenderness", "hip tightness", "sciatic-type leg pain", "pain with hip rotation"],
+    bestFor: "People with deep buttock pain, with or without sciatic-type leg symptoms, who want to manage conservatively.",
+    notFor: [
+      "Progressive leg weakness or foot drop",
+      "Bowel or bladder changes",
+      "Saddle numbness",
     ],
-    programAudit: "Consistent with conservative exercise principles used for deep gluteal/posterior hip presentations."
+    selfManagementAdvice: [
+      "Avoid prolonged sitting positions that clearly provoke symptoms.",
+      "Stop stretches that reproduce strong radiating pain down the leg.",
+      "Symptom behavior and activity modification are more important than aggressive stretching.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Mobility & Symptom Management",
+        description: "Gentle mobility work and nerve glides if leg symptoms are present.",
+        exercises: [
+          {
+            name: "Figure-4 Stretch",
+            why: "Can reduce posterior hip stiffness when tolerated.",
+            instructions: ["Lie on your back with both knees bent.", "Cross the affected ankle over the opposite knee.", "Lift the opposite thigh toward your chest.", "Hold a mild stretch in the buttock.", "Breathe normally."],
+            dose: "3–5 holds × 20–30 seconds, daily",
+            commonMistakes: ["Forcing the stretch", "Continuing if it reproduces radiating leg pain"],
+            easierVersion: "Just cross the ankle without pulling.",
+            harderVersion: "Slight increase in pull if tolerated.",
+            equipmentNeeded: "None",
+            stopIf: "It reproduces strong tingling or clear nerve pain down the leg.",
+            imageKey: "figure-4-stretch",
+          },
+          {
+            name: "Sciatic Nerve Glide",
+            why: "Optional — can help if leg symptoms are present and not highly irritable.",
+            instructions: ["Sit tall or lie on your back.", "Slowly straighten the affected knee while bringing the ankle up.", "Ease off and return.", "This should feel like a gentle glide, not an aggressive stretch."],
+            dose: "1–2 sets × 10 reps, 1–2 times daily",
+            commonMistakes: ["Stretching too aggressively", "Bouncing"],
+            easierVersion: "Smaller range.",
+            harderVersion: "Slightly more range as tolerated.",
+            equipmentNeeded: "None",
+            painRule: "Stop if symptoms increase or radiate further down the leg.",
+            imageKey: "nerve-slider",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Hip Strengthening",
+        description: "Progress when mobility work is comfortable and symptoms are manageable.",
+        exercises: [
+          {
+            name: "Clamshell",
+            why: "Strengthens deep hip external rotators and posterolateral hip muscles.",
+            instructions: ["Lie on your side with hips and knees bent.", "Keep feet together.", "Lift the top knee without rolling the pelvis backward.", "Lower slowly."],
+            dose: "2–3 sets × 12–15 reps per side, every other day",
+            commonMistakes: ["Rolling backward", "Lifting too high"],
+            easierVersion: "Smaller range.",
+            harderVersion: "Add a loop band above the knees.",
+            equipmentNeeded: "None",
+            imageKey: "clamshell",
+          },
+          {
+            name: "Side-Lying Hip Abduction",
+            why: "Improves gluteus medius strength and pelvic control.",
+            instructions: ["Lie on your side with the bottom knee bent.", "Keep the top leg straight and toes forward.", "Lift the top leg 20 to 30 cm.", "Lower slowly."],
+            dose: "2–3 sets × 10–15 reps per side, every other day",
+            commonMistakes: ["Rolling backward", "Rotating toes upward"],
+            easierVersion: "Smaller range.",
+            harderVersion: "Add ankle weight.",
+            equipmentNeeded: "None",
+            imageKey: "hip-abduction",
+          },
+          {
+            name: "Bridge with Band Around Knees",
+            why: "Combines glute strengthening with external rotation activation.",
+            instructions: ["Lie on your back with knees bent.", "Place a loop band around the knees.", "Press slightly outward and lift hips.", "Lower with control."],
+            dose: "2–3 sets × 10–12 reps, every other day",
+            commonMistakes: ["Letting knees cave in", "Arching the back"],
+            easierVersion: "Bridge without band.",
+            harderVersion: "Single-leg bridge.",
+            equipmentNeeded: "Loop band",
+            imageKey: "bridge-band",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Functional Loading",
+        description: "Progress when Phase 2 exercises are well tolerated.",
+        exercises: [
+          {
+            name: "Lateral Band Walk",
+            why: "Progresses hip-abductor and external-rotator loading in standing.",
+            instructions: ["Place a loop band around the ankles or above the knees.", "Slight bend at hips and knees.", "Step sideways slowly.", "Keep toes forward and pelvis level."],
+            dose: "2–3 sets × 8–12 steps each direction, every other day",
+            commonMistakes: ["Standing too upright", "Steps too large"],
+            easierVersion: "Band above knees.",
+            harderVersion: "Band at ankles, heavier resistance.",
+            equipmentNeeded: "Loop band",
+            important: "Progressive weakness, marked numbness, or worsening radiating pain warrants reassessment.",
+            imageKey: "lateral-band-walk",
+          },
+        ],
+      },
+    ],
+    progressionRules: DEFAULT_PROGRESSION_RULES,
+    flareUpRules: DEFAULT_FLARE_UP_RULES,
+    expectedTimeline: "Some symptom improvement may occur within 2 to 6 weeks. Full recovery often takes 6 to 12 weeks.",
+    seekAssessment: [
+      "Progressive leg weakness",
+      "Worsening numbness",
+      "Symptoms not improving after 6–8 weeks",
+    ],
+    requiredEquipment: [],
+    optionalEquipment: ["Loop band", "Ankle weight"],
+    noEquipmentAlternative: "All exercises can be done with body weight.",
+    urgentSigns: [
+      "Progressive leg weakness or foot drop",
+      "Loss of bladder or bowel control",
+      "Numbness in the groin or saddle area",
+    ],
+    programAudit: "Consistent with conservative exercise principles for deep gluteal and posterior hip presentations.",
   },
 
-  // ─── LUMBAR SPINAL STENOSIS BOOT CAMP ───
+  // ───────────────────────────────────────────────────────────
+  // 23. LUMBAR SPINAL STENOSIS
+  // ───────────────────────────────────────────────────────────
   {
     id: "lumbar-spinal-stenosis",
-    condition: "Lumbar Spinal Stenosis – Boot Camp Program",
-    goal: "Improve spinal mobility, core stability, and walking tolerance through a progressive flexion-based exercise program.",
-    description: "A structured 6-week boot camp program designed for lumbar spinal stenosis. Exercises emphasize flexion-based positions that open the spinal canal, progressive core strengthening, nerve mobilization, and graduated walking. All exercises should be performed while avoiding back extension (arching backwards).",
+    condition: "Lumbar Spinal Stenosis – Flexion-Biased Walking and Strength Program",
+    goal: "Improve spinal mobility, core stability, and walking tolerance through a progressive flexion-biased exercise program.",
+    description: "Many people with lumbar spinal stenosis feel better in flexed positions such as sitting or leaning forward. Use symptom response rather than rigid rules to guide exercise selection.",
     bodyRegion: "lower-back",
     symptoms: [
       "leg pain with walking",
@@ -1444,761 +3146,353 @@ export const programs: Program[] = [
       "pain relief with sitting or bending forward",
       "difficulty standing upright",
       "lumbar stenosis",
-      "spinal stenosis"
+      "spinal stenosis",
     ],
+    bestFor: "People with lumbar spinal stenosis symptoms who feel better in flexed positions and want to improve walking tolerance.",
+    notFor: [
+      "Sudden loss of bladder or bowel control",
+      "Progressive weakness in both legs",
+      "Saddle numbness",
+      "Sudden inability to walk",
+    ],
+    selfManagementAdvice: [
+      "Many people with stenosis feel better in flexed positions such as sitting, leaning forward, or cycling. Use symptom response to guide activity.",
+      "Walking tolerance often improves gradually with consistent effort.",
+      "Use rest breaks when leg symptoms appear during walking, then resume when symptoms settle.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Symptom Relief & Flexion-Biased Mobility",
+        description: "Focus on flexion-based positions that open the spinal canal and relieve nerve compression.",
+        exercises: [
+          {
+            name: "Stationary Bike (Leaning Forward)",
+            why: "Cycling in a flexed posture opens the spinal canal and improves cardiovascular endurance.",
+            instructions: [
+              "Be very careful when getting on and off the bike.",
+              "Adjust the seat so your legs almost fully extend.",
+              "Lean forward onto the handlebars throughout.",
+              "Start at 5 to 10 minutes and progress weekly.",
+            ],
+            dose: "Start at 5–10 minutes, progress to 20–30 minutes, daily",
+            commonMistakes: ["Sitting too upright", "Starting with too much resistance"],
+            easierVersion: "Shorter duration with light resistance.",
+            harderVersion: "Increase duration by 5 minutes each week; add light resistance.",
+            equipmentNeeded: "Stationary bike",
+            painRule: "Reduce duration if leg symptoms increase during cycling.",
+            imageKey: "stationary-bike-forward",
+          },
+          {
+            name: "Knee to Chest Stretch",
+            why: "Gently stretches the lower back and opens the lumbar spinal canal.",
+            instructions: ["Lie on your back.", "Bring one knee up to your chest.", "Pull it toward your chest/shoulder with both hands.", "Keep the other leg straight.", "Hold, then repeat on the other side."],
+            dose: "5–10 reps × 5–10 second holds each side, daily",
+            commonMistakes: ["Pulling too aggressively", "Lifting the head"],
+            easierVersion: "Pull less far.",
+            harderVersion: "Longer holds.",
+            equipmentNeeded: "None",
+            imageKey: "knee-to-chest-stretch",
+          },
+          {
+            name: "Double Knee to Chest Stretch",
+            why: "Maximizes lumbar flexion and spinal canal opening.",
+            instructions: ["Lie on your back.", "Bring both knees toward your chest.", "Pull as far as comfortable and hold."],
+            dose: "5 reps × 5–10 second holds, daily",
+            commonMistakes: ["Lifting head and shoulders too much", "Pulling too hard"],
+            easierVersion: "Single knee to chest.",
+            harderVersion: "Longer holds.",
+            equipmentNeeded: "None",
+            imageKey: "double-knee-to-chest",
+          },
+          {
+            name: "Pelvic Tilt (Supine)",
+            why: "Activates the deep core and flattens the lumbar curve, reducing canal compression.",
+            instructions: ["Lie on your back with knees bent.", "Squeeze buttock muscles.", "Contract lower abdominals and tilt pelvis.", "Flatten lower back against the floor.", "Hold."],
+            dose: "5 reps × 5–10 second holds, daily",
+            commonMistakes: ["Lifting the pelvis off the floor", "Holding the breath"],
+            easierVersion: "Shorter holds.",
+            harderVersion: "Longer holds.",
+            equipmentNeeded: "None",
+            imageKey: "pelvic-tilt-supine",
+          },
+          {
+            name: "Sitting Forward Flex",
+            why: "Stretches the lumbar spine in a flexion position, relieving canal compression.",
+            instructions: ["Sit at the edge of a chair.", "Grasp your ankles from the outside.", "Pull yourself downward toward the floor.", "Feel a stretch in the lower back.", "Hold."],
+            dose: "5 reps × 5–10 second holds, daily",
+            commonMistakes: ["Bouncing", "Pulling too hard"],
+            easierVersion: "Lean forward without grasping ankles.",
+            harderVersion: "Longer holds.",
+            equipmentNeeded: "Chair",
+            imageKey: "sitting-forward-flex",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Early Strength & Mobility",
+        description: "Progress when Phase 1 exercises are comfortable and walking tolerance is starting to improve.",
+        exercises: [
+          {
+            name: "Pelvic Twist Stretch",
+            why: "Rotational stretch that mobilizes the lumbar spine.",
+            instructions: ["Lie on your back with knees bent.", "Bring both knees together to one side, then the other.", "Keep shoulders flat.", "Move slowly."],
+            dose: "5 reps × 5–10 second holds each side, daily",
+            commonMistakes: ["Lifting shoulders off the floor", "Moving too fast"],
+            easierVersion: "Smaller range.",
+            harderVersion: "Advanced pelvic twist (cross one leg over).",
+            equipmentNeeded: "None",
+            imageKey: "pelvic-twist",
+          },
+          {
+            name: "Nerve Flossing",
+            why: "Mobilizes the sciatic nerve to reduce neural tension and improve leg symptoms.",
+            instructions: ["Lie on your back with a belt around the base of your toes.", "Pull the leg up with knee straight and hold.", "Point toes toward ceiling, then pull foot down with belt.", "Repeat on opposite side."],
+            dose: "5 reps × 2 sets each side, daily",
+            commonMistakes: ["Forcing too far", "Moving too fast"],
+            easierVersion: "Bend the knee slightly.",
+            harderVersion: "Increase range gradually.",
+            equipmentNeeded: "Belt or strap",
+            painRule: "Stop if sharp, shooting pain radiates down the leg.",
+            imageKey: "nerve-flossing-stenosis",
+          },
+          {
+            name: "Side-Lying Hip Abduction",
+            why: "Strengthens the gluteus medius for improved pelvic stability during walking.",
+            instructions: ["Lie on your side.", "Bottom knee bent for balance.", "Top leg straight.", "Lift the top leg upward.", "Hold 5 seconds, lower slowly."],
+            dose: "2–3 sets × 10–15 reps each side, daily",
+            commonMistakes: ["Rolling backward", "Lifting too high"],
+            easierVersion: "Smaller range.",
+            harderVersion: "Add ankle weight.",
+            equipmentNeeded: "None",
+            imageKey: "side-lying-hip",
+          },
+          {
+            name: "Sit-to-Stand",
+            why: "Functional strengthening for daily activities.",
+            instructions: ["Sit at the edge of a chair.", "Use arms if needed.", "Lean forward and stand.", "Lower back slowly."],
+            dose: "5 reps × 5–10 second holds at top, daily",
+            commonMistakes: ["Not leaning forward enough", "Dropping into the chair"],
+            easierVersion: "Use armrests.",
+            harderVersion: "Reduce arm assistance.",
+            equipmentNeeded: "Chair with armrests",
+            imageKey: "sit-to-stand",
+          },
+          {
+            name: "Half Sit-Up",
+            why: "Strengthens the anterior core to support the flexed lumbar posture.",
+            instructions: ["Lie on your back with knees bent.", "Arms across chest.", "Lift torso until shoulder blades clear the floor.", "Hold."],
+            dose: "5 reps × 5–10 second holds, daily",
+            commonMistakes: ["Lifting too high", "Pulling on the neck"],
+            easierVersion: "Shorter holds.",
+            harderVersion: "Longer holds.",
+            equipmentNeeded: "None",
+            imageKey: "half-sit-up",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Functional Walking Progression",
+        description: "Progress when Phase 2 exercises are comfortable and short walks are tolerable.",
+        exercises: [
+          {
+            name: "Standing Pelvic Tilt",
+            why: "Teaches pelvic control in standing, preparing for walking.",
+            instructions: ["Stand with feet shoulder-width apart.", "Squeeze buttocks and tilt pelvis.", "Avoid arching your back.", "Hold."],
+            dose: "5 reps × 5–10 second holds, daily",
+            commonMistakes: ["Arching the back", "Not engaging glutes"],
+            easierVersion: "Shorter holds.",
+            harderVersion: "Maintain during walking.",
+            equipmentNeeded: "None",
+            imageKey: "standing-pelvic-tilt",
+          },
+          {
+            name: "Graduated Walking",
+            why: "The ultimate functional goal — progressively increasing walking distance.",
+            instructions: ["Stand in the pelvic tilt position.", "Walk normally, swinging your arms.", "Count your steps and aim to increase weekly.", "Rest when symptoms appear, then resume."],
+            dose: "Start with comfortable step count, increase 10–20% weekly, daily",
+            commonMistakes: ["Increasing too fast", "Not resting when symptoms appear"],
+            easierVersion: "Shorter walking intervals.",
+            harderVersion: "Longer continuous walking.",
+            equipmentNeeded: "Supportive footwear",
+            painRule: "Rest when leg symptoms appear; resume after symptoms settle.",
+            imageKey: "standing-pelvic-tilt",
+          },
+        ],
+      },
+    ],
+    progressionRules: DEFAULT_PROGRESSION_RULES,
+    flareUpRules: [
+      ...DEFAULT_FLARE_UP_RULES,
+      "If walking-related leg symptoms are clearly worse, reduce walking distance temporarily.",
+    ],
+    expectedTimeline: "Walking tolerance may improve gradually over 6 to 12 weeks with consistent effort. Some people continue to improve over months.",
+    seekAssessment: [
+      "Sudden loss of bladder or bowel control",
+      "Progressive weakness in both legs",
+      "Saddle area numbness",
+      "Sudden inability to walk",
+      "No improvement after 8–12 weeks",
+    ],
+    requiredEquipment: ["Chair"],
+    optionalEquipment: ["Stationary bike", "Belt or strap for nerve flossing"],
+    noEquipmentAlternative: "Floor exercises and walking can be done without special equipment.",
     urgentSigns: [
       "Sudden loss of bladder or bowel control",
       "Progressive weakness in both legs",
-      "Saddle area numbness (inner thighs, buttocks, groin)",
-      "Sudden inability to walk"
+      "Saddle area numbness",
+      "Sudden inability to walk",
     ],
-    exercises: [
-      {
-        name: "Stationary Bike (Leaning Forward)",
-        why: "Cycling in a flexed posture opens the spinal canal and improves cardiovascular endurance with minimal spinal loading.",
-        instructions: [
-          "Be very careful when getting on and off the stationary bike — use a stool if needed.",
-          "Adjust the seat height so your legs almost fully extend while pedalling.",
-          "Lean forward onto the handlebars throughout.",
-          "Use a bike with a large, comfortable seat.",
-          "Start at 5–10 minutes and progress weekly."
-        ],
-        dose: "Week 1: 5–10 min → Week 6: 30 min, performed daily",
-        keyCues: ["Lean forward onto handlebars", "Keep resistance light initially"],
-        progression: "Increase duration by 5 minutes each week; add light resistance as tolerated.",
-        painRule: "Reduce duration if leg symptoms increase during cycling.",
-        imageKey: "stationary-bike-forward"
-      },
-      {
-        name: "Knee to Chest Stretch",
-        why: "Gently stretches the lower back and opens the lumbar spinal canal to relieve nerve compression.",
-        instructions: [
-          "Lie on your back with both legs straight.",
-          "Bring one knee up to your chest.",
-          "With both hands on the knee, pull it as far as you can toward your chest/shoulder.",
-          "Keep the other leg straight on the mat.",
-          "Hold, then repeat on the other side."
-        ],
-        dose: "Hold 5–10 sec, repeat 5× each side, performed daily",
-        keyCues: ["Keep opposite leg straight on mat", "Pull gently — no forcing"],
-        progression: "Increase hold time by 1–2 seconds each week.",
-        imageKey: "knee-to-chest-stretch"
-      },
-      {
-        name: "Knee to Opposite Shoulder Stretch",
-        why: "Targets the piriformis and deep hip rotators while further opening the lumbar canal.",
-        instructions: [
-          "Lie on your back and bring one knee to your chest.",
-          "With both hands on the outside of the knee, pull it toward the opposite shoulder.",
-          "Grasp the ankle with your opposite hand and pull at the same time.",
-          "Hold, then repeat on the opposite side."
-        ],
-        dose: "Hold 5–10 sec, repeat 5× each side, performed daily",
-        keyCues: ["Direct the knee toward the opposite shoulder", "Keep shoulders flat on the mat"],
-        progression: "Increase hold time by 1–2 seconds each week.",
-        imageKey: "knee-to-opposite-shoulder"
-      },
-      {
-        name: "Double Knee to Chest Stretch",
-        why: "Maximizes lumbar flexion stretch and spinal canal opening bilaterally.",
-        instructions: [
-          "Lie on your back.",
-          "Using your hands, bring both knees toward your chest.",
-          "Pull as far as you can go and hold."
-        ],
-        dose: "Hold 5–10 sec, repeat 5×, performed daily",
-        keyCues: ["Perform after single knee-to-chest and opposite shoulder stretches for best results"],
-        important: "Exercises 2, 3, and 4 can be done in sequence: Knee to Chest → Knee to Opposite Shoulder (both sides) → Double Knee to Chest.",
-        imageKey: "double-knee-to-chest"
-      },
-      {
-        name: "Pelvic Twist Stretch",
-        why: "Rotational stretch that mobilizes the lumbar spine and reduces stiffness.",
-        instructions: [
-          "Lie on your back with both knees bent, feet flat on the floor.",
-          "Bring both knees together to one side, then the other.",
-          "Keep your shoulders flat on the floor.",
-          "Do not shift your pelvis when moving side to side."
-        ],
-        dose: "Hold 5–10 sec each side, repeat 5×, performed daily",
-        keyCues: ["Keep shoulders pinned to the floor", "Move slowly and controlled"],
-        imageKey: "pelvic-twist"
-      },
-      {
-        name: "Advanced Pelvic Twist",
-        why: "Deeper rotational stretch targeting the lumbar spine and hip complex.",
-        instructions: [
-          "Lie on your back with both knees bent, feet flat on the mat.",
-          "Place the right leg over the left knee.",
-          "Keeping shoulders on the mat, drop the right knee toward your left side.",
-          "Place your left hand on your right knee and direct it downward as far as you can.",
-          "Hold, then repeat on the opposite side."
-        ],
-        dose: "Hold 5–10 sec each side, repeat 5×, performed daily",
-        keyCues: ["Keep shoulders flat", "Use hand pressure gently to deepen the stretch"],
-        progression: "Introduced in Week 2 once basic pelvic twist is comfortable.",
-        imageKey: "advanced-pelvic-twist"
-      },
-      {
-        name: "Nerve Flossing (Neuro-Mobilization)",
-        why: "Mobilizes the sciatic nerve to reduce neural tension and improve leg symptoms.",
-        instructions: [
-          "Lie on your back with a belt or strap wrapped around the base of your toes.",
-          "Phase 1: Pull the leg up toward you as far as you can with the knee straight and hold.",
-          "Phase 2: Point the toes toward the ceiling, then use the belt to pull the foot down while keeping the knee straight.",
-          "Repeat on the opposite side."
-        ],
-        dose: "5 reps × 2 sets each side, performed daily",
-        keyCues: ["Keep the knee straight throughout", "Move slowly — this should not reproduce sharp pain"],
-        regression: "Bend the knee slightly if the stretch is too intense.",
-        painRule: "Stop if sharp, shooting pain radiates down the leg.",
-        imageKey: "nerve-flossing-stenosis"
-      },
-      {
-        name: "Pelvic Tilt (Supine)",
-        why: "Activates the deep core and flattens the lumbar curve, reducing canal compression.",
-        instructions: [
-          "Lie on your back with knees bent, feet flat on the floor.",
-          "Squeeze your buttock muscles together.",
-          "Contract your lower abdominal muscles and tilt your pelvis toward you.",
-          "Flatten your lower back against the floor.",
-          "Hold this position — do not elevate your pelvis off the floor."
-        ],
-        dose: "Hold 5–10 sec, repeat 5×, performed daily",
-        keyCues: ["Think about pressing your belly button toward the floor", "Do not lift the pelvis"],
-        progression: "Increase hold time by 1–2 seconds each week.",
-        imageKey: "pelvic-tilt-supine"
-      },
-      {
-        name: "Half Sit-Up",
-        why: "Strengthens the anterior core to support the flexed lumbar posture.",
-        instructions: [
-          "Lie on your back with both knees bent, feet flat on the floor.",
-          "Place your arms across your chest.",
-          "Elevate your torso off the floor (partial sit-up).",
-          "Hold this position."
-        ],
-        dose: "Hold 5–10 sec, repeat 5×, performed daily",
-        keyCues: ["Lift only until shoulder blades clear the floor", "Exhale as you lift"],
-        progression: "Increase hold duration each week.",
-        imageKey: "half-sit-up"
-      },
-      {
-        name: "Side Sit-Up",
-        why: "Strengthens the obliques and lateral core to improve trunk stability.",
-        instructions: [
-          "Lie on your right side with both knees bent.",
-          "Bend your right arm, making a fist pointing to the ceiling, placing your right elbow against your body.",
-          "Place your left open hand over the fist of the right hand.",
-          "While pushing down with your left hand, elevate your torso.",
-          "Hold this position, then repeat on the other side."
-        ],
-        dose: "Hold 5–10 sec, repeat 5× each side, performed daily",
-        keyCues: ["Use the push-down force to help elevate", "Keep knees bent for stability"],
-        imageKey: "side-sit-up"
-      },
-      {
-        name: "Side-Lying Hip Abduction",
-        why: "Strengthen the gluteus medius to improve pelvic stability.",
-        instructions: [
-          "Lie on your right side.",
-          "Bend the bottom knee slightly for balance.",
-          "Keep the top leg straight and in line with your body.",
-          "Lift the top leg upward about 12–18 inches.",
-          "Keep the toes pointing forward or slightly down.",
-          "Hold 5 seconds, then slowly lower.",
-          "Repeat 10–15 repetitions, then switch sides."
-        ],
-        dose: "2–3 sets of 10–15 reps each side, performed daily",
-        keyCues: ["Toes pointing forward or slightly down", "Keep pelvis stacked — don't roll backward"],
-        imageKey: "side-lying-hip"
-      },
-      {
-        name: "Quadriceps Stretch (Side-Lying)",
-        why: "Stretches the quadriceps and hip flexors, which can contribute to anterior pelvic tilt and stenosis symptoms.",
-        instructions: [
-          "Lie on your side.",
-          "Bring your bottom bent knee up toward your chest with your bottom hand.",
-          "Grasp the ankle of the top leg and pull it backward without arching your back.",
-          "Hold this position, then repeat on the other side."
-        ],
-        dose: "Hold 5–10 sec, repeat 5× each side, performed daily",
-        keyCues: ["Do not arch your back", "Keep bottom knee pulled forward for stability"],
-        imageKey: "quad-stretch-side-lying"
-      },
-      {
-        name: "Back Leg Extension (Using Chair)",
-        why: "Strengthens the gluteals and posterior chain in a supported, flexed position.",
-        instructions: [
-          "Place a chair with armrests against a wall.",
-          "Lean forward and place hands on the armrests.",
-          "Extend the right leg backward, keeping your knee straight.",
-          "Lift your foot about 6 inches above the floor, hold for one second, then lower.",
-          "Repeat on the opposite side."
-        ],
-        dose: "5–10 reps × 2 sets each side, performed daily",
-        keyCues: ["Do not arch your back", "Small controlled movement — only 6 inches"],
-        progression: "Progress to prone version (with pillows) when comfortable.",
-        imageKey: "back-leg-ext-chair"
-      },
-      {
-        name: "Back Leg Extension (Prone)",
-        why: "Advanced glute and posterior chain strengthening in a supported prone position.",
-        instructions: [
-          "Place a stack of pillows or blankets (about 12 inches high) on the mat.",
-          "Lie face down with your pelvis on the pillows.",
-          "Lift one leg 6 inches off the mat, keeping your knee straight.",
-          "Do not arch your back.",
-          "Hold, then repeat on the opposite leg."
-        ],
-        dose: "Hold 5–10 sec, repeat 5× each side, performed daily",
-        keyCues: ["Pillows keep the spine in flexion", "Do not arch the back"],
-        imageKey: "back-leg-ext-prone"
-      },
-      {
-        name: "Torso Extension (Using Table)",
-        why: "Strengthens the back extensors in a controlled range without excessive lumbar extension.",
-        instructions: [
-          "Stand in front of a table or desk with legs shoulder-width apart.",
-          "Place hands behind your back.",
-          "Lean forward until your nose touches the table/desk.",
-          "Elevate your torso about 6 inches, hold for one second, then lower back down.",
-          "Repeat."
-        ],
-        dose: "5–10 reps × 2 sets, performed daily",
-        keyCues: ["Only 6 inches of movement", "Controlled tempo — no jerking"],
-        progression: "Progress to prone version when comfortable.",
-        imageKey: "torso-ext-table"
-      },
-      {
-        name: "Torso Extension (Prone)",
-        why: "Advanced back extensor strengthening in a supported prone position.",
-        instructions: [
-          "Place a stack of pillows or blankets (about 12 inches high) on the mat.",
-          "Lie face down with your pelvis on the pillows.",
-          "Place your hands behind your back.",
-          "Keeping your back straight, lift your torso 6 inches off the mat.",
-          "Do not arch your back. Hold this position."
-        ],
-        dose: "Hold 5–10 sec, repeat 5×, performed daily",
-        keyCues: ["Pillows maintain spinal flexion", "Lift only 6 inches"],
-        imageKey: "torso-ext-prone"
-      },
-      {
-        name: "Sit-Stand",
-        why: "Functional strengthening exercise that improves ability to transfer from sitting to standing.",
-        instructions: [
-          "Sit at the edge of a chair with armrests, legs shoulder-width apart.",
-          "Place hands on the armrests.",
-          "Using your arms to assist if necessary, stand up from the chair while leaning forward.",
-          "Then lower yourself back toward sitting slowly and hold."
-        ],
-        dose: "Hold 5–10 sec, repeat 5×, performed daily",
-        keyCues: ["Lean forward as you stand", "Lower yourself slowly — control the descent"],
-        progression: "Reduce arm assistance over time.",
-        imageKey: "sit-to-stand"
-      },
-      {
-        name: "Sitting Forward Flex",
-        why: "Stretches the lumbar spine in a flexion-dominant position, relieving canal compression.",
-        instructions: [
-          "Sit at the edge of a chair with legs shoulder-width apart.",
-          "Grasp your ankles from the outside of the legs.",
-          "Pull yourself downward toward the floor.",
-          "You should feel a stretch in the lower back.",
-          "Hold this position."
-        ],
-        dose: "Hold 5–10 sec, repeat 5×, performed daily",
-        keyCues: ["Grasp ankles from the outside", "Let gravity assist the stretch"],
-        imageKey: "sitting-forward-flex"
-      },
-      {
-        name: "Standing Pelvic Tilt",
-        why: "Teaches pelvic control in a functional standing position, preparing for walking.",
-        instructions: [
-          "Stand with your feet shoulder-width apart.",
-          "Squeeze your buttocks and perform the pelvic tilt.",
-          "Avoid arching your back.",
-          "Hold this position."
-        ],
-        dose: "Hold 5–10 sec, repeat 5×, performed daily",
-        keyCues: ["Same concept as supine pelvic tilt, now upright", "Maintain throughout walking practice"],
-        progression: "Use as the foundation for walking pelvic tilt exercise.",
-        imageKey: "standing-pelvic-tilt"
-      },
-      {
-        name: "Standing Groin Stretch",
-        why: "Stretches the hip adductors and groin, improving hip mobility for walking.",
-        instructions: [
-          "Place a chair against a wall.",
-          "Place one foot on the chair with the knee bent.",
-          "The other leg should be straight and about 6 inches from the chair.",
-          "While maintaining the pelvic tilt, lean forward by bending the knee on the chair.",
-          "You should feel a stretch along the groin of the opposite (straight) leg.",
-          "Hold, then repeat on the other side."
-        ],
-        dose: "Hold 5–10 sec, repeat 5× each side, performed daily",
-        keyCues: ["Maintain pelvic tilt throughout", "Lean forward gently"],
-        imageKey: "standing-groin-stretch"
-      },
-      {
-        name: "Graduated Walking with Pelvic Tilt",
-        why: "The ultimate functional goal — progressively increasing walking distance while maintaining optimal spinal posture.",
-        instructions: [
-          "Stand in the pelvic tilt position.",
-          "While maintaining the pelvic tilt, attempt to walk normally, swinging your arms.",
-          "Count your steps and aim to increase weekly.",
-          "Rest when symptoms appear, then resume."
-        ],
-        dose: "Start with comfortable step count, increase weekly. Performed daily.",
-        keyCues: ["Maintain pelvic tilt throughout", "Walk normally — swing arms", "Track your step count"],
-        progression: "Increase step count by 10–20% each week as tolerated.",
-        painRule: "Rest when leg symptoms appear; resume after symptoms settle.",
-        important: "Avoid back extension activities — that is, arching your back backwards at all times during this program.",
-        imageKey: "walking-pelvic-tilt"
-      }
-    ],
-    programAudit: "Based on the Boot Camp Program for Lumbar Spinal Stenosis©. Evidence supports flexion-based exercise programs for symptomatic lumbar stenosis, with progressive walking as a key functional outcome measure."
-  },
-  // ── Piriformis Syndrome ──
-  {
-    id: "piriformis-syndrome",
-    condition: "Piriformis Syndrome",
-    goal: "Reduce buttock pain and sciatic-type irritation, improve hip strength, and restore normal movement control.",
-    description: "A progressive program to reduce buttock and sciatic-type irritation, improve hip strength, and restore normal movement control.",
-    bodyRegion: "hip-groin",
-    symptoms: [
-      "Deep buttock pain",
-      "Sciatic-type leg pain",
-      "Pain sitting",
-      "Pain with hip rotation",
-      "Buttock tightness"
-    ],
-    urgentSigns: [
-      "Progressive leg weakness or foot drop",
-      "Loss of bladder or bowel control",
-      "Numbness in the groin or saddle area"
-    ],
-    exercises: [
-      {
-        name: "Supine Figure-4 Piriformis Stretch",
-        why: "Gently lengthens the piriformis to reduce compression on the sciatic nerve.",
-        instructions: [
-          "Lie on your back with both knees bent.",
-          "Cross the affected ankle over the other knee.",
-          "Gently pull the opposite thigh toward your chest until a stretch is felt deep in the buttock.",
-          "Do not force the movement."
-        ],
-        dose: "3 × 30-second holds, 1–2 times per day",
-        keyCues: ["Keep hips relaxed on the floor", "Pull gently — no sharp pain"],
-        progression: "Increase the stretch only slightly over time as tolerated.",
-        painRule: "Mild stretch is acceptable. Stop if sharp or radiating pain occurs.",
-        imageKey: "figure-4-stretch"
-      },
-      {
-        name: "Seated Piriformis Stretch",
-        why: "An accessible seated variation to improve piriformis flexibility throughout the day.",
-        instructions: [
-          "Sit tall in a chair.",
-          "Cross the affected leg over the other.",
-          "Lean forward slightly with a straight back until a stretch is felt in the buttock."
-        ],
-        dose: "3 × 30-second holds, 1–2 times per day",
-        keyCues: ["Sit tall — don't round the back", "Lean from the hips"],
-        progression: "Progress by increasing the forward lean slightly while staying comfortable.",
-        painRule: "Should feel a comfortable stretch, not sharp pain.",
-        imageKey: "figure-4-stretch"
-      },
-      {
-        name: "Sciatic Nerve Glide",
-        why: "Promotes healthy nerve mobility and reduces sciatic-type irritation.",
-        instructions: [
-          "Sit tall or lie on your back.",
-          "Slowly straighten the affected knee while bringing the ankle up.",
-          "Ease off and return to the start.",
-          "This should feel like a gentle glide, not an aggressive stretch."
-        ],
-        dose: "2 × 10 reps, 1–2 times per day",
-        keyCues: ["Smooth, rhythmic motion", "No bouncing or forcing"],
-        progression: "Increase range gradually only if symptoms do not flare afterward.",
-        painRule: "Stop if symptoms increase or radiate further down the leg.",
-        imageKey: "nerve-slider"
-      },
-      {
-        name: "Clamshell",
-        why: "Strengthens the hip external rotators and gluteus medius to improve pelvic control.",
-        instructions: [
-          "Lie on your side with hips and knees bent.",
-          "Keep your feet together and lift the top knee without rolling your pelvis backward."
-        ],
-        dose: "2–3 × 12–15 reps, 4–5 days per week",
-        keyCues: ["Don't roll backward", "Control the movement"],
-        progression: "Add a loop band above the knees when bodyweight becomes easy.",
-        imageKey: "clamshell"
-      },
-      {
-        name: "Side-Lying Hip Abduction",
-        why: "Targets the gluteus medius to improve lateral hip stability.",
-        instructions: [
-          "Lie on your side with the bottom knee bent and the top leg straight.",
-          "Lift the top leg slightly back and upward without turning the toes toward the ceiling."
-        ],
-        dose: "2–3 × 10–15 reps, 4–5 days per week",
-        keyCues: ["Lead with the heel", "Keep pelvis stacked"],
-        progression: "Add ankle weights or a loop band as tolerated.",
-        imageKey: "side-lying-hip"
-      },
-      {
-        name: "Bridge with Band Around Knees",
-        why: "Combines glute strengthening with external rotation activation to improve hip control.",
-        instructions: [
-          "Lie on your back with knees bent and feet flat.",
-          "Place a loop band around the knees.",
-          "Press slightly outward into the band and lift the hips upward.",
-          "Lower with control."
-        ],
-        dose: "2–3 × 10–12 reps, 4–5 days per week",
-        keyCues: ["Press knees outward throughout", "Squeeze glutes at the top"],
-        progression: "Progress to longer holds or single-leg bridge variations if tolerated.",
-        imageKey: "bridge-band"
-      }
-    ],
-    programAudit: "Based on established conservative exercise approaches for piriformis syndrome, combining mobility, nerve glide, and progressive hip strengthening. The exercise evidence base is less robust than some conditions, so this program focuses on the most widely used clinical approaches."
+    programAudit: "Based on flexion-biased exercise programs for symptomatic lumbar stenosis with progressive walking as a key functional outcome measure.",
   },
 
-  // ── Iliotibial Band Syndrome ──
+  // ───────────────────────────────────────────────────────────
+  // 24. ILIOTIBIAL BAND SYNDROME
+  // ───────────────────────────────────────────────────────────
   {
     id: "itband-syndrome",
     condition: "Iliotibial Band Syndrome",
     goal: "Reduce lateral knee pain and improve single-leg control through progressive hip and lower limb strengthening.",
-    description: "A progressive hip and lower limb strengthening program to reduce lateral knee pain and improve single-leg control.",
+    description: "Hip abductor strengthening and single-leg control are the primary exercise-based treatment. Do not frame IT band stretching or release as the primary treatment.",
     bodyRegion: "knee",
-    symptoms: [
-      "Lateral knee pain",
-      "Pain with running",
-      "Pain going downstairs",
-      "Outside knee pain",
-      "Pain with repetitive bending"
+    symptoms: ["lateral knee pain", "pain with running", "pain going downstairs", "outside knee pain", "pain with repetitive bending"],
+    bestFor: "People with lateral knee pain, especially runners, who want to reduce symptoms and improve hip control.",
+    notFor: [
+      "Significant knee swelling with no clear cause",
+      "Knee locking or giving way",
+      "Inability to bear weight",
     ],
+    selfManagementAdvice: [
+      "Reduce sudden mileage spikes in running.",
+      "Be cautious with downhill running and cambered surfaces during flare-ups.",
+      "Hip strength and single-leg control are more important than foam rolling or stretching.",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Hip Strengthening Foundation",
+        description: "Build hip abductor and external rotator strength.",
+        exercises: [
+          {
+            name: "Side-Lying Hip Abduction",
+            why: "Strengthens the gluteus medius, commonly weak in IT band syndrome.",
+            instructions: ["Lie on your side with bottom knee bent.", "Keep top leg straight and slightly behind the body.", "Lift upward without rolling the pelvis backward."],
+            dose: "2–3 sets × 12–15 reps, every other day",
+            commonMistakes: ["Rolling the pelvis", "Rotating toes upward"],
+            easierVersion: "Smaller range.",
+            harderVersion: "Add ankle weight.",
+            equipmentNeeded: "None",
+            imageKey: "side-lying-hip",
+          },
+          {
+            name: "Clamshell with Band",
+            why: "Targets hip external rotators to improve lateral hip control.",
+            instructions: ["Lie on your side with knees bent and a loop band around the thighs.", "Keep feet together and lift top knee.", "Keep pelvis still."],
+            dose: "2–3 sets × 12–15 reps, every other day",
+            commonMistakes: ["Rolling backward", "Moving too fast"],
+            easierVersion: "No band.",
+            harderVersion: "Heavier band.",
+            equipmentNeeded: "Loop band",
+            imageKey: "clamshell",
+          },
+          {
+            name: "Lateral Band Walk",
+            why: "Functional hip abductor strengthening for dynamic knee control.",
+            instructions: ["Place a loop band around ankles or above knees.", "Slight bend at hips and knees.", "Take controlled side steps.", "Keep tension on the band."],
+            dose: "2–3 sets × 8–12 steps each direction, every other day",
+            commonMistakes: ["Standing too upright", "Steps too large"],
+            easierVersion: "Band above knees.",
+            harderVersion: "Band at ankles, heavier resistance.",
+            equipmentNeeded: "Loop band",
+            imageKey: "lateral-band-walk",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Single-Leg Control",
+        description: "Progress when Phase 1 exercises are comfortable and daily symptoms are manageable.",
+        exercises: [
+          {
+            name: "Single-Leg Squat to Chair",
+            why: "Develops single-leg strength and knee alignment control.",
+            instructions: ["Stand on one leg in front of a chair.", "Slowly squat down toward the chair and return.", "Keep the knee aligned over the foot."],
+            dose: "2–3 sets × 6–10 reps, every other day",
+            commonMistakes: ["Knee collapsing inward", "Dropping into the chair"],
+            easierVersion: "Higher chair, touch only.",
+            harderVersion: "Lower chair, add weight.",
+            equipmentNeeded: "Chair",
+            imageKey: "sit-to-stand",
+          },
+          {
+            name: "Step-Down",
+            why: "Builds eccentric quadriceps and hip control in a functional pattern.",
+            instructions: ["Stand on a step on the affected leg.", "Slowly lower the opposite heel toward the floor.", "Keep pelvis level and knee tracking over foot."],
+            dose: "2–3 sets × 8–12 reps, every other day",
+            commonMistakes: ["Pelvis dropping", "Knee collapsing inward"],
+            easierVersion: "Lower step.",
+            harderVersion: "Higher step.",
+            equipmentNeeded: "Low step",
+            imageKey: "step-down",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Posterior Chain & Return to Running",
+        description: "Progress when single-leg control is good and running can be resumed gradually.",
+        exercises: [
+          {
+            name: "Single-Leg Romanian Deadlift",
+            why: "Develops posterior chain strength and single-leg balance.",
+            instructions: ["Stand on one leg and hinge forward at the hips.", "Extend the other leg behind you.", "Keep back straight and pelvis level.", "Return to standing."],
+            dose: "2–3 sets × 6–10 reps, every other day",
+            commonMistakes: ["Rounding the back", "Pelvis rotating"],
+            easierVersion: "Body weight, smaller range.",
+            harderVersion: "Add dumbbell.",
+            equipmentNeeded: "None",
+            imageKey: "romanian-deadlift",
+          },
+        ],
+      },
+    ],
+    progressionRules: DEFAULT_PROGRESSION_RULES,
+    flareUpRules: DEFAULT_FLARE_UP_RULES,
+    expectedTimeline: "Some symptom improvement may occur within 2 to 6 weeks. Full return to running often takes 6 to 12 weeks.",
+    seekAssessment: [
+      "No improvement after 6–8 weeks",
+      "Significant knee swelling",
+      "Locking or giving way",
+    ],
+    requiredEquipment: ["Loop band"],
+    optionalEquipment: ["Low step", "Dumbbell", "Chair"],
+    noEquipmentAlternative: "Side-lying abduction and single-leg squats can be done without equipment.",
     urgentSigns: [
       "Significant knee swelling with no clear cause",
       "Knee locking or giving way",
-      "Inability to bear weight"
+      "Inability to bear weight",
     ],
-    exercises: [
-      {
-        name: "Side-Lying Hip Abduction",
-        why: "Strengthens the gluteus medius, which is commonly weak in IT band syndrome.",
-        instructions: [
-          "Lie on your side with the bottom knee bent and the top leg straight.",
-          "Keep the top leg slightly behind the body and lift it upward without rolling the pelvis backward."
-        ],
-        dose: "3 × 12–15 reps, 4–5 days per week",
-        keyCues: ["Lead with the heel", "Don't rotate the pelvis"],
-        progression: "Add ankle weights as tolerated.",
-        imageKey: "side-lying-hip"
-      },
-      {
-        name: "Clamshell with Band",
-        why: "Targets hip external rotators to improve lateral hip control.",
-        instructions: [
-          "Lie on your side with knees bent and a loop band around the thighs.",
-          "Keep your feet together and lift the top knee while keeping your pelvis still."
-        ],
-        dose: "3 × 12–15 reps, 4–5 days per week",
-        keyCues: ["Keep pelvis still", "Control the lowering phase"],
-        progression: "Use a stronger band over time.",
-        imageKey: "clamshell"
-      },
-      {
-        name: "Lateral Band Walk",
-        why: "Functional hip abductor strengthening to improve dynamic knee control.",
-        instructions: [
-          "Place a loop band around the ankles or above the knees.",
-          "Bend slightly at the hips and knees.",
-          "Take controlled side steps while keeping tension on the band."
-        ],
-        dose: "2–3 rounds of 8–12 steps each direction, 4 days per week",
-        keyCues: ["Stay low", "Keep tension on the band throughout"],
-        progression: "Increase band resistance or step count.",
-        imageKey: "lateral-band-walk"
-      },
-      {
-        name: "Single-Leg Squat to Chair",
-        why: "Develops single-leg strength and knee alignment control.",
-        instructions: [
-          "Stand on one leg in front of a chair or box.",
-          "Slowly squat down toward the chair and return to standing.",
-          "Keep the knee aligned over the foot."
-        ],
-        dose: "2–3 × 6–10 reps, 3–4 days per week",
-        keyCues: ["Don't let the knee cave inward", "Control the descent"],
-        progression: "Lower the chair height or add light load when tolerated.",
-        imageKey: "sit-to-stand"
-      },
-      {
-        name: "Step-Down",
-        why: "Builds eccentric quadriceps and hip control in a functional pattern.",
-        instructions: [
-          "Stand on a step on the affected leg.",
-          "Slowly lower the opposite heel toward the floor, then return to the start.",
-          "Keep the pelvis level and avoid the knee collapsing inward."
-        ],
-        dose: "2–3 × 8–12 reps, 3–4 days per week",
-        keyCues: ["Keep pelvis level", "Knee tracks over foot"],
-        progression: "Increase step height gradually.",
-        imageKey: "step-down"
-      },
-      {
-        name: "Single-Leg Romanian Deadlift",
-        why: "Develops posterior chain strength and single-leg balance.",
-        instructions: [
-          "Stand on one leg and hinge forward at the hips while the other leg extends behind you.",
-          "Keep your back straight and pelvis level.",
-          "Return to standing."
-        ],
-        dose: "2–3 × 6–10 reps, 3 days per week",
-        keyCues: ["Hinge at the hips", "Keep back flat"],
-        progression: "Add a dumbbell or kettlebell as tolerated.",
-        imageKey: "romanian-deadlift"
-      }
-    ],
-    programAudit: "Based on established evidence supporting hip abductor strengthening and single-leg control training as the primary exercise-based treatment for iliotibial band syndrome."
+    programAudit: "Based on evidence supporting hip abductor strengthening and single-leg control training for IT band syndrome.",
   },
-
-  // ── Achilles Tendinopathy ──
-  {
-    id: "achilles-tendinopathy",
-    condition: "Achilles Tendinopathy",
-    goal: "Improve calf strength, tendon capacity, and tolerance for walking, stairs, and sport.",
-    description: "A tendon-loading program to improve calf strength, tendon capacity, and tolerance for walking, stairs, and sport.",
-    bodyRegion: "ankle-foot",
-    symptoms: [
-      "Achilles tendon pain",
-      "Morning stiffness in the tendon",
-      "Pain with walking or running",
-      "Tendon thickening",
-      "Pain on stairs"
-    ],
-    urgentSigns: [
-      "Sudden snap or pop in the tendon with immediate weakness",
-      "Inability to push off or stand on toes",
-      "Significant swelling or bruising around the ankle"
-    ],
-    exercises: [
-      {
-        name: "Standing Bilateral Calf Raise",
-        why: "Initiates tendon loading at a manageable level using both legs.",
-        instructions: [
-          "Stand holding onto a support if needed.",
-          "Rise up onto the balls of both feet.",
-          "Pause briefly, then lower slowly."
-        ],
-        dose: "3 × 15 reps, daily",
-        keyCues: ["Control the lowering phase", "Full range of motion"],
-        progression: "Progress to single-leg calf raises when tolerated.",
-        painRule: "Some tendon discomfort is acceptable if it remains manageable and settles by the next day.",
-        imageKey: "calf-raise"
-      },
-      {
-        name: "Isometric Calf Raise Hold",
-        why: "Provides tendon loading with sustained holds, useful for pain management.",
-        instructions: [
-          "Rise onto the balls of both feet and hold the position.",
-          "Keep weight evenly distributed unless instructed otherwise."
-        ],
-        dose: "5 × 30–45 second holds, daily",
-        keyCues: ["Stay tall", "Breathe normally"],
-        progression: "Progress to single-leg holds as tolerated.",
-        painRule: "Aim for tolerable discomfort only.",
-        imageKey: "calf-raise"
-      },
-      {
-        name: "Straight-Knee Calf Raise",
-        why: "Targets the gastrocnemius component of the calf for comprehensive tendon loading.",
-        instructions: [
-          "Stand on the floor or edge of a step.",
-          "Keeping the knee straight, rise up onto the ball of the foot.",
-          "Pause and lower slowly."
-        ],
-        dose: "3–4 × 8–15 reps, 3–5 days per week",
-        keyCues: ["Keep knee straight", "Slow 3-second lower"],
-        progression: "Progress from double-leg to single-leg, then add weight.",
-        painRule: "Pain should remain manageable during and settle within 24 hours.",
-        imageKey: "calf-raise"
-      },
-      {
-        name: "Bent-Knee Calf Raise",
-        why: "Targets the soleus muscle for deeper calf and tendon strengthening.",
-        instructions: [
-          "Perform a calf raise with the knees slightly bent.",
-          "Rise up, pause, and lower slowly."
-        ],
-        dose: "3–4 × 8–15 reps, 3–5 days per week",
-        keyCues: ["Keep knees bent throughout", "Slow controlled movement"],
-        progression: "Add external load as tolerated.",
-        painRule: "Tolerable discomfort is acceptable; sharp pain is not.",
-        imageKey: "bent-knee-calf-raise"
-      },
-      {
-        name: "Eccentric Heel Drop",
-        why: "A cornerstone exercise for Achilles tendinopathy — loads the tendon eccentrically to promote remodelling.",
-        instructions: [
-          "Rise up with both feet.",
-          "Shift weight to the affected side.",
-          "Slowly lower down on that side.",
-          "Use support as needed."
-        ],
-        dose: "3 × 15 reps, 1–2 times per day",
-        keyCues: ["Slow controlled lowering", "Use both legs to rise up"],
-        progression: "Increase load gradually with a backpack or dumbbell if tolerated.",
-        painRule: "Some discomfort is expected; stop if pain is sharp or worsening.",
-        imageKey: "eccentric-heel-drop"
-      },
-      {
-        name: "Heavy Slow Resistance Calf Raise",
-        why: "Progressive heavy loading to build tendon capacity and calf strength for return to activity.",
-        instructions: [
-          "Perform calf raises slowly using added weight such as a machine, dumbbell, backpack, or smith machine.",
-          "Use both straight-knee and bent-knee versions."
-        ],
-        dose: "3–4 × 6–8 reps, 3 days per week",
-        keyCues: ["3 seconds up, 3 seconds down", "Heavy but controlled"],
-        progression: "Increase weight gradually while maintaining slow controlled form.",
-        painRule: "Load should be challenging but pain should remain tolerable.",
-        imageKey: "heavy-slow-calf-raise"
-      }
-    ],
-    programAudit: "Based on strong evidence supporting progressive tendon loading for Achilles tendinopathy, including eccentric heel drop programs (Alfredson protocol) and heavy slow resistance approaches (Kongsgaard et al.)."
-  },
-
-  // ── Patellofemoral Pain Syndrome ──
-  {
-    id: "patellofemoral-pain",
-    condition: "Patellofemoral Pain Syndrome",
-    goal: "Reduce kneecap-related pain and improve functional tolerance through combined hip and knee strengthening.",
-    description: "A combined hip and knee strengthening program to reduce kneecap-related pain and improve functional tolerance.",
-    bodyRegion: "knee",
-    symptoms: [
-      "Pain around or behind the kneecap",
-      "Pain going up or down stairs",
-      "Pain with squatting",
-      "Pain sitting for long periods",
-      "Knee pain with running"
-    ],
-    urgentSigns: [
-      "Knee locking or giving way",
-      "Significant swelling with no clear cause",
-      "Inability to bear weight"
-    ],
-    exercises: [
-      {
-        name: "Spanish Squat or Wall Sit",
-        why: "Isometric quadriceps loading that can reduce pain and build early strength.",
-        instructions: [
-          "For a Spanish squat, lean back into a strap or band positioned behind the knees and sit into a squat hold.",
-          "For a wall sit, lean against a wall and hold a seated position at a tolerable bend angle."
-        ],
-        dose: "5 × 30–45 second holds, daily or before aggravating activity",
-        keyCues: ["Find a tolerable knee angle", "Breathe normally throughout"],
-        progression: "Increase hold time or depth gradually if tolerated.",
-        painRule: "Pain should remain tolerable during and settle quickly after.",
-        imageKey: "spanish-squat"
-      },
-      {
-        name: "Straight Leg Raise",
-        why: "Strengthens the quadriceps without significant kneecap loading.",
-        instructions: [
-          "Lie on your back with one knee bent and the affected leg straight.",
-          "Tighten the thigh and lift the straight leg upward.",
-          "Lower slowly."
-        ],
-        dose: "2–3 × 10–15 reps, 4–5 days per week",
-        keyCues: ["Lock the knee straight", "Controlled lowering"],
-        progression: "Add ankle weight when tolerated.",
-        imageKey: "straight-leg-raise"
-      },
-      {
-        name: "Knee Extension",
-        why: "Progressive quadriceps strengthening in a controlled range.",
-        instructions: [
-          "Perform a controlled knee extension in a tolerable range using bodyweight, a band, or a machine.",
-          "Avoid forcing painful range early on."
-        ],
-        dose: "2–3 × 10–15 reps, 3–4 days per week",
-        keyCues: ["Work in a comfortable range", "Slow and controlled"],
-        progression: "Increase resistance gradually.",
-        painRule: "Avoid ranges that produce sharp kneecap pain.",
-        imageKey: "leg-extension"
-      },
-      {
-        name: "Clamshell or Side-Lying Hip Abduction",
-        why: "Strengthens the hip abductors and external rotators to improve knee alignment.",
-        instructions: [
-          "Perform either clamshells or side-lying hip abduction with controlled movement.",
-          "Target the hip abductors and external rotators."
-        ],
-        dose: "2–3 × 12–15 reps, 4–5 days per week",
-        keyCues: ["Don't roll backward", "Control the movement"],
-        progression: "Add band resistance or ankle weights over time.",
-        imageKey: "clamshell"
-      },
-      {
-        name: "Sit-to-Stand or Squat to Chair",
-        why: "Functional quadriceps and hip strengthening with controlled depth.",
-        instructions: [
-          "Stand up from a chair and sit back down with control.",
-          "Keep the knees aligned over the feet."
-        ],
-        dose: "2–3 × 8–12 reps, 3–4 days per week",
-        keyCues: ["Push through the heels", "Control the descent"],
-        progression: "Lower the chair height or add load as tolerated.",
-        imageKey: "sit-to-stand"
-      },
-      {
-        name: "Step-Down",
-        why: "Develops eccentric quadriceps control in a functional pattern.",
-        instructions: [
-          "Stand on a step and slowly lower the opposite heel toward the floor.",
-          "Keep the pelvis controlled and the knee tracking over the foot."
-        ],
-        dose: "2–3 × 6–10 reps, 3–4 days per week",
-        keyCues: ["Keep pelvis level", "Knee over foot"],
-        progression: "Increase the step height gradually.",
-        imageKey: "step-down"
-      },
-      {
-        name: "Forward Lunge or Split Squat",
-        why: "Progressive single-leg strengthening for functional return.",
-        instructions: [
-          "Take a step forward or stagger the stance and lower under control.",
-          "Use a shallow range initially.",
-          "Keep the knee aligned over the foot."
-        ],
-        dose: "2–3 × 6–10 reps, 3 days per week",
-        keyCues: ["Shallow range first", "Knee tracks over toes"],
-        progression: "Increase depth and add load as tolerated.",
-        painRule: "Reduce range if sharp kneecap pain occurs.",
-        imageKey: "split-squat"
-      }
-    ],
-    programAudit: "Based on strong evidence supporting combined hip and knee strengthening for patellofemoral pain syndrome. Guidelines recommend both proximal (hip) and local (quadriceps) strengthening alongside activity modification and patient education."
-  }
 ];
 
+// ── Utility Functions ──
+
 export function getProgramsByRegion(region: BodyRegion): Program[] {
-  return programs.filter(p => p.bodyRegion === region);
+  return programs.filter((p) => p.bodyRegion === region);
 }
 
 export function getProgramById(id: string): Program | undefined {
-  return programs.find(p => p.id === id);
+  return programs.find((p) => p.id === id);
 }
 
 export function searchProgramsBySymptom(query: string): Program[] {
   const lower = query.toLowerCase();
-  return programs.filter(p =>
-    p.symptoms.some(s => s.toLowerCase().includes(lower)) ||
-    p.condition.toLowerCase().includes(lower) ||
-    p.description.toLowerCase().includes(lower)
+  return programs.filter(
+    (p) =>
+      p.symptoms.some((s) => s.toLowerCase().includes(lower)) ||
+      p.condition.toLowerCase().includes(lower) ||
+      p.description.toLowerCase().includes(lower)
   );
+}
+
+// Helper to get all exercises across all phases
+export function getAllExercises(program: Program): Exercise[] {
+  return program.phases.flatMap((phase) => phase.exercises);
 }
