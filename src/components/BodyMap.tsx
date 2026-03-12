@@ -6,80 +6,77 @@ interface BodyMapProps {
   selectedRegion?: BodyRegion | null;
 }
 
-// Realistic anatomical body regions with smooth, natural contours
 const regions: { id: BodyRegion; label: string; paths: string[] }[] = [
   {
     id: "neck",
     label: "Neck",
     paths: [
-      // Neck — cylindrical with slight taper
-      "M 188,108 C 188,108 185,120 184,128 C 183,134 183,138 184,142 L 216,142 C 217,138 217,134 216,128 C 215,120 212,108 212,108 Z",
+      "M 91,56 C 91,56 89,64 88,70 L 88,76 L 112,76 L 112,70 C 111,64 109,56 109,56 Z",
     ],
   },
   {
     id: "shoulder",
     label: "Shoulder",
     paths: [
-      // Left shoulder — rounded deltoid
-      "M 184,142 C 180,142 170,140 160,144 C 148,149 140,158 136,168 C 133,176 132,182 133,186 L 158,176 C 160,170 164,162 168,156 C 172,150 178,146 184,144 Z",
+      // Left shoulder
+      "M 88,76 C 84,76 78,77 72,80 C 65,84 60,90 57,97 C 55,102 55,106 56,108 L 72,104 L 78,90 L 84,82 L 88,78 Z",
       // Right shoulder
-      "M 216,142 C 220,142 230,140 240,144 C 252,149 260,158 264,168 C 267,176 268,182 267,186 L 242,176 C 240,170 236,162 232,156 C 228,150 222,146 216,144 Z",
+      "M 112,76 C 116,76 122,77 128,80 C 135,84 140,90 143,97 C 145,102 145,106 144,108 L 128,104 L 122,90 L 116,82 L 112,78 Z",
     ],
   },
   {
     id: "elbow-wrist-hand",
     label: "Elbow, Wrist & Hand",
     paths: [
-      // Left arm — upper arm, elbow, forearm, wrist, hand
-      "M 133,186 C 131,194 128,206 126,218 C 124,230 122,240 120,248 C 118,256 116,264 114,272 C 112,280 110,290 108,300 C 106,308 104,316 102,322 C 100,328 98,334 96,340 C 95,344 94,348 94,352 C 94,358 96,364 100,368 C 104,372 108,374 112,372 C 116,370 118,366 118,360 C 118,356 116,350 116,344 C 118,338 120,330 122,322 C 124,314 127,304 130,294 C 133,284 136,274 138,264 C 140,254 142,244 144,234 C 146,224 148,214 150,206 C 152,198 154,190 156,184 L 158,176 Z",
+      // Left arm
+      "M 56,108 C 54,116 51,128 49,140 C 47,152 45,162 43,170 C 41,178 39,186 37,194 C 35,202 33,210 32,216 C 31,222 30,226 30,230 C 30,236 32,240 36,242 C 40,244 44,242 46,238 C 48,234 48,228 47,222 C 48,216 50,208 52,200 C 54,192 56,182 58,172 C 60,162 63,150 66,140 C 68,132 70,122 72,114 L 72,104 Z",
       // Right arm
-      "M 267,186 C 269,194 272,206 274,218 C 276,230 278,240 280,248 C 282,256 284,264 286,272 C 288,280 290,290 292,300 C 294,308 296,316 298,322 C 300,328 302,334 304,340 C 305,344 306,348 306,352 C 306,358 304,364 300,368 C 296,372 292,374 288,372 C 284,370 282,366 282,360 C 282,356 284,350 284,344 C 282,338 280,330 278,322 C 276,314 273,304 270,294 C 267,284 264,274 262,264 C 260,254 258,244 256,234 C 254,224 252,214 250,206 C 248,198 246,190 244,184 L 242,176 Z",
+      "M 144,108 C 146,116 149,128 151,140 C 153,152 155,162 157,170 C 159,178 161,186 163,194 C 165,202 167,210 168,216 C 169,222 170,226 170,230 C 170,236 168,240 164,242 C 160,244 156,242 154,238 C 152,234 152,228 153,222 C 152,216 150,208 148,200 C 146,192 144,182 142,172 C 140,162 137,150 134,140 C 132,132 130,122 128,114 L 128,104 Z",
     ],
   },
   {
     id: "lower-back",
     label: "Lower Back",
     paths: [
-      // Torso / trunk — chest and abdomen as one region
-      "M 184,142 C 178,146 172,150 168,156 C 164,162 160,170 158,176 L 156,184 C 154,190 152,198 172,198 L 172,260 C 172,264 174,268 178,272 L 180,274 L 200,274 L 222,274 L 222,272 C 226,268 228,264 228,260 L 228,198 C 248,198 246,190 244,184 L 242,176 C 240,170 236,162 232,156 C 228,150 222,146 216,144 L 216,142 Z",
+      // Torso
+      "M 88,76 L 84,82 L 78,90 L 72,104 L 72,114 C 72,118 74,130 76,140 L 78,150 L 80,156 L 80,160 L 120,160 L 120,156 L 122,150 L 124,140 C 126,130 128,118 128,114 L 128,104 L 122,90 L 116,82 L 112,76 Z",
     ],
   },
   {
     id: "hip-groin",
     label: "Hip & Groin",
     paths: [
-      // Pelvis / hip region
-      "M 172,260 L 172,274 L 180,274 L 180,310 L 196,310 L 200,296 L 204,310 L 220,310 L 220,274 L 228,274 L 228,260 Z",
+      "M 80,160 L 80,172 C 80,178 82,184 84,188 L 88,194 L 92,198 L 100,198 L 100,192 L 100,198 L 108,198 L 112,194 L 116,188 C 118,184 120,178 120,172 L 120,160 Z",
     ],
   },
   {
     id: "thigh",
     label: "Thigh",
     paths: [
-      // Left thigh — tapered, muscular
-      "M 172,310 L 180,310 C 180,320 178,340 176,360 C 174,378 172,394 172,400 L 186,400 C 188,394 190,378 190,360 C 190,340 192,320 196,310 L 196,310 Z",
+      // Left thigh
+      "M 84,188 L 88,194 L 92,198 C 92,206 90,220 88,234 C 86,248 84,258 84,264 L 96,264 C 96,258 96,248 96,234 C 96,220 98,206 100,198 L 100,192 Z",
       // Right thigh
-      "M 204,310 C 208,320 210,340 210,360 C 210,378 212,394 214,400 L 228,400 C 228,394 226,378 224,360 C 222,340 220,320 220,310 Z",
+      "M 100,192 L 100,198 C 102,206 104,220 104,234 C 104,248 104,258 104,264 L 116,264 C 116,258 114,248 112,234 C 110,220 108,206 108,198 L 112,194 L 116,188 Z",
     ],
   },
   {
     id: "knee",
     label: "Knee",
     paths: [
-      // Left knee — subtle widening
-      "M 172,400 L 186,400 C 187,406 188,414 187,422 C 186,428 184,432 182,436 L 174,436 C 172,432 170,428 170,422 C 169,414 170,406 172,400 Z",
+      // Left knee
+      "M 84,264 L 96,264 C 96,268 96,274 95,280 C 95,284 94,286 93,288 L 86,288 C 85,286 84,284 84,280 C 83,274 84,268 84,264 Z",
       // Right knee
-      "M 214,400 L 228,400 C 230,406 231,414 230,422 C 230,428 228,432 226,436 L 218,436 C 216,432 214,428 214,422 C 213,414 214,406 214,400 Z",
+      "M 104,264 L 116,264 C 116,268 117,274 116,280 C 116,284 115,286 114,288 L 107,288 C 106,286 105,284 104,280 C 104,274 104,268 104,264 Z",
     ],
   },
   {
     id: "lower-leg",
     label: "Lower Leg",
     paths: [
-      // Left calf — tapered
-      "M 174,436 L 182,436 C 183,450 184,470 183,488 C 182,504 180,516 178,524 L 172,524 C 170,516 168,504 168,488 C 167,470 168,450 174,436 Z",
+      // Left calf
+      "M 86,288 L 93,288 C 94,298 94,312 93,326 C 92,338 91,346 90,352 L 86,352 C 85,346 84,338 83,326 C 82,312 83,298 86,288 Z",
       // Right calf
-      "M 218,436 L 226,436 C 227,450 228,470 227,488 C 226,504 224,516 222,524 L 216,524 C 214,516 212,504 212,488 C 211,470 212,450 218,436 Z",
+      "M 107,288 L 114,288 C 115,298 116,312 117,326 C 118,338 116,346 114,352 L 110,352 C 109,346 108,338 107,326 C 106,312 106,298 107,288 Z",
     ],
   },
   {
@@ -87,9 +84,9 @@ const regions: { id: BodyRegion; label: string; paths: string[] }[] = [
     label: "Ankle & Foot",
     paths: [
       // Left foot
-      "M 172,524 L 178,524 C 179,530 180,536 180,540 C 180,546 178,550 174,554 C 170,558 164,560 160,560 C 156,560 154,558 154,554 C 154,550 158,546 162,542 C 166,538 168,532 172,524 Z",
+      "M 86,352 L 90,352 C 90,356 90,360 90,364 C 90,368 88,370 85,372 C 82,374 78,374 76,372 C 74,370 74,368 76,366 C 78,364 80,360 82,356 Z",
       // Right foot
-      "M 216,524 L 222,524 C 221,530 220,536 220,540 C 220,546 222,550 226,554 C 230,558 236,560 240,560 C 244,560 246,558 246,554 C 246,550 242,546 238,542 C 234,538 232,532 228,524 Z",
+      "M 110,352 L 114,352 C 116,356 118,360 120,364 C 122,366 122,368 124,370 C 126,372 126,374 124,374 C 122,374 118,374 115,372 C 112,370 110,368 110,364 C 110,360 110,356 110,352 Z",
     ],
   },
 ];
@@ -103,36 +100,38 @@ export default function BodyMap({ onSelectRegion, selectedRegion }: BodyMapProps
     <div className="flex flex-col items-center">
       <div className="relative">
         <svg
-          viewBox="80 50 240 530"
-          className="w-56 h-auto md:w-72"
+          viewBox="20 10 160 380"
+          className="w-52 h-auto md:w-64"
           role="img"
           aria-label="Human body diagram — click a body region to find exercises"
         >
           <defs>
-            <radialGradient id="headGrad" cx="50%" cy="40%" r="50%">
-              <stop offset="0%" stopColor="hsl(var(--muted-foreground) / 0.08)" />
-              <stop offset="100%" stopColor="hsl(var(--muted-foreground) / 0.18)" />
+            <radialGradient id="skinGrad" cx="50%" cy="35%" r="55%">
+              <stop offset="0%" stopColor="hsl(var(--muted-foreground) / 0.06)" />
+              <stop offset="100%" stopColor="hsl(var(--muted-foreground) / 0.15)" />
             </radialGradient>
-            <filter id="bodyShadow" x="-4%" y="-2%" width="108%" height="106%">
-              <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="hsl(var(--foreground) / 0.08)" />
+            <radialGradient id="headGrad" cx="50%" cy="38%" r="50%">
+              <stop offset="0%" stopColor="hsl(var(--muted-foreground) / 0.06)" />
+              <stop offset="100%" stopColor="hsl(var(--muted-foreground) / 0.16)" />
+            </radialGradient>
+            <filter id="softShadow" x="-6%" y="-3%" width="112%" height="108%">
+              <feDropShadow dx="0" dy="1.5" stdDeviation="2" floodColor="hsl(var(--foreground) / 0.06)" />
             </filter>
           </defs>
 
           {/* Head */}
           <ellipse
-            cx="200"
-            cy="78"
-            rx="24"
-            ry="28"
+            cx="100"
+            cy="36"
+            rx="16"
+            ry="20"
             fill="url(#headGrad)"
             stroke="hsl(var(--border))"
-            strokeWidth="1.5"
+            strokeWidth="1.2"
           />
-          {/* Subtle face line */}
-          <line x1="200" y1="68" x2="200" y2="88" stroke="hsl(var(--border) / 0.3)" strokeWidth="0.5" />
 
           {/* Body regions */}
-          <g filter="url(#bodyShadow)">
+          <g filter="url(#softShadow)">
             {regions.map((region) => (
               <g
                 key={region.id}
@@ -147,15 +146,15 @@ export default function BodyMap({ onSelectRegion, selectedRegion }: BodyMapProps
                     d={d}
                     fill={
                       isHighlighted(region.id)
-                        ? "hsl(var(--primary) / 0.25)"
-                        : "hsl(var(--muted-foreground) / 0.12)"
+                        ? "hsl(var(--primary) / 0.22)"
+                        : "url(#skinGrad)"
                     }
                     stroke={
                       isHighlighted(region.id)
                         ? "hsl(var(--primary))"
-                        : "hsl(var(--border) / 0.7)"
+                        : "hsl(var(--border) / 0.6)"
                     }
-                    strokeWidth={isHighlighted(region.id) ? "2" : "1"}
+                    strokeWidth={isHighlighted(region.id) ? "1.8" : "0.8"}
                     strokeLinejoin="round"
                     className="transition-all duration-200"
                   />
