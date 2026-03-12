@@ -1,4 +1,5 @@
 import sitToStand from "@/assets/exercises/sit-to-stand.png";
+import supermanProneExtension from "@/assets/exercises/superman-prone-extension.png";
 import sidePlank from "@/assets/exercises/side-plank-from-knees.png";
 import birdDog from "@/assets/exercises/bird-dog-new.png";
 import bridge from "@/assets/exercises/bridge.png";
