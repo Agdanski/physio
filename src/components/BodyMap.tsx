@@ -7,7 +7,9 @@ interface BodyMapProps {
   selectedRegion?: BodyRegion | null;
 }
 
-const regions: { id: BodyRegion; label: string; areas: { x: number; y: number; w: number; h: number }[] }[] = [
+type RegionArea = { x: number; y: number; w: number; h: number };
+
+const regions: { id: BodyRegion; label: string; areas: RegionArea[] }[] = [
   {
     id: "neck",
     label: "Neck",
@@ -30,18 +32,18 @@ const regions: { id: BodyRegion; label: string; areas: { x: number; y: number; w
     id: "elbow-wrist-hand",
     label: "Elbow, Wrist & Hand",
     areas: [
-      { x: 9, y: 33, w: 8, h: 30 },
-      { x: 38, y: 33, w: 8, h: 30 },
-      { x: 47, y: 33, w: 7, h: 30 },
-      { x: 77, y: 33, w: 7, h: 30 },
+      { x: 17, y: 33, w: 6, h: 30 },
+      { x: 36, y: 33, w: 6, h: 30 },
+      { x: 54, y: 33, w: 6, h: 30 },
+      { x: 73, y: 33, w: 6, h: 30 },
     ],
   },
   {
     id: "lower-back",
     label: "Lower Back",
     areas: [
-      { x: 21, y: 26, w: 14, h: 19 },
-      { x: 59, y: 26, w: 12, h: 19 },
+      // Posterior-only: lumbar area is not visible on frontal diagram
+      { x: 58, y: 33, w: 14, h: 11 },
     ],
   },
   {
@@ -116,7 +118,7 @@ export default function BodyMap({ onSelectRegion, selectedRegion }: BodyMapProps
               onClick={() => onSelectRegion(region.id)}
               onMouseEnter={() => setHoveredRegion(region.id)}
               onMouseLeave={() => setHoveredRegion(null)}
-              className="absolute rounded-md transition-all duration-200"
+              className="absolute rounded-xl transition-all duration-200"
               style={{
                 left: `${area.x}%`,
                 top: `${area.y}%`,
