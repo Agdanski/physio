@@ -14,84 +14,112 @@ const regions: { id: BodyRegion; label: string; areas: RegionArea[] }[] = [
     id: "neck",
     label: "Neck",
     areas: [
-      { x: 24, y: 19, w: 8, h: 5 },
-      { x: 61, y: 16, w: 8, h: 5 },
+      // Front neck
+      { x: 22, y: 12, w: 7, h: 4 },
+      // Back neck
+      { x: 69, y: 11, w: 7, h: 4 },
     ],
   },
   {
     id: "shoulder",
     label: "Shoulder",
     areas: [
-      { x: 14, y: 22, w: 11, h: 9 },
-      { x: 31, y: 22, w: 11, h: 9 },
-      { x: 52, y: 20, w: 10, h: 9 },
-      { x: 70, y: 20, w: 10, h: 9 },
+      // Front left shoulder
+      { x: 14, y: 16, w: 9, h: 6 },
+      // Front right shoulder
+      { x: 28, y: 16, w: 9, h: 6 },
+      // Back left shoulder
+      { x: 61, y: 15, w: 9, h: 6 },
+      // Back right shoulder
+      { x: 75, y: 15, w: 9, h: 6 },
     ],
   },
   {
     id: "elbow-wrist-hand",
     label: "Elbow, Wrist & Hand",
     areas: [
-      { x: 17, y: 33, w: 6, h: 30 },
-      { x: 36, y: 33, w: 6, h: 30 },
-      { x: 54, y: 33, w: 6, h: 30 },
-      { x: 73, y: 33, w: 6, h: 30 },
+      // Front left arm
+      { x: 8, y: 27, w: 7, h: 24 },
+      // Front right arm
+      { x: 36, y: 27, w: 7, h: 24 },
+      // Back left arm
+      { x: 55, y: 26, w: 7, h: 24 },
+      // Back right arm
+      { x: 83, y: 26, w: 7, h: 24 },
     ],
   },
   {
     id: "lower-back",
     label: "Lower Back",
     areas: [
-      // Posterior-only: lumbar area is not visible on frontal diagram
-      { x: 58, y: 33, w: 14, h: 11 },
+      // Posterior only — lumbar region
+      { x: 65, y: 29, w: 14, h: 9 },
     ],
   },
   {
     id: "hip-groin",
     label: "Hip & Groin",
     areas: [
-      { x: 19, y: 45, w: 18, h: 8 },
-      { x: 56, y: 45, w: 18, h: 10 },
+      // Front hip/groin
+      { x: 18, y: 38, w: 16, h: 8 },
+      // Back hip/glute
+      { x: 64, y: 38, w: 16, h: 8 },
     ],
   },
   {
     id: "thigh",
     label: "Thigh",
     areas: [
-      { x: 17, y: 53, w: 10, h: 14 },
-      { x: 28, y: 53, w: 10, h: 14 },
-      { x: 55, y: 55, w: 10, h: 12 },
-      { x: 66, y: 55, w: 10, h: 12 },
+      // Front left thigh
+      { x: 18, y: 46, w: 8, h: 14 },
+      // Front right thigh
+      { x: 26, y: 46, w: 8, h: 14 },
+      // Back left thigh
+      { x: 65, y: 46, w: 8, h: 14 },
+      // Back right thigh
+      { x: 73, y: 46, w: 8, h: 14 },
     ],
   },
   {
     id: "knee",
     label: "Knee",
     areas: [
-      { x: 18, y: 67, w: 8, h: 6 },
-      { x: 29, y: 67, w: 8, h: 6 },
-      { x: 56, y: 67, w: 8, h: 5 },
-      { x: 67, y: 67, w: 8, h: 5 },
+      // Front left knee
+      { x: 19, y: 60, w: 6, h: 5 },
+      // Front right knee
+      { x: 27, y: 60, w: 6, h: 5 },
+      // Back left knee
+      { x: 66, y: 60, w: 6, h: 5 },
+      // Back right knee
+      { x: 74, y: 60, w: 6, h: 5 },
     ],
   },
   {
     id: "lower-leg",
     label: "Lower Leg",
     areas: [
-      { x: 18, y: 73, w: 8, h: 14 },
-      { x: 29, y: 73, w: 8, h: 14 },
-      { x: 56, y: 72, w: 8, h: 14 },
-      { x: 67, y: 72, w: 8, h: 14 },
+      // Front left lower leg
+      { x: 19, y: 65, w: 6, h: 14 },
+      // Front right lower leg
+      { x: 27, y: 65, w: 6, h: 14 },
+      // Back left lower leg
+      { x: 66, y: 65, w: 6, h: 14 },
+      // Back right lower leg
+      { x: 74, y: 65, w: 6, h: 14 },
     ],
   },
   {
     id: "ankle-foot",
     label: "Ankle & Foot",
     areas: [
-      { x: 17, y: 87, w: 9, h: 10 },
-      { x: 29, y: 87, w: 9, h: 10 },
-      { x: 55, y: 86, w: 9, h: 10 },
-      { x: 67, y: 86, w: 9, h: 10 },
+      // Front left foot
+      { x: 18, y: 79, w: 7, h: 10 },
+      // Front right foot
+      { x: 27, y: 79, w: 7, h: 10 },
+      // Back left foot
+      { x: 66, y: 79, w: 7, h: 10 },
+      // Back right foot
+      { x: 74, y: 79, w: 7, h: 10 },
     ],
   },
 ];
@@ -118,7 +146,7 @@ export default function BodyMap({ onSelectRegion, selectedRegion }: BodyMapProps
               onClick={() => onSelectRegion(region.id)}
               onMouseEnter={() => setHoveredRegion(region.id)}
               onMouseLeave={() => setHoveredRegion(null)}
-              className="absolute rounded-xl transition-all duration-200"
+              className="absolute rounded-lg transition-all duration-200"
               style={{
                 left: `${area.x}%`,
                 top: `${area.y}%`,
