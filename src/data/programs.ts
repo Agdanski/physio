@@ -3854,6 +3854,17 @@ export const programs: Program[] = [
             imageKey: "standing-pelvic-tilt",
           },
           {
+            name: "Groin Stretch",
+            why: "Stretches the hip adductors and improves hip mobility for walking.",
+            instructions: ["Place one foot on a chair.", "Lean your body forward over the raised leg.", "Feel a stretch in the inner thigh.", "Hold, then repeat on the other side."],
+            dose: "5 reps × 5–10 second holds each side, daily",
+            commonMistakes: ["Rounding the back", "Bouncing"],
+            easierVersion: "Use a lower surface.",
+            harderVersion: "Longer holds.",
+            equipmentNeeded: "Chair",
+            imageKey: "standing-groin-stretch",
+          },
+          {
             name: "Graduated Walking",
             why: "The ultimate functional goal — progressively increasing walking distance.",
             instructions: ["Stand in the pelvic tilt position.", "Walk normally, swinging your arms.", "Count your steps and aim to increase weekly.", "Rest when symptoms appear, then resume."],
