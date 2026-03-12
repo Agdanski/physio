@@ -87,7 +87,7 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     zones: [
       // Front: what was previously knee
       [23.4, 74.9, 5.4, 8.8],
-      [30.5, 74.9, 5.4, 8.8],
+      [33, 74.9, 5.4, 8.8],
       // Back: what was previously knee
       [60.2, 74.2, 4.8, 8.7],
       [68.1, 74.2, 4.8, 8.7],
