@@ -3774,7 +3774,6 @@ export const programs: Program[] = [
             harderVersion: "Longer continuous walking.",
             equipmentNeeded: "Supportive footwear",
             painRule: "Rest when leg symptoms appear; resume after symptoms settle.",
-            imageKey: "standing-pelvic-tilt",
           },
         ],
       },
