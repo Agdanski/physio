@@ -1,5 +1,5 @@
 import { Exercise } from "@/data/programs";
-import { AlertTriangle, TrendingUp, TrendingDown, Info } from "lucide-react";
+import { AlertTriangle, TrendingUp, TrendingDown, Info, XCircle, Dumbbell } from "lucide-react";
 import exerciseImages from "@/data/exerciseImages";
 
 interface ExerciseCardProps {
@@ -32,7 +32,7 @@ export default function ExerciseCard({ exercise, index }: ExerciseCardProps) {
 
           {/* Instructions */}
           <div className="mt-4">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Instructions</h4>
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">How To Do It</h4>
             <ol className="space-y-1.5">
               {exercise.instructions.map((step, i) => (
                 <li key={i} className="flex gap-2 text-sm text-foreground/90">
@@ -67,21 +67,47 @@ export default function ExerciseCard({ exercise, index }: ExerciseCardProps) {
             </div>
           )}
 
-          {/* Progression / Regression */}
-          <div className="flex flex-wrap gap-3 mt-3">
-            {exercise.progression && (
-              <div className="flex items-start gap-1.5 text-sm">
-                <TrendingUp className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
-                <span className="text-foreground/80"><span className="font-medium text-accent">Progress:</span> {exercise.progression}</span>
+          {/* Common Mistakes */}
+          {exercise.commonMistakes && exercise.commonMistakes.length > 0 && (
+            <div className="mt-3">
+              <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-destructive mb-1.5">
+                <XCircle className="w-3.5 h-3.5" />
+                Common Mistakes
               </div>
-            )}
-            {exercise.regression && (
+              <ul className="space-y-1">
+                {exercise.commonMistakes.map((mistake, i) => (
+                  <li key={i} className="text-sm text-foreground/80 flex gap-2">
+                    <span className="text-destructive">•</span>
+                    {mistake}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Easier / Harder versions */}
+          <div className="flex flex-wrap gap-3 mt-3">
+            {exercise.easierVersion && (
               <div className="flex items-start gap-1.5 text-sm">
                 <TrendingDown className="w-4 h-4 text-clinic-amber flex-shrink-0 mt-0.5" />
-                <span className="text-foreground/80"><span className="font-medium text-clinic-amber">Regress:</span> {exercise.regression}</span>
+                <span className="text-foreground/80"><span className="font-medium text-clinic-amber">Easier:</span> {exercise.easierVersion}</span>
+              </div>
+            )}
+            {exercise.harderVersion && (
+              <div className="flex items-start gap-1.5 text-sm">
+                <TrendingUp className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                <span className="text-foreground/80"><span className="font-medium text-accent">Harder:</span> {exercise.harderVersion}</span>
               </div>
             )}
           </div>
+
+          {/* Equipment */}
+          {exercise.equipmentNeeded && (
+            <div className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground">
+              <Dumbbell className="w-3.5 h-3.5" />
+              <span><span className="font-medium">Equipment:</span> {exercise.equipmentNeeded}</span>
+            </div>
+          )}
 
           {/* Pain rule / Stop if / Important */}
           {(exercise.painRule || exercise.stopIf || exercise.important) && (
