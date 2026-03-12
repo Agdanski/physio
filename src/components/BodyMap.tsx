@@ -7,73 +7,123 @@ interface BodyMapProps {
   selectedRegion?: BodyRegion | null;
 }
 
-// Clickable regions as percentage-based overlays on the front body (left figure)
-// Coordinates are percentages of the image dimensions
+// The image has two figures side by side.
+// Front figure center is ~30% from left, back figure center is ~65%.
+// We map clickable zones on BOTH figures for each region.
+// All values are percentages of the full image.
 const regions: { id: BodyRegion; label: string; areas: { x: number; y: number; w: number; h: number }[] }[] = [
   {
     id: "neck",
     label: "Neck",
-    areas: [{ x: 16.5, y: 8.5, w: 6, h: 5 }],
+    areas: [
+      // Front neck
+      { x: 26.5, y: 9, w: 5.5, h: 4 },
+      // Back neck
+      { x: 61, y: 7, w: 5.5, h: 5 },
+    ],
   },
   {
     id: "shoulder",
     label: "Shoulder",
     areas: [
-      { x: 8, y: 10, w: 9, h: 8 },
-      { x: 22, y: 10, w: 9, h: 8 },
+      // Front left shoulder
+      { x: 20, y: 11, w: 7.5, h: 8 },
+      // Front right shoulder
+      { x: 31, y: 11, w: 7.5, h: 8 },
+      // Back left shoulder
+      { x: 55, y: 11, w: 7, h: 8 },
+      // Back right shoulder
+      { x: 65.5, y: 11, w: 7, h: 8 },
     ],
   },
   {
     id: "elbow-wrist-hand",
     label: "Elbow, Wrist & Hand",
     areas: [
-      { x: 3, y: 22, w: 8, h: 28 },
-      { x: 28, y: 22, w: 8, h: 28 },
+      // Front left arm
+      { x: 16, y: 22, w: 6, h: 30 },
+      // Front right arm
+      { x: 36.5, y: 22, w: 6, h: 30 },
+      // Back left arm
+      { x: 51, y: 22, w: 6, h: 30 },
+      // Back right arm
+      { x: 70.5, y: 22, w: 6, h: 30 },
     ],
   },
   {
     id: "lower-back",
     label: "Lower Back",
     areas: [
-      // Front torso (abs/core area maps to lower back program)
-      { x: 13, y: 18, w: 13, h: 18 },
+      // Front torso (chest/abs)
+      { x: 24, y: 19, w: 10.5, h: 18 },
+      // Back torso (upper & lower back)
+      { x: 58.5, y: 16, w: 10.5, h: 22 },
     ],
   },
   {
     id: "hip-groin",
     label: "Hip & Groin",
-    areas: [{ x: 11, y: 36, w: 17, h: 8 }],
+    areas: [
+      // Front hip/groin
+      { x: 23, y: 37, w: 12.5, h: 8 },
+      // Back glutes
+      { x: 57, y: 38, w: 13.5, h: 10 },
+    ],
   },
   {
     id: "thigh",
     label: "Thigh",
     areas: [
-      { x: 10, y: 44, w: 9, h: 18 },
-      { x: 20, y: 44, w: 9, h: 18 },
+      // Front left thigh
+      { x: 22, y: 45, w: 7, h: 16 },
+      // Front right thigh
+      { x: 29.5, y: 45, w: 7, h: 16 },
+      // Back left thigh
+      { x: 57, y: 48, w: 7, h: 14 },
+      // Back right thigh
+      { x: 64, y: 48, w: 7, h: 14 },
     ],
   },
   {
     id: "knee",
     label: "Knee",
     areas: [
-      { x: 11, y: 62, w: 7, h: 8 },
-      { x: 21, y: 62, w: 7, h: 8 },
+      // Front left knee
+      { x: 23, y: 61, w: 5.5, h: 7 },
+      // Front right knee
+      { x: 30, y: 61, w: 5.5, h: 7 },
+      // Back left knee
+      { x: 57.5, y: 62, w: 5.5, h: 6 },
+      // Back right knee
+      { x: 64, y: 62, w: 5.5, h: 6 },
     ],
   },
   {
     id: "lower-leg",
     label: "Lower Leg",
     areas: [
-      { x: 11, y: 70, w: 7, h: 18 },
-      { x: 21, y: 70, w: 7, h: 18 },
+      // Front left calf
+      { x: 23, y: 68, w: 5.5, h: 18 },
+      // Front right calf
+      { x: 30, y: 68, w: 5.5, h: 18 },
+      // Back left calf
+      { x: 57.5, y: 68, w: 5.5, h: 18 },
+      // Back right calf
+      { x: 64, y: 68, w: 5.5, h: 18 },
     ],
   },
   {
     id: "ankle-foot",
     label: "Ankle & Foot",
     areas: [
-      { x: 10, y: 88, w: 8, h: 10 },
-      { x: 21, y: 88, w: 8, h: 10 },
+      // Front left foot
+      { x: 22, y: 86, w: 6, h: 12 },
+      // Front right foot
+      { x: 30, y: 86, w: 6, h: 12 },
+      // Back left foot
+      { x: 57, y: 86, w: 6, h: 12 },
+      // Back right foot
+      { x: 64, y: 86, w: 6, h: 12 },
     ],
   },
 ];
@@ -85,8 +135,7 @@ export default function BodyMap({ onSelectRegion, selectedRegion }: BodyMapProps
 
   return (
     <div className="flex flex-col items-center">
-      {/* Body image with clickable overlay regions */}
-      <div className="relative w-full max-w-lg mx-auto">
+      <div className="relative w-full max-w-xl mx-auto">
         <img
           src={bodyMapImage}
           alt="Human body diagram — click a body region to find exercises"
@@ -94,7 +143,6 @@ export default function BodyMap({ onSelectRegion, selectedRegion }: BodyMapProps
           draggable={false}
         />
 
-        {/* Clickable overlay zones */}
         {regions.map((region) =>
           region.areas.map((area, i) => (
             <button
@@ -102,7 +150,7 @@ export default function BodyMap({ onSelectRegion, selectedRegion }: BodyMapProps
               onClick={() => onSelectRegion(region.id)}
               onMouseEnter={() => setHoveredRegion(region.id)}
               onMouseLeave={() => setHoveredRegion(null)}
-              className="absolute rounded-lg transition-all duration-200"
+              className="absolute rounded-md transition-all duration-200"
               style={{
                 left: `${area.x}%`,
                 top: `${area.y}%`,
