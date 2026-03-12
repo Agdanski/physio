@@ -5,6 +5,7 @@ import BodyMap from "@/components/BodyMap";
 import ConditionList from "@/components/ConditionList";
 import ProgramDetail from "@/components/ProgramDetail";
 import SymptomSearch from "@/components/SymptomSearch";
+import FeedbackDialog from "@/components/FeedbackDialog";
 import { BodyRegion, bodyRegionLabels, getProgramsByRegion, Program } from "@/data/programs";
 import { LogOut, Activity } from "lucide-react";
 import { Button } from "@/components/ui/button";
