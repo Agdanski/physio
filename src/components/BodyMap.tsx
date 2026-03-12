@@ -17,7 +17,7 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Neck",
     zones: [
       // Front neck / upper collar
-      [29, 16, 6, 6],
+      [27, 16, 6, 6],
       // Back neck
       [64, 15, 5, 6],
     ],
@@ -59,7 +59,7 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Hip & Groin",
     zones: [
       // Front groin/pelvis (purple)
-      [25, 45, 10.5, 13.5],
+      [27, 45, 10.5, 13.5],
       // Back glutes (pink)
       [60, 45, 13.5, 14],
     ],
@@ -77,7 +77,7 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     zones: [
       // Front: what was previously thigh
       [23, 58.5, 5.8, 18.8],
-      [30.8, 58.5, 5.8, 18.8],
+      [33, 58.5, 5.8, 18.8],
       // Back: removed per mapping request
     ],
   },
@@ -87,7 +87,7 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     zones: [
       // Front: what was previously knee
       [23.4, 74.9, 5.4, 8.8],
-      [30.5, 74.9, 5.4, 8.8],
+      [33, 74.9, 5.4, 8.8],
       // Back: what was previously knee
       [60.2, 74.2, 4.8, 8.7],
       [68.1, 74.2, 4.8, 8.7],
@@ -99,7 +99,7 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     zones: [
       // Front: what was previously lower leg
       [22.8, 82.8, 6, 15.3],
-      [30.6, 82.8, 6, 15.3],
+      [33, 82.8, 6, 15.3],
       // Back: what was previously lower leg
       [59.7, 79.9, 6.2, 15.2],
       [67.7, 79.9, 6.2, 15.2],
