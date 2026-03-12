@@ -100,6 +100,8 @@ import standingGroinStretch from "@/assets/exercises/standing-groin-stretch.png"
 import standingPelvicTilt from "@/assets/exercises/standing-pelvic-tilt.png";
 import torsoExtProne from "@/assets/exercises/torso-ext-prone.png";
 import heavySlowCalfRaise from "@/assets/exercises/heavy-slow-calf-raise.png";
+import hipHinge from "@/assets/exercises/hip-hinge.png";
+import sideLyingHipAdduction from "@/assets/exercises/side-lying-hip-adduction.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
