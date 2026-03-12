@@ -7,31 +7,31 @@ interface BodyMapProps {
   selectedRegion?: BodyRegion | null;
 }
 
-// Percentage-based hit zones mapped to the anatomical image.
-// Image is landscape (~3:2). Front figure centered ~28%, back figure ~67%.
+// Percentage-based hit zones on the anatomical image.
+// The image is landscape with whitespace. Figures occupy roughly
+// the vertical range 5%-98% and horizontal range 12%-85%.
+// Front figure center ~28%, back figure center ~67%.
 const regions: { id: BodyRegion; label: string; areas: { x: number; y: number; w: number; h: number }[] }[] = [
   {
     id: "neck",
     label: "Neck",
     areas: [
-      // Front neck (yellow band between head and shoulders)
-      { x: 24, y: 14, w: 8, h: 5 },
-      // Back neck
-      { x: 61, y: 10, w: 8, h: 6 },
+      { x: 24, y: 22, w: 8, h: 5 },
+      { x: 61, y: 18, w: 8, h: 6 },
     ],
   },
   {
     id: "shoulder",
     label: "Shoulder",
     areas: [
-      // Front left shoulder (orange)
-      { x: 14, y: 16, w: 11, h: 10 },
-      // Front right shoulder (orange)
-      { x: 31, y: 16, w: 11, h: 10 },
-      // Back left shoulder (orange)
-      { x: 52, y: 14, w: 10, h: 10 },
-      // Back right shoulder (orange)
-      { x: 70, y: 14, w: 10, h: 10 },
+      // Front left shoulder (orange deltoid)
+      { x: 14, y: 25, w: 11, h: 9 },
+      // Front right shoulder
+      { x: 31, y: 25, w: 11, h: 9 },
+      // Back left shoulder
+      { x: 52, y: 23, w: 10, h: 9 },
+      // Back right shoulder
+      { x: 70, y: 23, w: 10, h: 9 },
     ],
   },
   {
@@ -39,89 +39,73 @@ const regions: { id: BodyRegion; label: string; areas: { x: number; y: number; w
     label: "Elbow, Wrist & Hand",
     areas: [
       // Front left arm (green)
-      { x: 9, y: 28, w: 8, h: 34 },
-      // Front right arm (green)
-      { x: 38, y: 28, w: 8, h: 34 },
-      // Back left arm (green)
-      { x: 47, y: 28, w: 7, h: 34 },
-      // Back right arm (green)
-      { x: 77, y: 28, w: 7, h: 34 },
+      { x: 9, y: 36, w: 8, h: 30 },
+      // Front right arm
+      { x: 38, y: 36, w: 8, h: 30 },
+      // Back left arm
+      { x: 47, y: 36, w: 7, h: 30 },
+      // Back right arm
+      { x: 77, y: 36, w: 7, h: 30 },
     ],
   },
   {
     id: "lower-back",
     label: "Lower Back",
     areas: [
-      // Front torso / chest+abs (blue region)
-      { x: 21, y: 20, w: 14, h: 22 },
-      // Back — upper + lower back (blue + purple)
-      { x: 59, y: 20, w: 12, h: 22 },
+      // Front torso (blue chest + abs)
+      { x: 21, y: 28, w: 14, h: 20 },
+      // Back torso (blue upper back + purple lower back)
+      { x: 59, y: 28, w: 12, h: 20 },
     ],
   },
   {
     id: "hip-groin",
     label: "Hip & Groin",
     areas: [
-      // Front hip/groin (purple shorts area)
-      { x: 19, y: 42, w: 18, h: 9 },
+      // Front hip/groin (purple shorts)
+      { x: 19, y: 48, w: 18, h: 8 },
       // Back glutes (pink)
-      { x: 56, y: 42, w: 18, h: 12 },
+      { x: 56, y: 48, w: 18, h: 10 },
     ],
   },
   {
     id: "thigh",
     label: "Thigh",
     areas: [
-      // Front left thigh
-      { x: 17, y: 51, w: 10, h: 14 },
-      // Front right thigh
-      { x: 28, y: 51, w: 10, h: 14 },
-      // Back left thigh (red)
-      { x: 55, y: 54, w: 10, h: 12 },
-      // Back right thigh (red)
-      { x: 66, y: 54, w: 10, h: 12 },
+      { x: 17, y: 56, w: 10, h: 14 },
+      { x: 28, y: 56, w: 10, h: 14 },
+      { x: 55, y: 58, w: 10, h: 12 },
+      { x: 66, y: 58, w: 10, h: 12 },
     ],
   },
   {
     id: "knee",
     label: "Knee",
     areas: [
-      // Front left knee (red)
-      { x: 18, y: 64, w: 8, h: 7 },
-      // Front right knee (red)
-      { x: 29, y: 64, w: 8, h: 7 },
-      // Back left knee
-      { x: 56, y: 66, w: 8, h: 5 },
-      // Back right knee
-      { x: 67, y: 66, w: 8, h: 5 },
+      { x: 18, y: 70, w: 8, h: 6 },
+      { x: 29, y: 70, w: 8, h: 6 },
+      { x: 56, y: 70, w: 8, h: 5 },
+      { x: 67, y: 70, w: 8, h: 5 },
     ],
   },
   {
     id: "lower-leg",
     label: "Lower Leg",
     areas: [
-      // Front left calf (purple+blue)
-      { x: 18, y: 71, w: 8, h: 16 },
-      // Front right calf
-      { x: 29, y: 71, w: 8, h: 16 },
-      // Back left calf (blue)
-      { x: 56, y: 71, w: 8, h: 16 },
-      // Back right calf
-      { x: 67, y: 71, w: 8, h: 16 },
+      { x: 18, y: 76, w: 8, h: 14 },
+      { x: 29, y: 76, w: 8, h: 14 },
+      { x: 56, y: 75, w: 8, h: 14 },
+      { x: 67, y: 75, w: 8, h: 14 },
     ],
   },
   {
     id: "ankle-foot",
     label: "Ankle & Foot",
     areas: [
-      // Front left foot (teal)
-      { x: 17, y: 87, w: 9, h: 11 },
-      // Front right foot
-      { x: 29, y: 87, w: 9, h: 11 },
-      // Back left foot
-      { x: 55, y: 87, w: 9, h: 11 },
-      // Back right foot
-      { x: 67, y: 87, w: 9, h: 11 },
+      { x: 17, y: 90, w: 9, h: 9 },
+      { x: 29, y: 90, w: 9, h: 9 },
+      { x: 55, y: 89, w: 9, h: 9 },
+      { x: 67, y: 89, w: 9, h: 9 },
     ],
   },
 ];
@@ -168,7 +152,6 @@ export default function BodyMap({ onSelectRegion, selectedRegion }: BodyMapProps
         )}
       </div>
 
-      {/* Region buttons */}
       <div className="grid grid-cols-3 gap-2 mt-6 w-full max-w-md">
         {regions.map((region) => (
           <button
