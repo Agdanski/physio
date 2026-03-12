@@ -102,7 +102,7 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
       [35, 82.8, 6, 15.3],
       // Back: what was previously lower leg
       [59.7, 79.9, 6.2, 15.2],
-      [67.7, 79.9, 6.2, 15.2],
+      [68.7, 79.9, 6.2, 15.2],
       // Removed previous too-low ankle/foot zones on both views
     ],
   },
