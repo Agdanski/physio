@@ -19,9 +19,9 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Neck",
     zones: [
       // Front neck (yellow)
-      [33, 13, 7, 5],
+      [34, 14, 6, 5],
       // Back neck
-      [60, 13, 7, 5],
+      [61, 13, 5, 5],
     ],
   },
   {
@@ -29,13 +29,13 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Shoulder",
     zones: [
       // Front left shoulder (orange)
-      [26, 17, 8, 7],
+      [28, 17, 8, 7],
       // Front right shoulder (orange)
-      [39, 17, 8, 7],
+      [38, 17, 8, 7],
       // Back left shoulder (orange)
-      [52, 17, 8, 7],
+      [53, 17, 8, 7],
       // Back right shoulder (orange)
-      [66, 17, 8, 7],
+      [65, 17, 8, 7],
     ],
   },
   {
@@ -43,21 +43,21 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Elbow, Wrist & Hand",
     zones: [
       // Front left arm (green)
-      [23, 28, 6, 28],
+      [24, 28, 6, 28],
       // Front right arm (green)
       [44, 28, 6, 28],
       // Back left arm (green)
-      [49, 28, 6, 28],
+      [50, 28, 5, 28],
       // Back right arm (green)
-      [71, 28, 6, 28],
+      [72, 28, 5, 28],
     ],
   },
   {
     id: "lower-back",
     label: "Lower Back",
     zones: [
-      // Back only - purple lower back
-      [56, 38, 14, 8],
+      // Back only - purple/blue lower back
+      [57, 37, 13, 9],
     ],
   },
   {
@@ -65,9 +65,9 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Hip & Groin",
     zones: [
       // Front groin (purple)
-      [31, 45, 11, 7],
+      [32, 45, 10, 7],
       // Back glutes (pink)
-      [55, 46, 16, 10],
+      [56, 46, 15, 10],
     ],
   },
   {
@@ -75,13 +75,13 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Thigh",
     zones: [
       // Front left thigh
-      [30, 52, 7, 14],
+      [31, 52, 6, 14],
       // Front right thigh
-      [37, 52, 7, 14],
+      [37, 52, 6, 14],
       // Back left thigh (red)
-      [55, 56, 9, 13],
+      [56, 56, 8, 13],
       // Back right thigh (red)
-      [64, 56, 9, 13],
+      [64, 56, 8, 13],
     ],
   },
   {
@@ -89,13 +89,13 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Knee",
     zones: [
       // Front left knee (red)
-      [30, 66, 7, 6],
+      [31, 65, 6, 6],
       // Front right knee (red)
-      [37, 66, 7, 6],
+      [37, 65, 6, 6],
       // Back left knee
-      [56, 69, 8, 5],
+      [57, 69, 7, 5],
       // Back right knee
-      [64, 69, 8, 5],
+      [64, 69, 7, 5],
     ],
   },
   {
@@ -103,13 +103,13 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Lower Leg",
     zones: [
       // Front left lower leg
-      [30, 72, 7, 15],
+      [31, 71, 6, 16],
       // Front right lower leg
-      [37, 72, 7, 15],
+      [37, 71, 6, 16],
       // Back left lower leg (blue)
-      [56, 74, 8, 13],
+      [57, 74, 7, 13],
       // Back right lower leg
-      [64, 74, 8, 13],
+      [64, 74, 7, 13],
     ],
   },
   {
@@ -117,13 +117,13 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Ankle & Foot",
     zones: [
       // Front left foot (teal)
-      [29, 87, 7, 8],
+      [30, 87, 6, 8],
       // Front right foot
-      [37, 87, 7, 8],
+      [37, 87, 6, 8],
       // Back left foot
-      [55, 87, 8, 8],
+      [56, 87, 7, 8],
       // Back right foot
-      [64, 87, 8, 8],
+      [64, 87, 7, 8],
     ],
   },
 ];
