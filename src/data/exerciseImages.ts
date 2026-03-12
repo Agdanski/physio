@@ -208,6 +208,7 @@ const exerciseImages: Record<string, string> = {
   "heavy-slow-calf-raise": heavySlowCalfRaise,
   "hip-hinge": hipHinge,
   "side-lying-hip-adduction": sideLyingHipAdduction,
+  "superman-prone-extension": supermanProneExtension,
 };
 
 export default exerciseImages;
