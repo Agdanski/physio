@@ -68,48 +68,42 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     id: "thigh",
     label: "Thigh",
     zones: [
-      // Front thighs
-      [23, 58.5, 5.8, 18.8],
-      [30.8, 58.5, 5.8, 18.8],
-      // Back thighs (red)
-      [60.1, 58.8, 6.1, 18.7],
-      [66.9, 58.8, 6.1, 18.7],
+      // Intentionally removed from both views per mapping request
     ],
   },
   {
     id: "knee",
     label: "Knee",
     zones: [
-      // Front knees
-      [23.4, 74.9, 5.4, 8.8],
-      [30.5, 74.9, 5.4, 8.8],
-      // Back knees
-      [60.2, 74.2, 4.8, 8.7],
-      [68.1, 74.2, 4.8, 8.7],
+      // Front: what was previously thigh
+      [23, 58.5, 5.8, 18.8],
+      [30.8, 58.5, 5.8, 18.8],
+      // Back: removed per mapping request
     ],
   },
   {
     id: "lower-leg",
     label: "Lower Leg",
     zones: [
-      // Front lower legs
-      [22.8, 82.8, 6, 15.3],
-      [30.6, 82.8, 6, 15.3],
-      // Back lower legs
-      [59.7, 79.9, 6.2, 15.2],
-      [67.7, 79.9, 6.2, 15.2],
+      // Front: what was previously knee
+      [23.4, 74.9, 5.4, 8.8],
+      [30.5, 74.9, 5.4, 8.8],
+      // Back: what was previously knee
+      [60.2, 74.2, 4.8, 8.7],
+      [68.1, 74.2, 4.8, 8.7],
     ],
   },
   {
     id: "ankle-foot",
     label: "Ankle & Foot",
     zones: [
-      // Front feet
-      [22.3, 91, 7, 8.8],
-      [30.1, 91, 7, 8.8],
-      // Back feet
-      [59, 91, 7.7, 8.8],
-      [66.9, 91, 7.7, 8.8],
+      // Front: what was previously lower leg
+      [22.8, 82.8, 6, 15.3],
+      [30.6, 82.8, 6, 15.3],
+      // Back: what was previously lower leg
+      [59.7, 79.9, 6.2, 15.2],
+      [67.7, 79.9, 6.2, 15.2],
+      // Removed previous too-low ankle/foot zones on both views
     ],
   },
 ];
