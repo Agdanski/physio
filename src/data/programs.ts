@@ -1154,7 +1154,6 @@ export const programs: Program[] = [
             easierVersion: "Smaller range of motion.",
             harderVersion: "Gentle overpressure with hand at end range.",
             equipmentNeeded: "None",
-            imageKey: "chin-tuck",
           },
           {
             name: "Band Row",
