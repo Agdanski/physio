@@ -1,7 +1,8 @@
 import { Program } from "@/data/programs";
 import ExerciseCard from "@/components/ExerciseCard";
-import { ArrowLeft, Printer, AlertTriangle, CheckCircle } from "lucide-react";
+import { ArrowLeft, Printer, AlertTriangle, CheckCircle, Clock, ShieldAlert, TrendingUp, Flame, Wrench, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 interface ProgramDetailProps {
   program: Program;
@@ -40,6 +41,7 @@ export default function ProgramDetail({ program, onBack }: ProgramDetailProps) {
           {program.condition}
         </h1>
         <p className="text-muted-foreground mt-2">{program.description}</p>
+
         <div className="mt-4 flex items-start gap-2 bg-primary/8 rounded-lg p-4">
           <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
           <div>
@@ -47,6 +49,13 @@ export default function ProgramDetail({ program, onBack }: ProgramDetailProps) {
             <p className="text-sm text-foreground/80 mt-0.5">{program.goal}</p>
           </div>
         </div>
+
+        {/* Best For */}
+        {program.bestFor && (
+          <div className="mt-3 text-sm text-foreground/80">
+            <span className="font-semibold text-foreground">Best for:</span> {program.bestFor}
+          </div>
+        )}
 
         {/* Symptoms */}
         <div className="mt-4">
@@ -61,18 +70,55 @@ export default function ProgramDetail({ program, onBack }: ProgramDetailProps) {
         </div>
       </div>
 
-      {/* Urgent Signs */}
-      {program.urgentSigns && program.urgentSigns.length > 0 && (
+      {/* Not For / Urgent Signs */}
+      {((program.notFor && program.notFor.length > 0) || (program.urgentSigns && program.urgentSigns.length > 0)) && (
         <div className="rounded-xl border border-destructive/30 bg-destructive/5 p-5 mb-6">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
             <div>
-              <h3 className="font-semibold text-destructive text-sm">Seek Urgent Medical Attention If You Experience:</h3>
-              <ul className="mt-2 space-y-1">
-                {program.urgentSigns.map((sign, i) => (
+              {program.notFor && program.notFor.length > 0 && (
+                <>
+                  <h3 className="font-semibold text-destructive text-sm">Not Suitable For / Seek Care If:</h3>
+                  <ul className="mt-2 space-y-1 mb-3">
+                    {program.notFor.map((item, i) => (
+                      <li key={i} className="text-sm text-foreground/80 flex gap-2">
+                        <span className="text-destructive">•</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              {program.urgentSigns && program.urgentSigns.length > 0 && (
+                <>
+                  <h3 className="font-semibold text-destructive text-sm">Seek Urgent Medical Attention If You Experience:</h3>
+                  <ul className="mt-2 space-y-1">
+                    {program.urgentSigns.map((sign, i) => (
+                      <li key={i} className="text-sm text-foreground/80 flex gap-2">
+                        <span className="text-destructive">•</span>
+                        {sign}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Self-Management Advice */}
+      {program.selfManagementAdvice && program.selfManagementAdvice.length > 0 && (
+        <div className="rounded-xl border border-border bg-muted/30 p-5 mb-6">
+          <div className="flex items-start gap-3">
+            <Info className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+            <div>
+              <h3 className="font-semibold text-foreground text-sm mb-2">Key Self-Management Advice</h3>
+              <ul className="space-y-1.5">
+                {program.selfManagementAdvice.map((advice, i) => (
                   <li key={i} className="text-sm text-foreground/80 flex gap-2">
-                    <span className="text-destructive">•</span>
-                    {sign}
+                    <span className="text-primary">•</span>
+                    {advice}
                   </li>
                 ))}
               </ul>
@@ -81,14 +127,122 @@ export default function ProgramDetail({ program, onBack }: ProgramDetailProps) {
         </div>
       )}
 
-      {/* Exercises */}
-      <h2 className="font-serif text-xl text-foreground mb-4">
-        Exercises ({program.exercises.length})
-      </h2>
-      <div className="space-y-4">
-        {program.exercises.map((exercise, index) => (
-          <ExerciseCard key={index} exercise={exercise} index={index} />
-        ))}
+      {/* Equipment */}
+      {((program.requiredEquipment && program.requiredEquipment.length > 0) || (program.optionalEquipment && program.optionalEquipment.length > 0)) && (
+        <div className="rounded-xl border border-border p-5 mb-6">
+          <div className="flex items-start gap-3">
+            <Wrench className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+            <div className="text-sm space-y-2">
+              {program.requiredEquipment && program.requiredEquipment.length > 0 && (
+                <div>
+                  <span className="font-semibold text-foreground">Required:</span>{" "}
+                  <span className="text-foreground/80">{program.requiredEquipment.join(", ")}</span>
+                </div>
+              )}
+              {program.optionalEquipment && program.optionalEquipment.length > 0 && (
+                <div>
+                  <span className="font-semibold text-foreground">Optional:</span>{" "}
+                  <span className="text-foreground/80">{program.optionalEquipment.join(", ")}</span>
+                </div>
+              )}
+              {program.noEquipmentAlternative && (
+                <div>
+                  <span className="font-semibold text-foreground">No-equipment option:</span>{" "}
+                  <span className="text-foreground/80">{program.noEquipmentAlternative}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Phase Tabs */}
+      {program.phases.length > 0 && (
+        <Tabs defaultValue="phase-0" className="mb-6">
+          <TabsList className="w-full flex">
+            {program.phases.map((phase, i) => (
+              <TabsTrigger key={i} value={`phase-${i}`} className="flex-1 text-xs sm:text-sm">
+                {phase.name}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          {program.phases.map((phase, i) => (
+            <TabsContent key={i} value={`phase-${i}`}>
+              {phase.description && (
+                <p className="text-sm text-muted-foreground mb-4 mt-2 italic">{phase.description}</p>
+              )}
+              <div className="space-y-4">
+                {phase.exercises.map((exercise, j) => (
+                  <ExerciseCard key={j} exercise={exercise} index={j} />
+                ))}
+              </div>
+            </TabsContent>
+          ))}
+        </Tabs>
+      )}
+
+      {/* Progression / Flare-Up / Timeline / Seek Assessment */}
+      <div className="grid gap-4 md:grid-cols-2 mb-6">
+        {program.progressionRules && program.progressionRules.length > 0 && (
+          <div className="rounded-xl border border-border p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <TrendingUp className="w-4 h-4 text-accent" />
+              <h3 className="text-sm font-semibold text-foreground">Progression Rules</h3>
+            </div>
+            <ul className="space-y-1.5">
+              {program.progressionRules.map((rule, i) => (
+                <li key={i} className="text-xs text-foreground/80 flex gap-2">
+                  <span className="text-accent">→</span>
+                  {rule}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {program.flareUpRules && program.flareUpRules.length > 0 && (
+          <div className="rounded-xl border border-clinic-amber/30 bg-clinic-amber/5 p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Flame className="w-4 h-4 text-clinic-amber" />
+              <h3 className="text-sm font-semibold text-foreground">Flare-Up Rules</h3>
+            </div>
+            <ul className="space-y-1.5">
+              {program.flareUpRules.map((rule, i) => (
+                <li key={i} className="text-xs text-foreground/80 flex gap-2">
+                  <span className="text-clinic-amber">→</span>
+                  {rule}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {program.expectedTimeline && (
+          <div className="rounded-xl border border-border p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Clock className="w-4 h-4 text-muted-foreground" />
+              <h3 className="text-sm font-semibold text-foreground">Expected Timeline</h3>
+            </div>
+            <p className="text-xs text-foreground/80">{program.expectedTimeline}</p>
+          </div>
+        )}
+
+        {program.seekAssessment && program.seekAssessment.length > 0 && (
+          <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <ShieldAlert className="w-4 h-4 text-destructive" />
+              <h3 className="text-sm font-semibold text-foreground">When to Seek Further Assessment</h3>
+            </div>
+            <ul className="space-y-1.5">
+              {program.seekAssessment.map((item, i) => (
+                <li key={i} className="text-xs text-foreground/80 flex gap-2">
+                  <span className="text-destructive">•</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       {/* Footer */}
@@ -97,7 +251,7 @@ export default function ProgramDetail({ program, onBack }: ProgramDetailProps) {
           <strong>Evidence base:</strong> {program.programAudit}
         </p>
         <p className="text-xs text-muted-foreground mt-2">
-          This program is provided for educational purposes. Always consult your healthcare provider before beginning any exercise program.
+          This program is designed as an evidence-informed self-management guide. It does not replace in-person assessment when symptoms are severe, traumatic, rapidly worsening, neurologic, or not improving.
         </p>
       </div>
 
