@@ -296,6 +296,300 @@ export const programs: Program[] = [
   },
 
   // ───────────────────────────────────────────────────────────
+  // 1b. ACUTE LUMBAR DISC HERNIATION / SCIATICA
+  // ───────────────────────────────────────────────────────────
+  {
+    id: "acute-disc-sciatica",
+    condition: "Acute Lumbar Disc Herniation / Sciatica",
+    goal: "Reduce leg pain irritability, maintain or restore comfortable movement, protect neurologic function, and gradually return to walking, sitting, bending, and daily activity.",
+    description: "For acute low back pain with disc-related leg pain or sciatica symptoms. Conservative care is first-line in many cases if there is no cauda equina syndrome, progressive major weakness, or other serious pathology. This program should be symptom-guided. Do not assume one direction of movement helps everyone.",
+    bodyRegion: "lower-back",
+    symptoms: [
+      "Low back pain with pain into the buttock or leg",
+      "Tingling",
+      "Numbness",
+      "Sharp or shooting leg pain",
+      "Pain worse with sitting or bending for some people",
+      "Pain worse with standing or walking for others",
+    ],
+    bestFor: "People with acute disc-related leg pain or sciatica being managed conservatively, without cauda equina syndrome or progressive major weakness.",
+    notFor: [
+      "Cauda equina syndrome (new bowel/bladder change, saddle numbness)",
+      "Progressive major leg weakness or foot drop",
+      "Severe unremitting pain not easing with any position or rest",
+      "Suspected serious spinal pathology",
+    ],
+    selfManagementAdvice: [
+      "Stay as active as you reasonably can without forcing through a major flare.",
+      "Use short frequent walks instead of long walks if symptoms are irritable.",
+      "Avoid prolonged bed rest.",
+      "Use movements or positions that reduce leg pain intensity or move symptoms upward toward the back.",
+      "Stop or reduce movements that clearly make symptoms travel farther down the leg.",
+      "Temporary soreness can be acceptable. Clear worsening that lasts into the next day means reduce range, reps, or frequency.",
+    ],
+    urgentSigns: [
+      "New bowel or bladder changes",
+      "Saddle numbness",
+      "Rapidly worsening leg weakness",
+      "Foot drop",
+      "Major gait decline",
+      "Severe unremitting pain not easing with rest",
+    ],
+    phases: [
+      {
+        name: "Phase 1: Symptom Relief",
+        description: "Focus on reducing irritability and maintaining comfortable movement. Continue movements that reduce or centralize symptoms. Stop movements that clearly worsen or peripheralize symptoms.",
+        exercises: [
+          {
+            name: "Comfortable Walking Intervals",
+            why: "Helps maintain activity and reduce fear of movement without prolonged static loading.",
+            instructions: [
+              "Walk for a short comfortable interval.",
+              "Stop before symptoms flare strongly.",
+              "Rest, then repeat if helpful.",
+            ],
+            dose: "3–6 short walks per day, starting with a tolerable duration",
+            keyCues: [
+              "Short and frequent is better than one long aggravating walk.",
+              "Walk tall but relaxed.",
+            ],
+            commonMistakes: [
+              "Walking too far in one go and triggering a major flare.",
+              "Avoiding all walking due to fear of pain.",
+            ],
+            easierVersion: "Shorter intervals with more rest between.",
+            harderVersion: "Gradually increase duration or total daily walking time.",
+            imageKey: "",
+          },
+          {
+            name: "Prone Lying or Prone on Elbows",
+            why: "Some people with disc-related leg pain feel better with gentle extension-biased positions. Use only if it clearly helps.",
+            instructions: [
+              "Lie on your stomach for 30–60 seconds.",
+              "If that feels helpful or neutral, prop onto your elbows.",
+              "Relax your lower back and breathe.",
+            ],
+            dose: "5–6 holds, 1–3 times daily as tolerated",
+            keyCues: [
+              "Continue only if leg pain becomes less intense or moves upward out of the leg.",
+            ],
+            commonMistakes: [
+              "Forcing into the position when it clearly aggravates leg pain.",
+              "Holding tension in the lower back instead of relaxing.",
+            ],
+            stopIf: "Leg pain clearly increases, spreads farther down the leg, or numbness/tingling worsens.",
+            easierVersion: "Prone lying only, without propping onto elbows.",
+            harderVersion: "If consistently helpful, add gentle repeated extension in lying.",
+            imageKey: "prone-on-elbows",
+          },
+          {
+            name: "Repeated Extension in Standing (Optional)",
+            why: "A symptom-response option for people who clearly improve with extension. Not mandatory.",
+            instructions: [
+              "Stand with feet shoulder-width apart.",
+              "Place hands on hips.",
+              "Gently bend backward a small amount.",
+              "Return to neutral.",
+            ],
+            dose: "1–2 sets of 8–10 reps, 2–4 times daily only if helpful",
+            keyCues: [
+              "Small motion is enough. Do not force range.",
+            ],
+            commonMistakes: [
+              "Pushing too far into extension.",
+              "Continuing despite worsening leg symptoms.",
+            ],
+            stopIf: "Symptoms peripheralize or worsen.",
+            imageKey: "standing-extension",
+          },
+          {
+            name: "Flexion Relief Position (Optional)",
+            why: "Some people feel better in flexed positions, especially if standing and walking aggravate symptoms. Not mandatory.",
+            instructions: [
+              "Lie on your back with knees bent, or rest with calves supported on a chair.",
+              "Relax and breathe for 30–90 seconds.",
+            ],
+            dose: "3–5 times daily as needed",
+            keyCues: [
+              "This is a relief position, not a strong stretch.",
+            ],
+            commonMistakes: [
+              "Using this as a substitute for all activity.",
+              "Pulling knees forcefully to the chest.",
+            ],
+            harderVersion: "Use as a symptom-calming strategy alongside gradual return to movement.",
+            imageKey: "double-knee-to-chest",
+          },
+          {
+            name: "Sciatic Nerve Slider",
+            why: "May help reduce neural mechanosensitivity without aggressive stretching.",
+            instructions: [
+              "Sit tall near the edge of a chair.",
+              "Straighten one knee as you gently look slightly upward.",
+              "Then bend the knee back down as you gently look slightly downward.",
+              "Move smoothly and lightly.",
+            ],
+            dose: "1–2 sets of 8–10 reps per side, once daily",
+            keyCues: [
+              "This should feel like a glide, not a hard stretch.",
+            ],
+            commonMistakes: [
+              "Forcing the knee fully straight.",
+              "Moving too quickly or aggressively.",
+            ],
+            stopIf: "It causes a lingering flare or stronger radiating pain.",
+            equipmentNeeded: "Chair",
+            imageKey: "nerve-slider",
+          },
+        ],
+      },
+      {
+        name: "Phase 2: Early Strength",
+        description: "Only begin Phase 2 when acute irritability is settling and Phase 1 movements are tolerated.",
+        exercises: [
+          {
+            name: "Abdominal Brace with Breathing",
+            why: "Reintroduces low-load trunk control without heavy spinal loading.",
+            instructions: [
+              "Lie on your back with knees bent.",
+              "Breathe out gently and lightly tighten the lower abdomen.",
+              "Keep ribs, pelvis, and buttocks relaxed.",
+              "Hold while taking 2–3 small breaths.",
+            ],
+            dose: "2–3 sets of 6–10 reps, once daily",
+            keyCues: [
+              "Use low effort only. Do not force your back flat.",
+            ],
+            commonMistakes: [
+              "Bracing too hard or holding the breath.",
+              "Pressing the back forcefully into the floor.",
+            ],
+            easierVersion: "Fewer reps with longer rest between.",
+            harderVersion: "Add gentle leg slides while maintaining brace.",
+            imageKey: "abdominal-brace",
+          },
+          {
+            name: "Bridge",
+            why: "Builds glute support and tolerance for hip-driven movement.",
+            instructions: [
+              "Lie on your back with knees bent.",
+              "Tighten glutes and lightly brace.",
+              "Lift hips until shoulders, hips, and knees are roughly in line.",
+              "Lower slowly.",
+            ],
+            dose: "2–3 sets of 6–10 reps, every other day",
+            keyCues: [
+              "Lift with the hips, not by arching the lower back.",
+            ],
+            commonMistakes: [
+              "Overarching the lower back at the top.",
+              "Pushing up too fast.",
+            ],
+            easierVersion: "Smaller lift range.",
+            harderVersion: "Longer hold at the top, then marching bridge only if well tolerated.",
+            imageKey: "bridge",
+          },
+          {
+            name: "Bird Dog (Short Range)",
+            why: "Improves trunk control with relatively low spinal motion.",
+            instructions: [
+              "Start on hands and knees.",
+              "Reach one leg back a short distance, or opposite arm and leg if tolerated.",
+              "Keep pelvis level.",
+              "Return slowly and switch.",
+            ],
+            dose: "2–3 sets of 4–8 reps per side, every other day",
+            keyCues: [
+              "Think long, not high. Avoid twisting.",
+            ],
+            commonMistakes: [
+              "Lifting the leg too high and losing pelvic control.",
+              "Rushing the movement.",
+            ],
+            easierVersion: "Arm only or leg only.",
+            harderVersion: "Full bird dog with longer hold.",
+            stopIf: "It reproduces clear leg symptom aggravation.",
+            imageKey: "bird-dog",
+          },
+        ],
+      },
+      {
+        name: "Phase 3: Functional Return",
+        description: "Only begin Phase 3 when leg pain is calmer, walking tolerance is improving, and there is no worsening neurologic loss.",
+        exercises: [
+          {
+            name: "Sit-to-Stand",
+            why: "Restores functional strength and confidence for daily tasks.",
+            instructions: [
+              "Sit near the edge of a chair.",
+              "Lean forward slightly.",
+              "Stand up without using the hands if possible.",
+              "Sit down slowly.",
+            ],
+            dose: "2–3 sets of 6–12 reps, every other day",
+            keyCues: [
+              "Move smoothly and stay relaxed through the low back.",
+            ],
+            commonMistakes: [
+              "Jerking upward or using momentum.",
+              "Holding breath.",
+            ],
+            easierVersion: "Use armrests for assistance.",
+            harderVersion: "Lower chair height or add reps.",
+            equipmentNeeded: "Chair",
+            imageKey: "sit-to-stand",
+          },
+          {
+            name: "Hip Hinge Drill",
+            why: "Helps reintroduce bending with better hip contribution and less guarded lumbar motion.",
+            instructions: [
+              "Stand tall with soft knees.",
+              "Push hips backward while keeping the chest facing forward.",
+              "Return to standing.",
+            ],
+            dose: "2–3 sets of 8–12 reps, every other day",
+            keyCues: [
+              "Small range at first. This is a movement practice drill, not a deep stretch.",
+            ],
+            commonMistakes: [
+              "Rounding the back excessively.",
+              "Going too deep too soon.",
+            ],
+            easierVersion: "Very small range with hands on a counter for support.",
+            harderVersion: "Gradually increase range, then add light load later if needed.",
+            imageKey: "romanian-deadlift",
+          },
+        ],
+      },
+    ],
+    progressionRules: [
+      "Progress only when symptoms during exercise remain tolerable and return near baseline by the next day.",
+      "Progress one variable at a time: range, then reps, then load, then complexity.",
+      "Continue movements that centralize symptoms or reduce leg pain intensity.",
+      "Reduce or stop movements that clearly peripheralize symptoms.",
+    ],
+    flareUpRules: [
+      "If symptoms spread farther down the leg, reduce the dose or return to the previous phase.",
+      "If pain, tingling, or numbness is clearly worse the next day, cut the volume or range.",
+      "During flares, use shorter walks, relief positions, and simpler exercises.",
+    ],
+    expectedTimeline: "Some people improve within a few weeks. Strength, movement confidence, and tolerance for sitting, bending, and walking may take longer. If symptoms are not improving over several weeks, or if neurologic symptoms worsen, seek further assessment.",
+    seekAssessment: [
+      "New bowel or bladder change",
+      "Saddle numbness",
+      "Progressive weakness",
+      "Foot drop",
+      "Increasing numbness",
+      "Severe unremitting night or rest pain",
+      "No meaningful improvement after a reasonable trial of conservative care",
+    ],
+    requiredEquipment: ["Chair"],
+    optionalEquipment: ["Mat"],
+    noEquipmentAlternative: "All core exercises can be done with standard home furniture and floor space.",
+    programAudit: "Consistent with current guideline-level recommendations favoring initial conservative management, activity, symptom-guided exercise, and escalation when neurologic deficits progress.",
+  },
+
+  // ───────────────────────────────────────────────────────────
   // 2. ROTATOR CUFF–RELATED SHOULDER PAIN
   // ───────────────────────────────────────────────────────────
   {
