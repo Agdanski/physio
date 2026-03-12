@@ -59,7 +59,7 @@ const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
     label: "Hip & Groin",
     zones: [
       // Front groin/pelvis (purple)
-      [25, 45, 10.5, 13.5],
+      [27, 45, 10.5, 13.5],
       // Back glutes (pink)
       [60, 45, 13.5, 14],
     ],
