@@ -10,120 +10,106 @@ interface BodyMapProps {
 // Percentage-based hit zones: [left%, top%, width%, height%]
 type Zone = [number, number, number, number];
 
-// Coordinates calibrated to the uploaded body-map.png
-// Front figure center ~36%, Back figure center ~63%
-// Front figure: x range ~26%-47%, Back: ~52%-73%
+// Coordinates calibrated to src/assets/body-map.png (front + back figures)
 const regionDefs: { id: BodyRegion; label: string; zones: Zone[] }[] = [
   {
     id: "neck",
     label: "Neck",
     zones: [
-      // Front neck (yellow)
-      [34, 14, 6, 5],
+      // Front neck / upper collar
+      [29, 16, 6, 6],
       // Back neck
-      [61, 13, 5, 5],
+      [64, 15, 5, 6],
     ],
   },
   {
     id: "shoulder",
     label: "Shoulder",
     zones: [
-      // Front left shoulder (orange)
-      [28, 17, 8, 7],
-      // Front right shoulder (orange)
-      [37, 17, 7, 7],
-      // Back left shoulder (orange)
-      [55, 17, 7, 7],
-      // Back right shoulder (orange)
-      [64, 17, 8, 7],
+      // Front shoulders (orange)
+      [22, 21, 6, 12],
+      [34, 21, 6, 12],
+      // Back shoulders (orange)
+      [58, 21, 6, 12],
+      [70, 21, 6, 12],
     ],
   },
   {
     id: "elbow-wrist-hand",
     label: "Elbow, Wrist & Hand",
     zones: [
-      // Front left arm (green)
-      [24, 28, 6, 28],
-      // Front right arm (green)
-      [44, 28, 6, 28],
-      // Back left arm (green)
-      [50, 28, 5, 28],
-      // Back right arm (green)
-      [72, 28, 5, 28],
+      // Front arms (green / teal)
+      [18.5, 29, 5.5, 31],
+      [37, 29, 5.5, 31],
+      // Back arms (green / teal)
+      [53.5, 29, 5.5, 31],
+      [74, 29, 5.5, 31],
     ],
   },
   {
     id: "lower-back",
     label: "Lower Back",
     zones: [
-      // Back only - purple/blue lower back
-      [57, 37, 13, 9],
+      // Posterior only (purple)
+      [60, 36, 13.5, 16],
     ],
   },
   {
     id: "hip-groin",
     label: "Hip & Groin",
     zones: [
-      // Front groin (purple)
-      [32, 45, 10, 7],
+      // Front groin/pelvis (purple)
+      [25, 45, 10.5, 13.5],
       // Back glutes (pink)
-      [56, 46, 15, 10],
+      [60, 45, 13.5, 14],
     ],
   },
   {
     id: "thigh",
     label: "Thigh",
     zones: [
-      // Front left thigh
-      [31, 52, 6, 14],
-      // Front right thigh
-      [37, 52, 6, 14],
-      // Back left thigh (red)
-      [56, 56, 8, 13],
-      // Back right thigh (red)
-      [64, 56, 8, 13],
+      // Front thighs
+      [23, 58.5, 5.8, 18.8],
+      [30.8, 58.5, 5.8, 18.8],
+      // Back thighs (red)
+      [60.1, 58.8, 6.1, 18.7],
+      [66.9, 58.8, 6.1, 18.7],
     ],
   },
   {
     id: "knee",
     label: "Knee",
     zones: [
-      // Front left knee (red)
-      [31, 65, 6, 6],
-      // Front right knee (red)
-      [37, 65, 6, 6],
-      // Back left knee
-      [57, 69, 7, 5],
-      // Back right knee
-      [64, 69, 7, 5],
+      // Front knees
+      [23.4, 74.9, 5.4, 8.8],
+      [30.5, 74.9, 5.4, 8.8],
+      // Back knees
+      [60.2, 74.2, 4.8, 8.7],
+      [68.1, 74.2, 4.8, 8.7],
     ],
   },
   {
     id: "lower-leg",
     label: "Lower Leg",
     zones: [
-      // Front left lower leg
-      [31, 71, 6, 16],
-      // Front right lower leg
-      [37, 71, 6, 16],
-      // Back left lower leg (blue)
-      [57, 74, 7, 13],
-      // Back right lower leg
-      [64, 74, 7, 13],
+      // Front lower legs
+      [22.8, 82.8, 6, 15.3],
+      [30.6, 82.8, 6, 15.3],
+      // Back lower legs
+      [59.7, 79.9, 6.2, 15.2],
+      [67.7, 79.9, 6.2, 15.2],
     ],
   },
   {
     id: "ankle-foot",
     label: "Ankle & Foot",
     zones: [
-      // Front left foot (teal)
-      [30, 87, 6, 8],
-      // Front right foot
-      [37, 87, 6, 8],
-      // Back left foot
-      [56, 87, 7, 8],
-      // Back right foot
-      [64, 87, 7, 8],
+      // Front feet
+      [22.3, 91, 7, 8.8],
+      [30.1, 91, 7, 8.8],
+      // Back feet
+      [59, 91, 7.7, 8.8],
+      [66.9, 91, 7.7, 8.8],
     ],
   },
 ];
