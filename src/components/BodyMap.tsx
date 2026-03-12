@@ -32,10 +32,10 @@ const regions: { id: BodyRegion; label: string; areas: RegionArea[] }[] = [
     id: "elbow-wrist-hand",
     label: "Elbow, Wrist & Hand",
     areas: [
-      { x: 12, y: 33, w: 7, h: 30 },
-      { x: 36, y: 33, w: 7, h: 30 },
-      { x: 49, y: 33, w: 7, h: 30 },
-      { x: 75, y: 33, w: 7, h: 30 },
+      { x: 17, y: 33, w: 6, h: 30 },
+      { x: 36, y: 33, w: 6, h: 30 },
+      { x: 54, y: 33, w: 6, h: 30 },
+      { x: 73, y: 33, w: 6, h: 30 },
     ],
   },
   {
