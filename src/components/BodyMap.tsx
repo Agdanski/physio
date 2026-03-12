@@ -2,6 +2,33 @@ import { useState } from "react";
 import { BodyRegion } from "@/data/programs";
 import bodyMapImage from "@/assets/body-map.png";
 
+// Toggle this to show/hide overlay debug boxes
+const DEBUG_OVERLAYS = true;
+
+const DEBUG_COLORS: Record<string, string> = {
+  neck: "rgba(255,0,0,0.25)",
+  shoulder: "rgba(255,165,0,0.25)",
+  "elbow-wrist-hand": "rgba(0,200,0,0.25)",
+  "lower-back": "rgba(128,0,128,0.25)",
+  "hip-groin": "rgba(255,105,180,0.25)",
+  thigh: "rgba(255,255,0,0.25)",
+  knee: "rgba(0,0,255,0.25)",
+  "lower-leg": "rgba(0,200,200,0.25)",
+  "ankle-foot": "rgba(139,69,19,0.25)",
+};
+
+const DEBUG_BORDERS: Record<string, string> = {
+  neck: "red",
+  shoulder: "orange",
+  "elbow-wrist-hand": "green",
+  "lower-back": "purple",
+  "hip-groin": "hotpink",
+  thigh: "yellow",
+  knee: "blue",
+  "lower-leg": "teal",
+  "ankle-foot": "saddlebrown",
+};
+
 interface BodyMapProps {
   onSelectRegion: (region: BodyRegion) => void;
   selectedRegion?: BodyRegion | null;
@@ -131,20 +158,30 @@ export default function BodyMap({ onSelectRegion, selectedRegion }: BodyMapProps
               onMouseEnter={() => setHoveredRegion(region.id)}
               onMouseLeave={() => setHoveredRegion(null)}
               aria-label={region.label}
-              className="absolute rounded-lg transition-all duration-200 border-2"
+              className="absolute rounded-lg transition-all duration-200 border-2 flex items-center justify-center overflow-hidden"
               style={{
                 left: `${zone[0]}%`,
                 top: `${zone[1]}%`,
                 width: `${zone[2]}%`,
                 height: `${zone[3]}%`,
-                backgroundColor: isHighlighted(region.id)
-                  ? "hsl(var(--primary) / 0.3)"
-                  : "transparent",
-                borderColor: isHighlighted(region.id)
-                  ? "hsl(var(--primary) / 0.7)"
-                  : "transparent",
+                backgroundColor: DEBUG_OVERLAYS
+                  ? DEBUG_COLORS[region.id] || "rgba(128,128,128,0.25)"
+                  : isHighlighted(region.id)
+                    ? "hsl(var(--primary) / 0.3)"
+                    : "transparent",
+                borderColor: DEBUG_OVERLAYS
+                  ? DEBUG_BORDERS[region.id] || "gray"
+                  : isHighlighted(region.id)
+                    ? "hsl(var(--primary) / 0.7)"
+                    : "transparent",
               }}
-            />
+            >
+              {DEBUG_OVERLAYS && (
+                <span className="text-[6px] font-bold text-black bg-white/80 px-0.5 rounded leading-tight text-center pointer-events-none">
+                  {region.label} {i}
+                </span>
+              )}
+            </button>
           ))
         )}
 
