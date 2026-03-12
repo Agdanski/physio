@@ -2,6 +2,33 @@ import { useState } from "react";
 import { BodyRegion } from "@/data/programs";
 import bodyMapImage from "@/assets/body-map.png";
 
+// Toggle this to show/hide overlay debug boxes
+const DEBUG_OVERLAYS = true;
+
+const DEBUG_COLORS: Record<string, string> = {
+  neck: "rgba(255,0,0,0.25)",
+  shoulder: "rgba(255,165,0,0.25)",
+  "elbow-wrist-hand": "rgba(0,200,0,0.25)",
+  "lower-back": "rgba(128,0,128,0.25)",
+  "hip-groin": "rgba(255,105,180,0.25)",
+  thigh: "rgba(255,255,0,0.25)",
+  knee: "rgba(0,0,255,0.25)",
+  "lower-leg": "rgba(0,200,200,0.25)",
+  "ankle-foot": "rgba(139,69,19,0.25)",
+};
+
+const DEBUG_BORDERS: Record<string, string> = {
+  neck: "red",
+  shoulder: "orange",
+  "elbow-wrist-hand": "green",
+  "lower-back": "purple",
+  "hip-groin": "hotpink",
+  thigh: "yellow",
+  knee: "blue",
+  "lower-leg": "teal",
+  "ankle-foot": "saddlebrown",
+};
+
 interface BodyMapProps {
   onSelectRegion: (region: BodyRegion) => void;
   selectedRegion?: BodyRegion | null;
