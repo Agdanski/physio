@@ -3654,6 +3654,17 @@ export const programs: Program[] = [
             imageKey: "knee-to-chest-stretch",
           },
           {
+            name: "Knee to Opposite Shoulder",
+            why: "Targets the piriformis and deep hip rotators while maintaining lumbar flexion.",
+            instructions: ["Lie on your back.", "Bring one knee up toward the opposite shoulder.", "Pull gently with both hands.", "Hold, then repeat on the other side."],
+            dose: "5 reps × 5–10 second holds each side, daily",
+            commonMistakes: ["Pulling too aggressively", "Lifting the head off the floor"],
+            easierVersion: "Pull less far.",
+            harderVersion: "Longer holds.",
+            equipmentNeeded: "None",
+            imageKey: "knee-to-opposite-shoulder",
+          },
+          {
             name: "Double Knee to Chest Stretch",
             why: "Maximizes lumbar flexion and spinal canal opening.",
             instructions: ["Lie on your back.", "Bring both knees toward your chest.", "Pull as far as comfortable and hold."],
