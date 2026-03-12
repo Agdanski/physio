@@ -156,8 +156,19 @@ export default function ProgramDetail({ program, onBack }: ProgramDetailProps) {
         </div>
       )}
 
-      {/* Phase Tabs */}
-      {program.phases.length > 0 && (
+      {/* Exercises */}
+      {program.phases.length === 1 ? (
+        <div className="mb-6">
+          {program.phases[0].description && (
+            <p className="text-sm text-muted-foreground mb-4 italic">{program.phases[0].description}</p>
+          )}
+          <div className="space-y-4">
+            {program.phases[0].exercises.map((exercise, j) => (
+              <ExerciseCard key={j} exercise={exercise} index={j} />
+            ))}
+          </div>
+        </div>
+      ) : program.phases.length > 1 ? (
         <Tabs defaultValue="phase-0" className="mb-6">
           <TabsList className="w-full flex">
             {program.phases.map((phase, i) => (
@@ -179,7 +190,7 @@ export default function ProgramDetail({ program, onBack }: ProgramDetailProps) {
             </TabsContent>
           ))}
         </Tabs>
-      )}
+      ) : null}
 
       {/* Progression / Flare-Up / Timeline / Seek Assessment */}
       <div className="grid gap-4 md:grid-cols-2 mb-6">

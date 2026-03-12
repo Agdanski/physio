@@ -3622,8 +3622,8 @@ export const programs: Program[] = [
     ],
     phases: [
       {
-        name: "Phase 1: Symptom Relief & Flexion-Biased Mobility",
-        description: "Focus on flexion-based positions that open the spinal canal and relieve nerve compression.",
+        name: "Complete Exercise Program",
+        description: "All exercises should be performed as tolerated. Use symptom response to guide which exercises feel best for you.",
         exercises: [
           {
             name: "Stationary Bike (Leaning Forward)",
@@ -3697,12 +3697,6 @@ export const programs: Program[] = [
             equipmentNeeded: "Chair",
             imageKey: "sitting-forward-flex",
           },
-        ],
-      },
-      {
-        name: "Phase 2: Early Strength & Mobility",
-        description: "Progress when Phase 1 exercises are comfortable and walking tolerance is starting to improve.",
-        exercises: [
           {
             name: "Pelvic Twist Stretch",
             why: "Rotational stretch that mobilizes the lumbar spine.",
@@ -3836,12 +3830,6 @@ export const programs: Program[] = [
             equipmentNeeded: "Large pillow",
             imageKey: "torso-ext-prone",
           },
-        ],
-      },
-      {
-        name: "Phase 3: Functional Walking Progression",
-        description: "Progress when Phase 2 exercises are comfortable and short walks are tolerable.",
-        exercises: [
           {
             name: "Standing Pelvic Tilt",
             why: "Teaches pelvic control in standing, preparing for walking.",
