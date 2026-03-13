@@ -89,6 +89,9 @@ export interface Program {
   bestFor?: string;
   notFor?: string[];
   selfManagementAdvice?: string[];
+  sideSpecificNotes?: string[];
+  loadingNote?: string[];
+  importantNotes?: string[];
   phases: Phase[];
   progressionRules?: string[];
   flareUpRules?: string[];
