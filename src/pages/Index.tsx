@@ -26,11 +26,13 @@ const Index = () => {
   const handleSelectRegion = (region: BodyRegion) => {
     setSelectedRegion(region);
     setView("conditions");
+    window.scrollTo(0, 0);
   };
 
   const handleSelectProgram = (program: Program) => {
     setSelectedProgram(program);
     setView("program");
+    window.scrollTo(0, 0);
   };
 
   const handleBack = () => {
@@ -41,6 +43,7 @@ const Index = () => {
       setView("home");
       setSelectedRegion(null);
     }
+    window.scrollTo(0, 0);
   };
 
   return (
