@@ -26,6 +26,7 @@ const Index = () => {
   const handleSelectRegion = (region: BodyRegion) => {
     setSelectedRegion(region);
     setView("conditions");
+    window.scrollTo(0, 0);
   };
 
   const handleSelectProgram = (program: Program) => {
