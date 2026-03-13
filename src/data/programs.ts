@@ -3359,7 +3359,7 @@ export const programs: Program[] = [
             easierVersion: "Squat to chair.",
             harderVersion: "Deeper range, add weight.",
             equipmentNeeded: "None",
-            imageKey: "sit-to-stand",
+            imageKey: "single-leg-squat-pattern",
           },
         ],
       },
