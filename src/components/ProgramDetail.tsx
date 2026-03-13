@@ -230,13 +230,23 @@ export default function ProgramDetail({ program, onBack }: ProgramDetailProps) {
         </div>
       ) : program.phases.length > 1 ? (
         <Tabs defaultValue="phase-0" className="mb-6">
-          <TabsList className="w-full flex">
-            {program.phases.map((phase, i) => (
-              <TabsTrigger key={i} value={`phase-${i}`} className="flex-1 text-xs sm:text-sm">
-                {phase.name}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+          {/* Phase navigation banner */}
+          <div className="rounded-xl border-2 border-primary/20 bg-primary/5 p-4 mb-4">
+            <p className="text-sm font-semibold text-primary text-center mb-3">
+              This program has {program.phases.length} phases — make sure to progress through each one
+            </p>
+            <TabsList className="w-full flex h-12 bg-muted/80 p-1 rounded-lg">
+              {program.phases.map((phase, i) => (
+                <TabsTrigger
+                  key={i}
+                  value={`phase-${i}`}
+                  className="flex-1 text-xs sm:text-sm font-semibold py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md rounded-md transition-all"
+                >
+                  {phase.name}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
           {program.phases.map((phase, i) => (
             <TabsContent key={i} value={`phase-${i}`}>
               {phase.description && (
