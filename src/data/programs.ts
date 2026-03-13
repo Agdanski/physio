@@ -3077,25 +3077,40 @@ export const programs: Program[] = [
   },
 
   // ───────────────────────────────────────────────────────────
-  // 19. MENISCAL IRRITATION / DEGENERATIVE MENISCAL PAIN
+  // 19. MENISCAL IRRITATION / DEGENERATIVE MENISCAL PAIN (MEDIAL OR LATERAL)
   // ───────────────────────────────────────────────────────────
   {
     id: "meniscal",
-    condition: "Meniscal Irritation / Degenerative Meniscal Pain",
+    condition: "Meniscal Irritation / Degenerative Meniscal Pain (Medial or Lateral)",
     goal: "Reduce pain and swelling, restore quadriceps strength, and return to walking, stairs, and squatting tolerance.",
-    description: "Recent consensus supports nonoperative management including exercise as the first approach for degenerative meniscal lesions.",
+    description: "This program is designed for general conservative rehabilitation of medial or lateral meniscal irritation / degenerative meniscal pain. It is not specific to tear side or tear type. The core rehab principles are similar for both sides: reduce irritation, restore motion, rebuild quadriceps and hip strength, improve balance and knee control, and return gradually to walking, stairs, and squatting tolerance. Some people may notice side-specific aggravating movements, so symptom response should guide loading.",
     bodyRegion: "knee",
     symptoms: ["knee pain with twisting", "knee swelling", "catching or locking sensation", "pain with deep squatting", "joint line tenderness"],
-    bestFor: "People with degenerative meniscal symptoms who want to manage conservatively.",
+    bestFor: "People with medial or lateral degenerative meniscal symptoms who want to manage conservatively.",
     notFor: [
       "True locked knee (cannot straighten the knee at all)",
       "Major recurrent swelling",
       "Suspected rupture with major instability",
     ],
+    importantNotes: [
+      "This is a general meniscal rehab program for medial or lateral meniscal symptoms.",
+      "It is not intended to independently manage suspected bucket-handle tears, locked knees, major extension blocks, acute large swelling after twisting trauma, or post-surgical repair restrictions.",
+    ],
     selfManagementAdvice: [
       "Avoid repeated twisting/pivoting and deep forced squatting during the irritable phase.",
       "Gentle knee range-of-motion work within tolerance can help.",
       "Swelling is your guide — increase in swelling means reduce activity.",
+    ],
+    sideSpecificNotes: [
+      "If symptoms are mainly on the medial (inner) side of the knee, be especially cautious with deep loaded knee bending, twisting, pivoting, and positions that clearly provoke inner-knee pain.",
+      "If symptoms are mainly on the lateral (outer) side of the knee, also be cautious with twisting, pivoting, cross-over loading, and positions that clearly provoke outer-knee pain.",
+      "For either side, use symptom response to guide depth, load, and exercise selection.",
+      "During the irritable phase, avoid repeatedly pushing into painful twisting or deep flexion.",
+    ],
+    loadingNote: [
+      "Keep squat depth, step height, and balance challenge within a tolerable range.",
+      "Increase depth and load gradually.",
+      "If one movement clearly provokes medial or lateral joint-line pain, reduce the range or return to the previous exercise level.",
     ],
     phases: [
       {
@@ -3174,10 +3189,11 @@ export const programs: Program[] = [
     ],
     expectedTimeline: "Some improvement may occur within 2 to 6 weeks. Functional recovery often takes 6 to 12 weeks.",
     seekAssessment: [
-      "True locked knee",
-      "Major extension block",
-      "Large recurrent swelling",
-      "No improvement after 6–8 weeks",
+      "Locked knee or inability to fully straighten the knee",
+      "Major recurrent swelling",
+      "Persistent catching or giving way",
+      "Acute twisting injury followed by large swelling",
+      "Symptoms not improving with a reasonable trial of conservative care",
     ],
     requiredEquipment: ["Chair"],
     optionalEquipment: ["Low step"],
@@ -3187,7 +3203,7 @@ export const programs: Program[] = [
       "Major swelling or deformity",
       "Inability to bear weight after trauma",
     ],
-    programAudit: "Aligned with consensus statements supporting PT-first management for degenerative meniscal lesions.",
+    programAudit: "Aligned with modern conservative meniscal rehabilitation principles emphasizing progressive strengthening, functional exercise, and neuromuscular training for medial or lateral meniscal symptoms. Differences in rehab are usually driven more by irritability, mechanical symptoms, tear pattern, and functional limitation than by side alone.",
   },
 
   // ───────────────────────────────────────────────────────────
