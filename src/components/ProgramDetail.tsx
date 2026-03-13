@@ -127,7 +127,67 @@ export default function ProgramDetail({ program, onBack }: ProgramDetailProps) {
         </div>
       )}
 
-      {/* Equipment */}
+      {/* Important Notes */}
+      {program.importantNotes && program.importantNotes.length > 0 && (
+        <div className="rounded-xl border border-destructive/30 bg-destructive/5 p-5 mb-6">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+            <div>
+              <h3 className="font-semibold text-destructive text-sm mb-2">Important</h3>
+              <ul className="space-y-1.5">
+                {program.importantNotes.map((note, i) => (
+                  <li key={i} className="text-sm text-foreground/80 flex gap-2">
+                    <span className="text-destructive">•</span>
+                    {note}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Side-Specific Modification Notes */}
+      {program.sideSpecificNotes && program.sideSpecificNotes.length > 0 && (
+        <div className="rounded-xl border border-border bg-muted/30 p-5 mb-6">
+          <div className="flex items-start gap-3">
+            <Target className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+            <div>
+              <h3 className="font-semibold text-foreground text-sm mb-2">Side-Specific Modification Notes</h3>
+              <ul className="space-y-1.5">
+                {program.sideSpecificNotes.map((note, i) => (
+                  <li key={i} className="text-sm text-foreground/80 flex gap-2">
+                    <span className="text-primary">•</span>
+                    {note}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Loading Note */}
+      {program.loadingNote && program.loadingNote.length > 0 && (
+        <div className="rounded-xl border border-border bg-muted/30 p-5 mb-6">
+          <div className="flex items-start gap-3">
+            <Weight className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+            <div>
+              <h3 className="font-semibold text-foreground text-sm mb-2">Loading Note</h3>
+              <ul className="space-y-1.5">
+                {program.loadingNote.map((note, i) => (
+                  <li key={i} className="text-sm text-foreground/80 flex gap-2">
+                    <span className="text-muted-foreground">•</span>
+                    {note}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
+
       {((program.requiredEquipment && program.requiredEquipment.length > 0) || (program.optionalEquipment && program.optionalEquipment.length > 0)) && (
         <div className="rounded-xl border border-border p-5 mb-6">
           <div className="flex items-start gap-3">
