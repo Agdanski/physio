@@ -4018,7 +4018,7 @@ export const programs: Program[] = [
             easierVersion: "Higher chair, touch only.",
             harderVersion: "Lower chair, add weight.",
             equipmentNeeded: "Chair",
-            imageKey: "sit-to-stand",
+            imageKey: "single-leg-squat-chair",
           },
           {
             name: "Step-Down",
