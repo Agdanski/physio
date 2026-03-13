@@ -1,6 +1,6 @@
 import { Program } from "@/data/programs";
 import ExerciseCard from "@/components/ExerciseCard";
-import { ArrowLeft, Printer, AlertTriangle, CheckCircle, Clock, ShieldAlert, TrendingUp, Flame, Wrench, Info } from "lucide-react";
+import { ArrowLeft, Printer, AlertTriangle, CheckCircle, Clock, ShieldAlert, TrendingUp, Flame, Wrench, Info, Target, Weight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
