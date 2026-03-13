@@ -43,6 +43,7 @@ const Index = () => {
       setView("home");
       setSelectedRegion(null);
     }
+    window.scrollTo(0, 0);
   };
 
   return (
