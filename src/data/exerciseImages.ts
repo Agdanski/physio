@@ -212,6 +212,9 @@ const exerciseImages: Record<string, string> = {
   "hip-hinge": hipHinge,
   "side-lying-hip-adduction": sideLyingHipAdduction,
   "superman-prone-extension": supermanProneExtension,
+  "single-leg-squat-pattern": singleLegSquatPattern,
+  "single-leg-squat-chair": singleLegSquatChair,
+  "single-leg-rdl": singleLegRdl,
 };
 
 export default exerciseImages;

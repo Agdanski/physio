@@ -4046,7 +4046,7 @@ export const programs: Program[] = [
             easierVersion: "Body weight, smaller range.",
             harderVersion: "Add dumbbell.",
             equipmentNeeded: "None",
-            imageKey: "romanian-deadlift",
+            imageKey: "single-leg-rdl",
           },
         ],
       },
