@@ -103,6 +103,9 @@ import torsoExtProne from "@/assets/exercises/torso-ext-prone.png";
 import heavySlowCalfRaise from "@/assets/exercises/heavy-slow-calf-raise.png";
 import hipHinge from "@/assets/exercises/hip-hinge.png";
 import sideLyingHipAdduction from "@/assets/exercises/side-lying-hip-adduction.png";
+import singleLegSquatPattern from "@/assets/exercises/single-leg-squat-pattern.png";
+import singleLegSquatChair from "@/assets/exercises/single-leg-squat-chair.png";
+import singleLegRdl from "@/assets/exercises/single-leg-rdl.png";
 
 const exerciseImages: Record<string, string> = {
   "sit-to-stand": sitToStand,
