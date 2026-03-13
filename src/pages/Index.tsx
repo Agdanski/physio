@@ -32,6 +32,7 @@ const Index = () => {
   const handleSelectProgram = (program: Program) => {
     setSelectedProgram(program);
     setView("program");
+    window.scrollTo(0, 0);
   };
 
   const handleBack = () => {
