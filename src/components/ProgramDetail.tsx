@@ -235,12 +235,12 @@ export default function ProgramDetail({ program, onBack }: ProgramDetailProps) {
             <p className="text-sm font-semibold text-primary text-center mb-3">
               This program has {program.phases.length} phases — make sure to progress through each one
             </p>
-            <TabsList className="w-full flex flex-wrap h-auto gap-1 bg-muted/80 p-1.5 rounded-lg">
+            <TabsList className="w-full flex flex-wrap items-stretch h-auto gap-1 bg-muted/80 p-1.5 rounded-lg">
               {program.phases.map((phase, i) => (
                 <TabsTrigger
                   key={i}
                   value={`phase-${i}`}
-                  className="flex-1 min-w-[120px] text-xs sm:text-sm font-semibold py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md rounded-md transition-all"
+                  className="flex-[1_1_calc(50%-0.25rem)] sm:flex-1 min-w-[140px] whitespace-normal break-words text-center leading-tight text-xs sm:text-sm font-semibold px-2 py-2.5 min-h-[3rem] data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md rounded-md transition-all"
                 >
                   {phase.name}
                 </TabsTrigger>
