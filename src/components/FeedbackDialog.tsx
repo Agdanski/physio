@@ -51,7 +51,7 @@ export default function FeedbackDialog() {
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="gap-2">
           <MessageSquare className="w-4 h-4" />
-          Feedback
+          <span className="hidden sm:inline">Feedback</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">

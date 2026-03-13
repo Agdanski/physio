@@ -60,8 +60,8 @@ const Index = () => {
               onClick={logout}
               className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/10"
             >
-              <LogOut className="w-4 h-4 mr-1.5" />
-              Sign Out
+              <LogOut className="w-4 h-4 sm:mr-1.5" />
+              <span className="hidden sm:inline">Sign Out</span>
             </Button>
           </div>
         </div>
